@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import Apply from '../Apply';
+import Apply from '../ApplicationProcess/Apply';
 
 
 function Copyright() {
