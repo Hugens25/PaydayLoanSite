@@ -11,12 +11,7 @@ import ApplicantForm from './ApplicantInfo';
 import BankForm from './IncomeAndBankInfo';
 import Review from './Review';
 
-
-
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing(2),
@@ -81,7 +76,7 @@ export default function Checkout() {
     <React.Fragment>
       <CssBaseline />
       <main className={classes.layout}>
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={3}>
           <Typography component="h1" variant="h4" align="center">
             Application
           </Typography>

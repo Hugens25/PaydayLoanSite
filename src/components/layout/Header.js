@@ -48,20 +48,20 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-        <ThemeProvider theme={NavbarTheme}>
-            <AppBar position="static" color="primary">
-                <Toolbar>
-                  <StyledIconButton edge="start" className={classes.menuButton} aria-label="menu">
-                    <MenuIcon />
-                  </StyledIconButton>
-                  <Typography variant="h6" className={classes.title} >
-                    Company Name
-                  </Typography>
-                  <StyledButton >Sign Up</StyledButton>
-                  <StyledButton >Login</StyledButton>
-                </Toolbar>
-            </AppBar>
-        </ThemeProvider>
+      <ThemeProvider theme={NavbarTheme}>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <StyledIconButton edge="start" className={classes.menuButton} aria-label="menu">
+              <MenuIcon />
+            </StyledIconButton>
+            <Typography variant="h6" className={classes.title} >
+              Company Name
+            </Typography>
+            <StyledButton >Apply Now!</StyledButton>
+            <StyledButton >Login</StyledButton>
+          </Toolbar>
+        </AppBar>
+      </ThemeProvider>
     </div>
   );
 }
