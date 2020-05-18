@@ -61,7 +61,7 @@ export default function Login() {
                           <TextField required id="email" label="Username / Email" fullWidth autoComplete="email"/>
                       </Grid>
                       <Grid item xs={12} sm={12}>
-                          <TextField required id="password" label="Password" fullWidth />
+                          <TextField required id="password" label="Password" type="password" fullWidth />
                       </Grid>
                   </Grid>
               </Box>

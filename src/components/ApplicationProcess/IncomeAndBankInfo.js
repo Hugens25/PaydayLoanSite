@@ -40,7 +40,7 @@ export default function PaymentForm() {
   const [hasSecondaryIncome, setHasSecondaryIncome] = React.useState('');
 
   const handleSecondaryIncomeTypeChange = (event) => {
-    setHasSecondaryIncome(event.target.value != "N / A" ? true : false)
+    setHasSecondaryIncome(event.target.value !== "N / A" ? true : false)
     setsecondaryIncomeType(event.target.value);
   };
 

@@ -5,18 +5,21 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from '@date-io/date-fns';
-
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 export default function AddressForm() {
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const date = new Date();
+  let minimumValidDOB = date.setFullYear(date.getFullYear() - 18);
+  
+  const [selectedDate, setSelectedDate] = React.useState(minimumValidDOB);
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    if (date > minimumValidDOB) {
+      alert("Unable to Proceed:\n\nYou must be 18 years old or older to apply for a Payday Loan.")
+    } else {
+      setSelectedDate(date);
+    }
   };
 
   return (
@@ -113,6 +116,7 @@ export default function AddressForm() {
             id="SSN"
             name="SSN"
             label="Social Security Number"
+            // type="number"
             fullWidth
             autoComplete="SSN"
           />
