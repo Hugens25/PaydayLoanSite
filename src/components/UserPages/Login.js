@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -49,26 +50,26 @@ export default function Login() {
 
     const classes = useStyles();
     return(
-        <React.Fragment>
-            <div>
-                <Paper className={classes.paper} elevation={3}>
-                    <Typography variant="h5" gutterBottom>Account Login</Typography>
-                    <Box mt={5}>
-                        <Grid container spacing={4}>
-                            <Grid item xs={12} sm={12}>
-                                <TextField required id="email" label="Username / Email" fullWidth autoComplete="email"/>
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField required id="password" label="Password" fullWidth />
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box className={classes.buttons}>
-                        <StyledButton className={classes.button}>Login</StyledButton>
-                    </Box>
-                </Paper>
-            </div>
-        </React.Fragment>
-        
+      <React.Fragment>
+        <CssBaseline />
+        <div className={classes.layout}>
+          <Paper className={classes.paper} elevation={3}>
+              <Typography variant="h5" gutterBottom>Account Login</Typography>
+              <Box mt={5}>
+                  <Grid container spacing={4}>
+                      <Grid item xs={12} sm={12}>
+                          <TextField required id="email" label="Username / Email" fullWidth autoComplete="email"/>
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                          <TextField required id="password" label="Password" fullWidth />
+                      </Grid>
+                  </Grid>
+              </Box>
+              <Box className={classes.buttons}>
+                  <StyledButton className={classes.button}>Login</StyledButton>
+              </Box>
+          </Paper>
+        </div>
+      </React.Fragment>
     );
 }

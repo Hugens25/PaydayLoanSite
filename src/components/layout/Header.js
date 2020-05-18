@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useParams } from "react-router-dom";
 import { makeStyles, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,6 +9,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import green from '@material-ui/core/colors/green';
+import Login from '../UserPages/Login';
+import Apply from '../ApplicationProcess/Apply';
+import LandingPage from '../LandingPage';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,21 +51,26 @@ export default function Navbar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <ThemeProvider theme={NavbarTheme}>
-        <AppBar position="static" color="primary">
-          <Toolbar>
-            <StyledIconButton edge="start" className={classes.menuButton} aria-label="menu">
-              <MenuIcon />
-            </StyledIconButton>
-            <Typography variant="h6" className={classes.title} >
-              Company Name
-            </Typography>
-            <StyledButton >Apply Now!</StyledButton>
-            <StyledButton >Login</StyledButton>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
-    </div>
+    <Router>
+      <div className={classes.root}>
+        <ThemeProvider theme={NavbarTheme}>
+          <AppBar position="static" color="primary">
+            <Toolbar>
+              <StyledIconButton edge="start" className={classes.menuButton} aria-label="menu">
+                <MenuIcon />
+              </StyledIconButton>
+              <Typography variant="h6" className={classes.title} >
+                <Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/">Company Name</Link>
+              </Typography>
+              <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/apply">Apply Now!</Link></StyledButton>
+              <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/login">Login</Link></StyledButton>
+            </Toolbar>
+          </AppBar>
+        </ThemeProvider>
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/apply" component={Apply}/>
+        <Route path="/login" component={Login}/>
+      </div>
+    </Router>
   );
 }
