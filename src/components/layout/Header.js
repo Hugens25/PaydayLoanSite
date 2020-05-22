@@ -12,6 +12,7 @@ import green from '@material-ui/core/colors/green';
 import Login from '../UserPages/Login';
 import Apply from '../ApplicationProcess/Apply';
 import LandingPage from '../LandingPage';
+import HomePage from '../UserPages/HomePage';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +71,7 @@ export default function Navbar() {
         <Route exact path="/" component={LandingPage} />
         <Route path="/apply" component={Apply}/>
         <Route path="/login" component={Login}/>
+        <Route path="/home" component={HomePage}/>
       </div>
     </Router>
   );

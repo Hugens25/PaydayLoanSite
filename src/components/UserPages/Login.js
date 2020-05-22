@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -53,10 +54,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
 
   const classes = useStyles();
+  const history = useHistory();
 
-  const [email, setEmail] = React.useState();
-  const [password, setPassword] = React.useState();
-  const [validateCredentials, setValidateCredentials] = React.useState(true);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [validateCredentials, setValidateCredentials] = useState(false);
+  const [loginAttempts, setLoginAttempts] = useState(1);
+  const [maximumAttemptsReached, setMaximumAttemptsReached] = useState(false);
 
   const handleEmaileEntry = (e) => {
     setEmail(e.target.value);
@@ -70,12 +74,29 @@ export default function Login() {
     setValidateCredentials(val);
   };
 
-  async function handleLogin() {
+  const handleLoginAttempts = (val) => {
+    setLoginAttempts(val + 1);
+    handleMaximumAttemptsReached();
+  };
+
+  const handleMaximumAttemptsReached = () => {
+    if(loginAttempts === 3){
+      setMaximumAttemptsReached(true)
+    }
+  };
+
+  useEffect(() => {
+    if(validateCredentials === true) {
+      history.push("/home");
+    }
+  });
+
+  async function handleValidation() {
     let url = process.env.REACT_APP_VALIDATE_USER_URL
     let payload = {'email':email, 'password_hash':password}
     let data = await fetch(url, {method: 'POST', body: JSON.stringify(payload)})
-    console.log(await data.json())
     handleValidateCredentials(data.status === 200 ? true : false)
+    handleLoginAttempts(loginAttempts);
   }
 
     return(
@@ -89,7 +110,7 @@ export default function Login() {
                       <Grid item xs={12} sm={12}>
                           <TextField 
                             required id="email" 
-                            label="Username / Email" 
+                            label="Email" 
                             fullWidth 
                             autoComplete="email"
                             onChange={handleEmaileEntry}
@@ -107,10 +128,10 @@ export default function Login() {
                   </Grid>
               </Box>
               <Box className={classes.warning}>
-                  {!validateCredentials && <Typography>Invalid Credentials Provided. Please try again.</Typography>}
+                  {!validateCredentials && loginAttempts > 1 && <Typography>{loginAttempts <= 3 ? 'Invalid Credentials Provided. Please try again.' : 'Maximum Login Attempts (3) has been exceeded. For your protection, this account has been locked.'}</Typography>}
               </Box>
               <Box className={classes.buttons}>
-                  <StyledButton className={classes.button} onClick={handleLogin}>Login</StyledButton>
+                  <StyledButton className={classes.button} onClick={!maximumAttemptsReached ? handleValidation : null}>Login</StyledButton>
               </Box>
           </Paper>
         </div>
