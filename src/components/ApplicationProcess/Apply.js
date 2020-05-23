@@ -54,15 +54,12 @@ function getStepContent(step, applicantInfo, setApplicantInfo, startedTypingRequ
               applicantInfo={applicantInfo} 
               setApplicantInfo={setApplicantInfo} 
               startedTypingRequiredFields={startedTypingRequiredFields}
-              handleStartedTypingRequiredFields={handleStartedTypingRequiredFields}
               handleAddApplicantInformation={handleAddApplicantInformation}
             />;
     case 1:
       return <BankForm 
               applicantInfo={applicantInfo} 
-              setApplicantInfo={setApplicantInfo} 
               startedTypingRequiredFields={startedTypingRequiredFields}
-              handleStartedTypingRequiredFields={handleStartedTypingRequiredFields}
               handleAddApplicantInformation={handleAddApplicantInformation}
             />;
     case 2:

@@ -24,9 +24,7 @@ export default function PaymentForm(props) {
 
   const {
           applicantInfo, 
-          setApplicantInfo, 
           startedTypingRequiredFields, 
-          handleStartedTypingRequiredFields,
           handleAddApplicantInformation
         } = props;
 

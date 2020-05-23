@@ -14,11 +14,9 @@ export default function AddressForm(props) {
           applicantInfo, 
           setApplicantInfo, 
           startedTypingRequiredFields, 
-          handleStartedTypingRequiredFields,
           handleAddApplicantInformation
         } = props;
 
-  const [selectedDate, setSelectedDate] = useState(minimumValidDOB);
   const [passwordValidated, setValidatedPassword] = useState(true);
   const [ssnValidated, setValidatedSSN] = useState(true); 
 
@@ -26,7 +24,6 @@ export default function AddressForm(props) {
     if (date > minimumValidDOB) {
       alert("Unable to Proceed:\n\nYou must be 18 years old or older to apply for a Payday Loan.")
     } else {
-      setSelectedDate(date);
       setApplicantInfo({...applicantInfo, "bday":date})
     }
   };
