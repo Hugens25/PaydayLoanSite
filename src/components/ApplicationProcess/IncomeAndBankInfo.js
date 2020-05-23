@@ -20,9 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaymentForm() {
+export default function PaymentForm(props) {
 
   const classes = useStyles();
+
+  const {applicantInfo, setApplicantInfo} = props;
 
   const [incomeType, setIncomeType] = React.useState('');
 

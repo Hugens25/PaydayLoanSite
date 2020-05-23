@@ -5,13 +5,14 @@ import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
-export default function AddressForm() {
+export default function AddressForm(props) {
 
   const date = new Date();
   let minimumValidDOB = date.setFullYear(date.getFullYear() - 18);
   
+  const {applicantInfo, setApplicantInfo} = props;
+
   const [selectedDate, setSelectedDate] = useState(minimumValidDOB);
-  const [applicantInfo, setApplicantInfo] = useState({});
   const [passwordValidated, setValidatedPassword] = useState(true);
   const [ssnValidated, setValidatedSSN] = useState(true);
   const [maskedSSN, setMaskedSSN] = useState();
@@ -22,7 +23,7 @@ export default function AddressForm() {
       alert("Unable to Proceed:\n\nYou must be 18 years old or older to apply for a Payday Loan.")
     } else {
       setSelectedDate(date);
-      setApplicantInfo({"bday":date})
+      setApplicantInfo({...applicantInfo, "bday":date})
     }
   };
 
@@ -62,7 +63,8 @@ export default function AddressForm() {
             label="First name"
             fullWidth
             autoComplete="given-name"
-            onChange={(e) => {handleAddApplicantInformation("first-name", e)}}
+            value={applicantInfo.firstName}
+            onChange={(e) => {handleAddApplicantInformation("firstName", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -73,7 +75,8 @@ export default function AddressForm() {
             label="Last name"
             fullWidth
             autoComplete="family-name"
-            onChange={(e) => {handleAddApplicantInformation("last-name", e)}}
+            value={applicantInfo.lastName}
+            onChange={(e) => {handleAddApplicantInformation("lastName", e)}}
           />
         </Grid>
         <Grid item xs={12}>
@@ -84,7 +87,8 @@ export default function AddressForm() {
             label="Address line 1"
             fullWidth
             autoComplete="billing address-line1"
-            onChange={(e) => {handleAddApplicantInformation("address-1", e)}}
+            value={applicantInfo.address1}
+            onChange={(e) => {handleAddApplicantInformation("address1", e)}}
           />
         </Grid>
         <Grid item xs={12}>
@@ -94,7 +98,8 @@ export default function AddressForm() {
             label="Address line 2"
             fullWidth
             autoComplete="billing address-line2"
-            onChange={(e) => {handleAddApplicantInformation("address-2", e)}}
+            value={applicantInfo.address2}
+            onChange={(e) => {handleAddApplicantInformation("address2", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -105,6 +110,7 @@ export default function AddressForm() {
             label="City"
             fullWidth
             autoComplete="billing address-level2"
+            value={applicantInfo.city}
             onChange={(e) => {handleAddApplicantInformation("city", e)}}
           />
         </Grid>
@@ -114,6 +120,7 @@ export default function AddressForm() {
             name="state" 
             label="State/Province/Region" 
             fullWidth
+            value={applicantInfo.state}
             onChange={(e) => {handleAddApplicantInformation("state", e)}}
           />
         </Grid>
@@ -125,7 +132,8 @@ export default function AddressForm() {
             label="Zip / Postal Code"
             fullWidth
             autoComplete="billing postal-code"
-            onChange={(e) => {handleAddApplicantInformation("zip-code", e)}}
+            value={applicantInfo.zipCode}
+            onChange={(e) => {handleAddApplicantInformation("zipCode", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -136,6 +144,7 @@ export default function AddressForm() {
             label="Country"
             fullWidth
             autoComplete="billing country"
+            value={applicantInfo.country}
             onChange={(e) => {handleAddApplicantInformation("country", e)}}
           />
         </Grid>
@@ -147,6 +156,7 @@ export default function AddressForm() {
             label="Email"
             fullWidth
             autoComplete="email"
+            value={applicantInfo.email}
             onChange={(e) => {handleAddApplicantInformation("email", e)}}
           />
         </Grid>
@@ -160,6 +170,7 @@ export default function AddressForm() {
             autoComplete="password"
             type="password"
             error={!passwordValidated}
+            value={applicantInfo.password}
             onChange={(e) => {handleAddApplicantInformation("password", e)}}
           />
         </Grid>
@@ -187,6 +198,7 @@ export default function AddressForm() {
             autoComplete="SSN"
             value={maskedSSN}
             error={!ssnValidated}
+            value={applicantInfo.ssn}
             onChange={(e) => {handleAddApplicantInformation("ssn", e)}}
           />
         </Grid>
@@ -211,7 +223,7 @@ export default function AddressForm() {
               margin="normal"
               id="date-picker-inline"
               label="Date of Birth"
-              value={selectedDate}
+              value={applicantInfo.bday}
               onChange={handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date',

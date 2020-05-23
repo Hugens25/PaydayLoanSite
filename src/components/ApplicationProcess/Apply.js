@@ -47,14 +47,14 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Applicant Info', 'Income and Bank Details', 'Review and Submit'];
 
-function getStepContent(step) {
+function getStepContent(step, applicantInfo, setApplicantInfo) {
   switch (step) {
     case 0:
-      return <ApplicantForm />;
+      return <ApplicantForm applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />;
     case 1:
-      return <BankForm />;
+      return <BankForm applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />;
     case 2:
-      return <Review />;
+      return <Review applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />;
     default:
       throw new Error('Unknown step');
   }
@@ -63,6 +63,7 @@ function getStepContent(step) {
 export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [applicantInfo, setApplicantInfo] = React.useState({});
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -100,7 +101,7 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, applicantInfo, setApplicantInfo)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>

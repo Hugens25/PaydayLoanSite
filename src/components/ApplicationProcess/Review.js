@@ -33,8 +33,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review() {
+export default function Review(props) {
   const classes = useStyles();
+
+  const {applicantInfo, setApplicantInfo} = props;
 
   return (
     <React.Fragment>
