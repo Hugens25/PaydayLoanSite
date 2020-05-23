@@ -60,7 +60,7 @@ function getStepContent(step, applicantInfo, setApplicantInfo) {
   }
 }
 
-export default function Checkout() {
+export default function SubmitApplication() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [applicantInfo, setApplicantInfo] = useState({});
@@ -73,7 +73,15 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  useEffect(() => {console.log(applicantInfo)});
+  useEffect(() => {
+    if (activeStep === steps.length) {
+      let url = process.env.REACT_APP_ADD_USER_URL
+      let payload = applicantInfo
+      fetch(url, {method: 'POST', body: JSON.stringify(payload)})
+      .then((data) => {console.log(data)})
+      .catch((err) => {console.log(err)})
+    }
+  });
 
   return (
     <React.Fragment>
@@ -81,7 +89,7 @@ export default function Checkout() {
       <main className={classes.layout}>
         <Paper className={classes.paper} elevation={3}>
           <Typography component="h1" variant="h4" align="center">
-            Application
+            Application Submitted Successfully!
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
@@ -94,11 +102,12 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  You're On Your Way to a Brighter Future!
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  We have receieved your application, and are currently reviewing your information.
+                  Should additional information be required, we will reach out to you via the contact
+                  information provided on this application.
                 </Typography>
               </React.Fragment>
             ) : (

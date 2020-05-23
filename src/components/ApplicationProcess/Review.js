@@ -41,46 +41,32 @@ export default function Review(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        Application Summary
       </Typography>
-      <List disablePadding>
-        {products.map((product) => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
-            $34.06
-          </Typography>
-        </ListItem>
-      </List>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+        <Grid item xs={12} sm={12}>
+          <Typography>{`Applicant Name: ${applicantInfo.firstName} ${applicantInfo.lastName}`}</Typography>
+          <Typography>{`Applicant Address: ${applicantInfo.address1} ${applicantInfo.address2 || ''} ${applicantInfo.city}, ${applicantInfo.state} ${applicantInfo.zipCode}`}</Typography>
+          <Typography>{`Applicant Email: ${applicantInfo.email}`}</Typography>
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
+        <Grid item xs={12} sm={12}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
+            Income Details
           </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
+          <Typography >{`Employment Type: ${applicantInfo.incomeType}`}</Typography>
+          <Typography >{`Employer: ${applicantInfo.employerName}`}</Typography>
+          <Typography >{`Income Per Check: ${applicantInfo.recentCheck}`}</Typography>
+
+          <Typography >{`Additional Source of Income: ${applicantInfo.additionalSourceOfIncome}`}</Typography>
+          <Typography >{`Additional Income Amount: ${applicantInfo.additionalIncomeAmount}`}</Typography>
+
+        </Grid>
+        <Grid item container direction="column" xs={12} sm={12}>
+          <Typography variant="h6" gutterBottom className={classes.title}>
+            Bank details
+          </Typography>
+          <Typography>{`Bank Routing Number: ${applicantInfo.routingNumber}`}</Typography>
+          <Typography>{`Bank Account Number: ${applicantInfo.bankAccountNumber}`}</Typography>
         </Grid>
       </Grid>
     </React.Fragment>
