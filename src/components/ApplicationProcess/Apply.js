@@ -47,14 +47,32 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Applicant Info', 'Income and Bank Details', 'Review and Submit'];
 
-function getStepContent(step, applicantInfo, setApplicantInfo) {
+function getStepContent(step, applicantInfo, setApplicantInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation) {
   switch (step) {
     case 0:
-      return <ApplicantForm applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />;
+      return <ApplicantForm 
+              applicantInfo={applicantInfo} 
+              setApplicantInfo={setApplicantInfo} 
+              startedTypingRequiredFields={startedTypingRequiredFields}
+              handleStartedTypingRequiredFields={handleStartedTypingRequiredFields}
+              handleAddApplicantInformation={handleAddApplicantInformation}
+            />;
     case 1:
-      return <BankForm applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />;
+      return <BankForm 
+              applicantInfo={applicantInfo} 
+              setApplicantInfo={setApplicantInfo} 
+              startedTypingRequiredFields={startedTypingRequiredFields}
+              handleStartedTypingRequiredFields={handleStartedTypingRequiredFields}
+              handleAddApplicantInformation={handleAddApplicantInformation}
+            />;
     case 2:
-      return <Review applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />;
+      return <Review 
+              applicantInfo={applicantInfo} 
+              setApplicantInfo={setApplicantInfo} 
+              startedTypingRequiredFields={startedTypingRequiredFields}
+              handleStartedTypingRequiredFields={handleStartedTypingRequiredFields}
+              handleAddApplicantInformation={handleAddApplicantInformation}
+            />;
     default:
       throw new Error('Unknown step');
   }
@@ -63,10 +81,10 @@ function getStepContent(step, applicantInfo, setApplicantInfo) {
 export default function SubmitApplication() {
   const classes = useStyles();
 
-  const requiredFields = ['email', 'password']
 
   const [activeStep, setActiveStep] = useState(0);
   const [applicantInfo, setApplicantInfo] = useState({});
+  const [startedTypingRequiredFields, setStartedTypingRequiredFields] = useState({}); 
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -75,6 +93,19 @@ export default function SubmitApplication() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const handleStartedTypingRequiredFields = (key) => {
+    let field = {...startedTypingRequiredFields}
+    field[key] = true
+    setStartedTypingRequiredFields(field)
+  }
+
+  const handleAddApplicantInformation = (key, e) => {
+    let info = { ...applicantInfo }
+    info[key] = e.target.value
+    setApplicantInfo(info)
+    handleStartedTypingRequiredFields(key)
+  }
 
   useEffect(() => {
     if (activeStep === steps.length) {
@@ -115,7 +146,7 @@ export default function SubmitApplication() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep, applicantInfo, setApplicantInfo)}
+                {getStepContent(activeStep, applicantInfo, setApplicantInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>

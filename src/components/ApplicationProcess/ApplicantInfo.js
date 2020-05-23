@@ -10,13 +10,17 @@ export default function AddressForm(props) {
   const date = new Date();
   let minimumValidDOB = date.setFullYear(date.getFullYear() - 18);
   
-  const {applicantInfo, setApplicantInfo} = props;
+  const {
+          applicantInfo, 
+          setApplicantInfo, 
+          startedTypingRequiredFields, 
+          handleStartedTypingRequiredFields,
+          handleAddApplicantInformation
+        } = props;
 
   const [selectedDate, setSelectedDate] = useState(minimumValidDOB);
   const [passwordValidated, setValidatedPassword] = useState(true);
-  const [ssnValidated, setValidatedSSN] = useState(true);
-  const [maskedSSN, setMaskedSSN] = useState();
-  
+  const [ssnValidated, setValidatedSSN] = useState(true); 
 
   const handleDateChange = (date) => {
     if (date > minimumValidDOB) {
@@ -27,19 +31,18 @@ export default function AddressForm(props) {
     }
   };
 
-  const handleAddApplicantInformation = (key, e) => {
-    let info = { ...applicantInfo }
-    info[key] = e.target.value
-    setApplicantInfo(info)
+  const handleValidatePassword = (original, validated) => {
+    setValidatedPassword(original === validated ? true : false)
   }
 
-  const handleValidatePassword = (e) => {
-    setValidatedPassword(applicantInfo.password === e.target.value ? true : false)
+  const handleValidateSSN = (original, validated) => {
+    setValidatedSSN(original === validated ? true : false)
   }
 
-  const handleValidateSSN = (e) => {
-    setValidatedSSN(applicantInfo.ssn === e.target.value ? true : false)
-  }
+  useEffect(() => {
+    handleValidatePassword(applicantInfo.password, applicantInfo.validatedPassword)
+    handleValidateSSN(applicantInfo.ssn, applicantInfo.validatedSSN)
+  });
 
   return (
     <React.Fragment>
@@ -56,6 +59,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="given-name"
             value={applicantInfo.firstName}
+            error={!applicantInfo.firstName && startedTypingRequiredFields.firstName}
             onChange={(e) => {handleAddApplicantInformation("firstName", e)}}
           />
         </Grid>
@@ -68,6 +72,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="family-name"
             value={applicantInfo.lastName}
+            error={!applicantInfo.lastName && startedTypingRequiredFields.lastName}
             onChange={(e) => {handleAddApplicantInformation("lastName", e)}}
           />
         </Grid>
@@ -80,6 +85,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing address-line1"
             value={applicantInfo.address1}
+            error={!applicantInfo.address1 && startedTypingRequiredFields.address1}
             onChange={(e) => {handleAddApplicantInformation("address1", e)}}
           />
         </Grid>
@@ -103,6 +109,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing address-level2"
             value={applicantInfo.city}
+            error={!applicantInfo.city && startedTypingRequiredFields.city}
             onChange={(e) => {handleAddApplicantInformation("city", e)}}
           />
         </Grid>
@@ -113,6 +120,7 @@ export default function AddressForm(props) {
             label="State/Province/Region" 
             fullWidth
             value={applicantInfo.state}
+            error={!applicantInfo.state && startedTypingRequiredFields.state}
             onChange={(e) => {handleAddApplicantInformation("state", e)}}
           />
         </Grid>
@@ -125,6 +133,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing postal-code"
             value={applicantInfo.zipCode}
+            error={!applicantInfo.zipCode && startedTypingRequiredFields.zipCode}
             onChange={(e) => {handleAddApplicantInformation("zipCode", e)}}
           />
         </Grid>
@@ -137,6 +146,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing country"
             value={applicantInfo.country}
+            error={!applicantInfo.country && startedTypingRequiredFields.country}
             onChange={(e) => {handleAddApplicantInformation("country", e)}}
           />
         </Grid>
@@ -149,6 +159,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="email"
             value={applicantInfo.email}
+            error={!applicantInfo.email && startedTypingRequiredFields.email}
             onChange={(e) => {handleAddApplicantInformation("email", e)}}
           />
         </Grid>
@@ -163,6 +174,7 @@ export default function AddressForm(props) {
             type="password"
             error={!passwordValidated}
             value={applicantInfo.password}
+            error={!applicantInfo.password && startedTypingRequiredFields.password}
             onChange={(e) => {handleAddApplicantInformation("password", e)}}
           />
         </Grid>
@@ -176,7 +188,7 @@ export default function AddressForm(props) {
             autoComplete="password"
             type="password"
             error={!passwordValidated}
-            onChange={handleValidatePassword}
+            onChange={(e) => {handleAddApplicantInformation("validatedPassword", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -188,9 +200,9 @@ export default function AddressForm(props) {
             // type="number"
             fullWidth
             autoComplete="SSN"
-            value={maskedSSN}
             error={!ssnValidated}
             value={applicantInfo.ssn}
+            error={!applicantInfo.ssn && startedTypingRequiredFields.ssn}
             onChange={(e) => {handleAddApplicantInformation("ssn", e)}}
           />
         </Grid>
@@ -203,7 +215,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="SSN"
             error={!ssnValidated}
-            onChange={handleValidateSSN}
+            onChange={(e) => {handleAddApplicantInformation("validatedSSN", e)}}
           />
         </Grid>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -22,11 +22,17 @@ export default function PaymentForm(props) {
 
   const classes = useStyles();
 
-  const {applicantInfo, setApplicantInfo} = props;
+  const {
+          applicantInfo, 
+          setApplicantInfo, 
+          startedTypingRequiredFields, 
+          handleStartedTypingRequiredFields,
+          handleAddApplicantInformation
+        } = props;
 
-  const [secondaryIncomeType, setsecondaryIncomeType] = React.useState('');
-  const [hasSecondaryIncome, setHasSecondaryIncome] = React.useState('');
-  const [accountNumberVerified, setAccountNumberVerified] = React.useState(true);
+  const [secondaryIncomeType, setsecondaryIncomeType] = useState('');
+  const [hasSecondaryIncome, setHasSecondaryIncome] = useState('');
+  const [accountNumberVerified, setAccountNumberVerified] = useState(true);
 
   const handleSecondaryIncomeTypeChange = (e) => {
     setHasSecondaryIncome(e.target.value !== "N / A" ? true : false)
@@ -34,15 +40,13 @@ export default function PaymentForm(props) {
     handleAddApplicantInformation("additionalSourceOfIncome", e)
   };
 
-  const handleVerifyAccountNumber = (e) => {
-    setAccountNumberVerified(applicantInfo.bankAccountNumber === e.target.value ? true : false)
+  const handleVerifyAccountNumber = (original, validated) => {
+    setAccountNumberVerified(original === validated ? true : false)
   }
 
-  const handleAddApplicantInformation = (key, e) => {
-    let info = { ...applicantInfo }
-    info[key] = e.target.value
-    setApplicantInfo(info)
-  }
+  useEffect(() => {
+    handleVerifyAccountNumber(applicantInfo.bankAccountNumber, applicantInfo.verifyfBankAccountNumber)
+  });
 
   return (
     <React.Fragment>
@@ -58,6 +62,7 @@ export default function PaymentForm(props) {
                 labelId="sourceOfIncome"
                 id="sourceOfIncomeSelect"
                 value={applicantInfo.incomeType}
+                error={!applicantInfo.incomeType && startedTypingRequiredFields.incomeType}
                 onChange={(e) => {handleAddApplicantInformation("incomeType", e)}}
               >
                 <MenuItem value={"Employed"}>Employed</MenuItem>
@@ -75,6 +80,7 @@ export default function PaymentForm(props) {
                   labelId="payFrequency"
                   id="payFrequencySelect"
                   value={applicantInfo.payFrequency}
+                  error={!applicantInfo.payFrequency && startedTypingRequiredFields.payFrequency}
                   onChange={(e) => {handleAddApplicantInformation("payFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
@@ -91,6 +97,7 @@ export default function PaymentForm(props) {
               id="recentCheck" 
               label="What was the amount of your most recent check?" 
               fullWidth 
+              error={!applicantInfo.recentCheck && startedTypingRequiredFields.recentCheck}
               onChange={(e) => {handleAddApplicantInformation("recentCheck", e)}}
               value={applicantInfo.recentCheck}
             />
@@ -124,8 +131,8 @@ export default function PaymentForm(props) {
                 id="recentCheck" 
                 label="Additional Income Amount" 
                 fullWidth
+                error={!applicantInfo.additionalIncomeAmount && startedTypingRequiredFields.additionalIncomeAmount}
                 onChange={(e) => {handleAddApplicantInformation("additionalIncomeAmount", e)}}
-                // onChange={handleSecondaryIncomeTypeChange} 
                 value={applicantInfo.additionalIncomeAmount}
                 />
             </Grid>
@@ -137,6 +144,7 @@ export default function PaymentForm(props) {
               label="Company or Employer Name:" 
               fullWidth 
               onChange={(e) => {handleAddApplicantInformation("employerName", e)}}  
+              error={!applicantInfo.employerName && startedTypingRequiredFields.employerName}
               value={applicantInfo.employerName}
             />
           </Grid>
@@ -146,6 +154,7 @@ export default function PaymentForm(props) {
               id="routingNumber" 
               label="Bank Routing Number" 
               fullWidth 
+              error={!applicantInfo.routingNumber && startedTypingRequiredFields.routingNumber}
               onChange={(e) => {handleAddApplicantInformation("routingNumber", e)}}
               value={applicantInfo.routingNumber}
             />
@@ -156,6 +165,7 @@ export default function PaymentForm(props) {
               id="accountNumber" 
               label="Bank Account Number" 
               fullWidth 
+              error={!applicantInfo.bankAccountNumber && startedTypingRequiredFields.bankAccountNumber}
               onChange={(e) => {handleAddApplicantInformation("bankAccountNumber", e)}}
               value={applicantInfo.bankAccountNumber}
             />
@@ -167,7 +177,7 @@ export default function PaymentForm(props) {
               label="Re-Enter Bank Account Number" 
               fullWidth 
               error={!accountNumberVerified}
-              onChange={(e) => {handleVerifyAccountNumber(e)}}
+              onChange={(e) => {handleAddApplicantInformation("verifyfBankAccountNumber", e)}}
             />
           </Grid>
         </Grid>
