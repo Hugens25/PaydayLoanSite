@@ -84,7 +84,7 @@ export default function Login(props) {
   const handleValidateCredentials = (val) => {
     setValidateCredentials(val);
     if(val) {
-      setUserInfo({...userInfo, "email":email});
+      setUserInfo({...userInfo, "email":email, "isLoggedIn":true});
     }
   };
 

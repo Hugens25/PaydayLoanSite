@@ -93,20 +93,20 @@ export default function SubmitApplication() {
   const [missingValues, setMissingValues] = useState(false);
 
   const handleNext = () => {
-    if (activeStep < 2) {
-      let fieldValues = requiredFields[activeStep].fields.map((field) => {
-        return applicantInfo[field] ? true : false
-      })
-      if(!fieldValues.includes(false)){
-        setMissingValues(false)
-        setActiveStep(activeStep + 1);
-      } else {
-        setMissingValues(true)
-      }
-    } else {
-      setActiveStep(activeStep + 1);
-    }
-    
+    // if (activeStep < 2) {
+    //   let fieldValues = requiredFields[activeStep].fields.map((field) => {
+    //     return applicantInfo[field] ? true : false
+    //   })
+    //   if(!fieldValues.includes(false)){
+    //     setMissingValues(false)
+    //     setActiveStep(activeStep + 1);
+    //   } else {
+    //     setMissingValues(true)
+    //   }
+    // } else {
+    //   setActiveStep(activeStep + 1);
+    // }
+    setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {

@@ -10,10 +10,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import green from '@material-ui/core/colors/green';
 import Login from '../UserPages/Login';
+import Logout from '../UserPages/Logout';
 import Apply from '../ApplicationProcess/Apply';
 import LandingPage from '../LandingPage';
 import HomePage from '../UserPages/HomePage';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +51,7 @@ const StyledIconButton = withStyles({
 export default function Navbar() {
   const classes = useStyles();
 
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({'isLoggedIn':false});
 
   return (
     <Router>
@@ -66,13 +66,15 @@ export default function Navbar() {
                 <Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/">Company Name</Link>
               </Typography>
               <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/apply">Apply Now!</Link></StyledButton>
-              <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/login">Login</Link></StyledButton>
+              {!userInfo.isLoggedIn && <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/login">LOGIN</Link></StyledButton>}
+              {userInfo.isLoggedIn && <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/logout">LOGOUT</Link></StyledButton>}
             </Toolbar>
           </AppBar>
         </ThemeProvider>
-        <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+        <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} logout={false} />}/>
         <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} />}/>
         <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+        <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} logout={true} />}/>
         <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
       </div>
     </Router>
