@@ -60,17 +60,26 @@ export default function Login(props) {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [startedTypingEmail, setStartedTypingEmail] = useState(false);
+  const [startedTypingPassword, setStartedTypingPassword] = useState(false);
   const [validateCredentials, setValidateCredentials] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(1);
   const [maximumAttemptsReached, setMaximumAttemptsReached] = useState(false);
+  const [requiredValuesProvided, setRequiredValuesProvided] = useState(false);
 
   const handleEmaileEntry = (e) => {
+    setStartedTypingEmail(true)
     setEmail(e.target.value);
   };
 
   const handlePasswordEntry = (e) => {
+    setStartedTypingPassword(true)
     setPassword(e.target.value);
   };
+
+  const handleValuesExist = () => {
+    setRequiredValuesProvided(email && email.length > 0 && password && password.length > 0 ? true : false)
+  }
 
   const handleValidateCredentials = (val) => {
     setValidateCredentials(val);
@@ -89,11 +98,17 @@ export default function Login(props) {
       setMaximumAttemptsReached(true)
     }
   };
+  
+  const handleNotAllValuesProvided = () => {
+    setStartedTypingEmail(true)
+    setStartedTypingPassword(true)
+  }
 
   useEffect(() => {
-    if(validateCredentials === true) {
+    if(validateCredentials) {
       history.push("/home");
     }
+    handleValuesExist()
   });
 
   async function handleValidation() {
@@ -114,29 +129,35 @@ export default function Login(props) {
                   <Grid container spacing={4}>
                       <Grid item xs={12} sm={12}>
                           <TextField 
-                            required id="email" 
+                            required={true}
+                            id="email" 
                             label="Email" 
                             fullWidth 
                             autoComplete="email"
+                            error={!email && startedTypingEmail} 
                             onChange={handleEmaileEntry}
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
                           <TextField 
-                            required id="password" 
+                            required={true}
+                            id="password" 
                             label="Password" 
                             type="password" 
-                            fullWidth 
+                            fullWidth
+                            error={!password && startedTypingPassword} 
                             onChange={handlePasswordEntry}
                           />
                       </Grid>
                   </Grid>
               </Box>
               <Box className={classes.warning}>
-                  {!validateCredentials && loginAttempts > 1 && <Typography>{loginAttempts <= 3 ? 'Invalid Credentials Provided. Please try again.' : 'Maximum Login Attempts (3) has been exceeded. For your protection, this account has been locked.'}</Typography>}
+                {
+                  !validateCredentials && loginAttempts > 1 && <Typography>{loginAttempts <= 3 ? 'Invalid Credentials Provided. Please try again.' : 'Maximum Login Attempts (3) has been exceeded. For your protection, this account has been locked.'}</Typography>
+                }
               </Box>
               <Box className={classes.buttons}>
-                  <StyledButton className={classes.button} onClick={!maximumAttemptsReached ? handleValidation : null}>Login</StyledButton>
+                  <StyledButton className={classes.button} onClick={!maximumAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>
               </Box>
           </Paper>
         </div>

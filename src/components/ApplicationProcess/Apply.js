@@ -62,6 +62,9 @@ function getStepContent(step, applicantInfo, setApplicantInfo) {
 
 export default function SubmitApplication() {
   const classes = useStyles();
+
+  const requiredFields = ['email', 'password']
+
   const [activeStep, setActiveStep] = useState(0);
   const [applicantInfo, setApplicantInfo] = useState({});
 
