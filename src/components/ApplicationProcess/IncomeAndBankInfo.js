@@ -43,7 +43,7 @@ export default function PaymentForm(props) {
   }
 
   useEffect(() => {
-    handleVerifyAccountNumber(applicantInfo.bankAccountNumber, applicantInfo.verifyfBankAccountNumber)
+    handleVerifyAccountNumber(applicantInfo.bankAccountNumber, applicantInfo.verifyBankAccountNumber)
   });
 
   return (
@@ -126,7 +126,7 @@ export default function PaymentForm(props) {
             <Grid item xs={12} sm={6}>
               <TextField 
                 required 
-                id="recentCheck" 
+                id="additionalIncomeAmount" 
                 label="Additional Income Amount" 
                 fullWidth
                 error={!applicantInfo.additionalIncomeAmount && startedTypingRequiredFields.additionalIncomeAmount}
@@ -175,7 +175,7 @@ export default function PaymentForm(props) {
               label="Re-Enter Bank Account Number" 
               fullWidth 
               error={!accountNumberVerified}
-              onChange={(e) => {handleAddApplicantInformation("verifyfBankAccountNumber", e)}}
+              onChange={(e) => {handleAddApplicantInformation("verifyBankAccountNumber", e)}}
             />
           </Grid>
         </Grid>

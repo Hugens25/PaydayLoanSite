@@ -7,6 +7,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import red from '@material-ui/core/colors/red';
 import ApplicantForm from './ApplicantInfo';
 import BankForm from './IncomeAndBankInfo';
 import Review from './Review';
@@ -43,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  warning : {
+    color: red[500],
+  },
 }));
 
 const steps = ['Applicant Info', 'Income and Bank Details', 'Review and Submit'];
@@ -78,13 +83,25 @@ function getStepContent(step, applicantInfo, setApplicantInfo, startedTypingRequ
 export default function SubmitApplication() {
   const classes = useStyles();
 
+  let page1 = {'fields':['firstName', 'lastName', 'address1', 'city', 'state', 'zipCode', 'country', 'email', 'password', 'validatedPassword', 'ssn', 'validatedSSN', 'bday']}
+  let page2 = {'fields':['incomeType', 'payFrequency', 'recentCheck', 'additionalSourceOfIncome', 'employerName', 'routingNumber', 'bankAccountNumber', 'verifyBankAccountNumber']}
+  let requiredFields = [page1, page2]
 
   const [activeStep, setActiveStep] = useState(0);
   const [applicantInfo, setApplicantInfo] = useState({});
-  const [startedTypingRequiredFields, setStartedTypingRequiredFields] = useState({}); 
+  const [startedTypingRequiredFields, setStartedTypingRequiredFields] = useState({});
+  const [missingValues, setMissingValues] = useState(false);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    let fieldValues = requiredFields[activeStep].fields.map((field) => {
+      return applicantInfo[field] ? true : false
+    })
+    if(!fieldValues.includes(false)){
+      setMissingValues(false)
+      setActiveStep(activeStep + 1);
+    } else {
+      setMissingValues(true)
+    }
   };
 
   const handleBack = () => {
@@ -159,6 +176,9 @@ export default function SubmitApplication() {
                     {activeStep === steps.length - 1 ? 'Submit Application' : 'Next'}
                   </Button>
                 </div>
+                <Box className={classes.warning}>
+                {missingValues && <Typography>All required fields must be filled before continuing.</Typography>}
+                </Box>
               </React.Fragment>
             )}
           </React.Fragment>
