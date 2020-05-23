@@ -31,7 +31,6 @@ export default function AddressForm(props) {
     let info = { ...applicantInfo }
     info[key] = e.target.value
     setApplicantInfo(info)
-    
   }
 
   const handleValidatePassword = (e) => {
@@ -41,13 +40,6 @@ export default function AddressForm(props) {
   const handleValidateSSN = (e) => {
     setValidatedSSN(applicantInfo.ssn === e.target.value ? true : false)
   }
-
-  const handleMaskSSN = (e) => {
-    let maskValue = 'X'
-    setMaskedSSN(maskValue.repeat(applicantInfo.ssn.length))
-  }
-
-  useEffect(() => {console.log(applicantInfo)});
 
   return (
     <React.Fragment>

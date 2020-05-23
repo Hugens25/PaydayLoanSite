@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -62,8 +62,8 @@ function getStepContent(step, applicantInfo, setApplicantInfo) {
 
 export default function Checkout() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [applicantInfo, setApplicantInfo] = React.useState({});
+  const [activeStep, setActiveStep] = useState(0);
+  const [applicantInfo, setApplicantInfo] = useState({});
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -72,6 +72,8 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  useEffect(() => {console.log(applicantInfo)});
 
   return (
     <React.Fragment>

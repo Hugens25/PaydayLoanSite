@@ -4,8 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -26,25 +24,25 @@ export default function PaymentForm(props) {
 
   const {applicantInfo, setApplicantInfo} = props;
 
-  const [incomeType, setIncomeType] = React.useState('');
-
-  const handleIncomeTypeChange = (event) => {
-    setIncomeType(event.target.value);
-  };
-
-  const [payFrequency, setPayFrequency] = React.useState('');
-
-  const handlePayFrequencyChange = (event) => {
-    setPayFrequency(event.target.value);
-  };
-
   const [secondaryIncomeType, setsecondaryIncomeType] = React.useState('');
   const [hasSecondaryIncome, setHasSecondaryIncome] = React.useState('');
+  const [accountNumberVerified, setAccountNumberVerified] = React.useState(true);
 
-  const handleSecondaryIncomeTypeChange = (event) => {
-    setHasSecondaryIncome(event.target.value !== "N / A" ? true : false)
-    setsecondaryIncomeType(event.target.value);
+  const handleSecondaryIncomeTypeChange = (e) => {
+    setHasSecondaryIncome(e.target.value !== "N / A" ? true : false)
+    setsecondaryIncomeType(e.target.value);
+    handleAddApplicantInformation("additionalSourceOfIncome", e)
   };
+
+  const handleVerifyAccountNumber = (e) => {
+    setAccountNumberVerified(applicantInfo.bankAccountNumber === e.target.value ? true : false)
+  }
+
+  const handleAddApplicantInformation = (key, e) => {
+    let info = { ...applicantInfo }
+    info[key] = e.target.value
+    setApplicantInfo(info)
+  }
 
   return (
     <React.Fragment>
@@ -59,8 +57,8 @@ export default function PaymentForm(props) {
               <Select
                 labelId="sourceOfIncome"
                 id="sourceOfIncomeSelect"
-                value={incomeType}
-                onChange={handleIncomeTypeChange}
+                value={applicantInfo.incomeType}
+                onChange={(e) => {handleAddApplicantInformation("incomeType", e)}}
               >
                 <MenuItem value={"Employed"}>Employed</MenuItem>
                 <MenuItem value={"Self-Employed"}>Self-Employed</MenuItem>
@@ -76,8 +74,8 @@ export default function PaymentForm(props) {
                 <Select
                   labelId="payFrequency"
                   id="payFrequencySelect"
-                  value={payFrequency}
-                  onChange={handlePayFrequencyChange}
+                  value={applicantInfo.payFrequency}
+                  onChange={(e) => {handleAddApplicantInformation("payFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
                   <MenuItem value={"Every Week"}>Weekly</MenuItem>
@@ -88,16 +86,24 @@ export default function PaymentForm(props) {
               </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <TextField required id="recentCheck" label="What was the amount of your most recent check?" fullWidth />
+            <TextField 
+              required 
+              id="recentCheck" 
+              label="What was the amount of your most recent check?" 
+              fullWidth 
+              onChange={(e) => {handleAddApplicantInformation("recentCheck", e)}}
+              value={applicantInfo.recentCheck}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl className={classes.formControl}>
               <InputLabel id="additionalSourceOfIncome">Additional Source of Income</InputLabel>
               <Select
-                labelId="sourceOfIncome"
-                id="sourceOfIncomeSelect"
+                labelId="additionalSourceOfIncome"
+                id="additionalSourceOfIncomeSelect"
                 value={secondaryIncomeType}
-                onChange={handleSecondaryIncomeTypeChange}
+                onChange={handleSecondaryIncomeTypeChange} 
+                value={applicantInfo.additionalSourceOfIncome}
               >
                 <MenuItem value={"N / A"}>N / A</MenuItem>
                 <MenuItem value={"Second Job"}>Second Job</MenuItem>
@@ -110,30 +116,62 @@ export default function PaymentForm(props) {
               </Select>
             </FormControl>
           </Grid>
-          { hasSecondaryIncome && <Grid item xs={12} sm={6}>
-            <TextField required id="recentCheck" label="Additional Income Amount" fullWidth />
-          </Grid>}
+          { 
+            hasSecondaryIncome && 
+            <Grid item xs={12} sm={6}>
+              <TextField 
+                required 
+                id="recentCheck" 
+                label="Additional Income Amount" 
+                fullWidth
+                onChange={(e) => {handleAddApplicantInformation("additionalIncomeAmount", e)}}
+                // onChange={handleSecondaryIncomeTypeChange} 
+                value={applicantInfo.additionalIncomeAmount}
+                />
+            </Grid>
+          }
           <Grid item xs={12} sm={8}>
-            <TextField required id="employerName" label="Company or Employer Name:" fullWidth />
+            <TextField 
+              required 
+              id="employerName" 
+              label="Company or Employer Name:" 
+              fullWidth 
+              onChange={(e) => {handleAddApplicantInformation("employerName", e)}}  
+              value={applicantInfo.employerName}
+            />
           </Grid>
           <Grid item xs={12} sm={8}>
-            <TextField required id="routingNumber" label="Bank Routing Number" fullWidth />
+            <TextField 
+              required 
+              id="routingNumber" 
+              label="Bank Routing Number" 
+              fullWidth 
+              onChange={(e) => {handleAddApplicantInformation("routingNumber", e)}}
+              value={applicantInfo.routingNumber}
+            />
           </Grid>
           <Grid item xs={12} sm={8}>
-            <TextField required id="accountNumber" label="Bank Account Number" fullWidth />
+            <TextField 
+              required 
+              id="accountNumber" 
+              label="Bank Account Number" 
+              fullWidth 
+              onChange={(e) => {handleAddApplicantInformation("bankAccountNumber", e)}}
+              value={applicantInfo.bankAccountNumber}
+            />
           </Grid>
           <Grid item xs={12} sm={8}>
-            <TextField required id="verifyAccountNumber" label="Re-Enter Bank Account Number" fullWidth />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-              label="Remember credit card details for next time"
+            <TextField 
+              required 
+              id="verifyAccountNumber" 
+              label="Re-Enter Bank Account Number" 
+              fullWidth 
+              error={!accountNumberVerified}
+              onChange={(e) => {handleVerifyAccountNumber(e)}}
             />
           </Grid>
         </Grid>
       </Box>
-      
     </React.Fragment>
   );
 }
