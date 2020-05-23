@@ -51,10 +51,12 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Login() {
+export default function Login(props) {
 
   const classes = useStyles();
   const history = useHistory();
+
+  const {userInfo, setUserInfo} = props
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -72,6 +74,9 @@ export default function Login() {
 
   const handleValidateCredentials = (val) => {
     setValidateCredentials(val);
+    if(val) {
+      setUserInfo({...userInfo, "email":email});
+    }
   };
 
   const handleLoginAttempts = (val) => {

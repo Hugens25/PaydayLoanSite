@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,17 +35,43 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function HomePage() {
+export default function HomePage(props) {
 
-    const classes = useStyles();
-    return(
-        <React.Fragment>
-            <CssBaseline />
-            <div className={classes.layout}>
-                <Paper className={classes.paper} elevation={3}>
-                    <Typography variant="h5" gutterBottom>User's Home Page</Typography>
-                </Paper>
-            </div>
-        </React.Fragment>        
-    );
+  const {userInfo, setUserInfo} = props
+
+  const [userInfoIsFetched, setUserInfoIsFetched] = useState(false);
+
+  async function getUserInfo() {
+    let url = process.env.REACT_APP_GET_USER_URL
+    let payload = {'email':userInfo.email}
+    let data = await fetch(url, {method: 'POST', body: JSON.stringify(payload)})
+    let user = await data.json();
+    let firstName = user.user.firstName
+    let lastName = user.user.lastName
+    setUserInfo({...userInfo, "firstName":firstName, "lastName":lastName})
+  }
+
+  const handleUserInfoIsFetched = () => {
+    setUserInfoIsFetched(true)
+  }
+
+  useEffect(() => {
+    getUserInfo();
+    handleUserInfoIsFetched();
+  });
+  
+  const classes = useStyles();
+  return(
+      <React.Fragment>
+          <CssBaseline />
+          <div className={classes.layout}>
+              <Paper className={classes.paper} elevation={3}>
+                  {
+                    userInfoIsFetched &&
+                    <Typography variant="h5" gutterBottom>{`${userInfo.firstName || ''} ${userInfo.lastName || ''} Home Page`}</Typography>
+                  }
+              </Paper>
+          </div>
+      </React.Fragment>        
+  );
 }

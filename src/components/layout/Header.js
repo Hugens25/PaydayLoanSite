@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { makeStyles, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -51,6 +51,8 @@ const StyledIconButton = withStyles({
 export default function Navbar() {
   const classes = useStyles();
 
+  const [userInfo, setUserInfo] = useState({});
+
   return (
     <Router>
       <div className={classes.root}>
@@ -68,10 +70,10 @@ export default function Navbar() {
             </Toolbar>
           </AppBar>
         </ThemeProvider>
-        <Route exact path="/" component={LandingPage} />
-        <Route path="/apply" component={Apply}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/home" component={HomePage}/>
+        <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+        <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+        <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+        <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
       </div>
     </Router>
   );
