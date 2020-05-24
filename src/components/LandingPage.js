@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Slider from '@material-ui/core/Slider';
+
 
 const useStyles = makeStyles((theme) => ({
     layout: {
@@ -41,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     },
     textInputs: {
       marginTop: theme.spacing(3),
+    },
+    slider: {
+      marginTop: theme.spacing(5),
     }
   }));
 
@@ -58,9 +63,9 @@ export default function LandingPage(props) {
 
   async function handleSaveApplicantInfo() {
     let url = process.env.REACT_APP_SAVE_APPLICANT_URL
-    let payload = applicantInfo
-    let data = await fetch(url, {method: 'POST', body: JSON.stringify(payload)})
-    console.log(data);
+    let desiredLoanAmount = document.getElementById('desiredLoanAmount').innerText
+    let payload = {...applicantInfo, "desiredLoanAmount":desiredLoanAmount}
+    let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
   }
 
   return(
@@ -105,6 +110,17 @@ export default function LandingPage(props) {
                     autoComplete="email"
                     variant="outlined"
                     onChange={(e) => {handleAddApplicantInformation("email", e)}}
+                  />
+                  <Typography className={classes.textInputs} gutterBottom>
+                    Desired Loan Amount
+                  </Typography>
+                  <Slider
+                    id="desiredLoanAmount"
+                    className={classes.slider}
+                    defaultValue={20}
+                    step={2.5}
+                    scale={(num) => num * 20}
+                    valueLabelDisplay="on"
                   />
                   <Box className={classes.buttons}>
                     <Button className={classes.button} onClick={handleSaveApplicantInfo}>

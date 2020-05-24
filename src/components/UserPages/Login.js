@@ -114,8 +114,8 @@ export default function Login(props) {
   async function handleValidation() {
     let url = process.env.REACT_APP_VALIDATE_USER_URL
     let payload = {'email':email, 'password_hash':password}
-    let data = await fetch(url, {method: 'POST', body: JSON.stringify(payload)})
-    handleValidateCredentials(data.status === 200 ? true : false)
+    let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
+    handleValidateCredentials(data.validated)
     handleLoginAttempts(loginAttempts);
   }
 

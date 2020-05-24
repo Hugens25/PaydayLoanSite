@@ -130,10 +130,13 @@ export default function Apply(props) {
   useEffect(() => {
     if (activeStep === steps.length) {
       let url = process.env.REACT_APP_ADD_USER_URL
-      let payload = applicantInfo
+      let now = new Date(); let mm = now.getUTCMonth() + 1; let dd = now.getUTCDate(); let yy = now.getUTCFullYear(); 
+      let hh = now.getUTCHours(); let min = now.getUTCMinutes(); let ss = now.getUTCSeconds();
+      
+      let payload = {...applicantInfo, "dateOfApplication": `${mm}-${dd}-${yy} ${hh}:${min}:${ss}`}
       fetch(url, {method: 'POST', body: JSON.stringify(payload)})
-      .then((data) => {console.log(data)})
-      .catch((err) => {console.log(err)})
+      .then((data) => null)
+      .catch((err) => null)
     }
   });
 

@@ -44,10 +44,9 @@ export default function HomePage(props) {
   async function getUserInfo() {
     let url = process.env.REACT_APP_GET_USER_URL
     let payload = {'email':userInfo.email}
-    let data = await fetch(url, {method: 'POST', body: JSON.stringify(payload)})
-    let user = await data.json();
-    let firstName = user.user.firstName
-    let lastName = user.user.lastName
+    let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
+    let firstName = data.user.firstName
+    let lastName = data.user.lastName
     setUserInfo({...userInfo, "firstName":firstName, "lastName":lastName})
   }
 
