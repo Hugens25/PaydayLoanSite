@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -95,6 +96,9 @@ export default function PaymentForm(props) {
               id="recentCheck" 
               label="What was the amount of your most recent check?" 
               fullWidth 
+              InputProps={{
+                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+              }}
               error={!applicantInfo.recentCheck && startedTypingRequiredFields.recentCheck}
               onChange={(e) => {handleAddApplicantInformation("recentCheck", e)}}
               value={applicantInfo.recentCheck}
@@ -140,7 +144,7 @@ export default function PaymentForm(props) {
             <TextField 
               helperText={!applicantInfo.employerName ? "*required" : ""} 
               id="employerName" 
-              label="Company or Employer Name:" 
+              label="Company or Employer Name" 
               fullWidth 
               onChange={(e) => {handleAddApplicantInformation("employerName", e)}}  
               error={!applicantInfo.employerName && startedTypingRequiredFields.employerName}
