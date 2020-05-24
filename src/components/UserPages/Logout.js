@@ -46,11 +46,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Logout(props) {
 
-  const {userInfo, setUserInfo} = props
+  const {userInfo, setUserInfo, applicantInfo, setApplicantInfo } = props
   const [open, setOpen] = useState(true);
 
   const handleLogOut = () => {
-    setUserInfo({...userInfo, "isLoggedIn":false})
+    setUserInfo({"isLoggedIn":false})
+    setApplicantInfo({})
   }
 
   useEffect(() => {
@@ -80,7 +81,7 @@ export default function Logout(props) {
           Successfully Logged Out.
         </Alert>
       </Collapse>
-      <LandingPage />
+      <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />
       {!open && <Redirect to="/" />}
     </div> 
   );

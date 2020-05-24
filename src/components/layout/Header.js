@@ -52,6 +52,7 @@ export default function Navbar() {
   const classes = useStyles();
 
   const [userInfo, setUserInfo] = useState({'isLoggedIn':false});
+  const [applicantInfo, setApplicantInfo] = useState({});
 
   return (
     <Router>
@@ -71,10 +72,10 @@ export default function Navbar() {
             </Toolbar>
           </AppBar>
         </ThemeProvider>
-        <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} logout={false} />}/>
-        <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+        <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
+        <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
         <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} />}/>
-        <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} logout={true} />}/>
+        <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
         <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
       </div>
     </Router>
