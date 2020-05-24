@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -47,16 +47,15 @@ export default function PaymentForm(props) {
   });
 
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Income and Direct Deposit Information
-      </Typography>
+    <Fragment>
+      <Typography variant="h6" gutterBottom>Income and Direct Deposit Information</Typography>
       <Box mt={5}>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <FormControl className={classes.formControl}>
               <InputLabel id="sourceOfIncome">Primary Income</InputLabel>
               <Select
+                helperText={!applicantInfo.incomeType ? "*required" : ""}
                 labelId="sourceOfIncome"
                 id="sourceOfIncomeSelect"
                 value={applicantInfo.incomeType}
@@ -75,6 +74,7 @@ export default function PaymentForm(props) {
             <FormControl className={classes.formControl}>
               <InputLabel id="payFrequency">How often are you paid?</InputLabel>
                 <Select
+                  helperText={!applicantInfo.payFrequency ? "*required" : ""}
                   labelId="payFrequency"
                   id="payFrequencySelect"
                   value={applicantInfo.payFrequency}
@@ -91,7 +91,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12}>
             <TextField 
-              required 
+              helperText={!applicantInfo.recentCheck ? "*required" : ""} 
               id="recentCheck" 
               label="What was the amount of your most recent check?" 
               fullWidth 
@@ -104,6 +104,7 @@ export default function PaymentForm(props) {
             <FormControl className={classes.formControl}>
               <InputLabel id="additionalSourceOfIncome">Additional Source of Income</InputLabel>
               <Select
+                helperText={!applicantInfo.additionalSourceOfIncome ? "*required" : ""}
                 labelId="additionalSourceOfIncome"
                 id="additionalSourceOfIncomeSelect"
                 value={secondaryIncomeType}
@@ -125,7 +126,7 @@ export default function PaymentForm(props) {
             hasSecondaryIncome && 
             <Grid item xs={12} sm={6}>
               <TextField 
-                required 
+                helperText={!applicantInfo.additionalIncomeAmount ? "*required" : ""} 
                 id="additionalIncomeAmount" 
                 label="Additional Income Amount" 
                 fullWidth
@@ -137,7 +138,7 @@ export default function PaymentForm(props) {
           }
           <Grid item xs={12} sm={8}>
             <TextField 
-              required 
+              helperText={!applicantInfo.employerName ? "*required" : ""} 
               id="employerName" 
               label="Company or Employer Name:" 
               fullWidth 
@@ -148,7 +149,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <TextField 
-              required 
+              helperText={!applicantInfo.routingNumber ? "*required" : ""} 
               id="routingNumber" 
               label="Bank Routing Number" 
               fullWidth 
@@ -159,7 +160,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <TextField 
-              required 
+              helperText={!applicantInfo.bankAccountNumber ? "*required" : ""} 
               id="accountNumber" 
               label="Bank Account Number" 
               fullWidth 
@@ -170,7 +171,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <TextField 
-              required 
+              helperText={!applicantInfo.verifyBankAccountNumber ? "*required" : ""} 
               id="verifyAccountNumber" 
               label="Re-Enter Bank Account Number" 
               fullWidth 
@@ -180,6 +181,6 @@ export default function PaymentForm(props) {
           </Grid>
         </Grid>
       </Box>
-    </React.Fragment>
+    </Fragment>
   );
 }

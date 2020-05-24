@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -137,7 +137,7 @@ export default function SubmitApplication() {
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper} elevation={3}>
@@ -151,9 +151,9 @@ export default function SubmitApplication() {
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
+          <Fragment>
             {activeStep === steps.length ? (
-              <React.Fragment>
+              <Fragment>
                 <Typography variant="h5" gutterBottom>
                   You're On Your Way to a Brighter Future!
                 </Typography>
@@ -162,9 +162,9 @@ export default function SubmitApplication() {
                   Should additional information be required, we will reach out to you via the contact
                   information provided on this application.
                 </Typography>
-              </React.Fragment>
+              </Fragment>
             ) : (
-              <React.Fragment>
+              <Fragment>
                 {getStepContent(activeStep, applicantInfo, setApplicantInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
@@ -184,11 +184,11 @@ export default function SubmitApplication() {
                 <Box className={classes.warning}>
                 {missingValues && <Typography>All required fields must be filled before continuing.</Typography>}
                 </Box>
-              </React.Fragment>
+              </Fragment>
             )}
-          </React.Fragment>
+          </Fragment>
         </Paper>
       </main>
-    </React.Fragment>
+    </Fragment>
   );
 }

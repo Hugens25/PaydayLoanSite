@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -120,7 +120,7 @@ export default function Login(props) {
   }
 
     return(
-      <React.Fragment>
+      <Fragment>
         <CssBaseline />
         <div className={classes.layout}>
           <Paper className={classes.paper} elevation={3}>
@@ -161,6 +161,6 @@ export default function Login(props) {
               </Box>
           </Paper>
         </div>
-      </React.Fragment>
+      </Fragment>
     );
 }

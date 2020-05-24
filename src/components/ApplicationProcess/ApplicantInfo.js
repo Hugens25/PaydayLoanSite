@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -42,14 +42,14 @@ export default function AddressForm(props) {
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Typography variant="h6" gutterBottom>
         Tell Us About Yourself
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            helperText={!applicantInfo.firstName ? "*required" : ""}
             id="firstName"
             name="firstName"
             label="First name"
@@ -62,7 +62,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            helperText={!applicantInfo.lastName ? "*required" : ""}
             id="lastName"
             name="lastName"
             label="Last name"
@@ -75,7 +75,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12}>
           <TextField
-            required
+            helperText={!applicantInfo.address1 ? "*required" : ""}
             id="address1"
             name="address1"
             label="Address line 1"
@@ -99,7 +99,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            helperText={!applicantInfo.city ? "*required" : ""}
             id="city"
             name="city"
             label="City"
@@ -112,6 +112,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField 
+            helperText={!applicantInfo.state ? "*required" : ""}
             id="state" 
             name="state" 
             label="State/Province/Region" 
@@ -123,7 +124,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            helperText={!applicantInfo.zipCode ? "*required" : ""}
             id="zip"
             name="zip"
             label="Zip / Postal Code"
@@ -136,7 +137,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            helperText={!applicantInfo.country ? "*required" : ""}
             id="country"
             name="country"
             label="Country"
@@ -149,7 +150,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12}>
           <TextField
-            required
+            helperText={!applicantInfo.email ? "*required" : ""}
             id="email"
             name="email"
             label="Email"
@@ -162,7 +163,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={6}>
           <TextField
-            required
+            helperText={!applicantInfo.password ? "*required" : ""}
             id="password"
             name="password"
             label="Choose a Password"
@@ -177,7 +178,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={6}>
           <TextField
-            required
+            helperText={!applicantInfo.validatedPassword ? "*required" : ""}
             id="validatePassword"
             name="validatePassword"
             label="Re-Enter Password"
@@ -190,7 +191,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            helperText={!applicantInfo.ssn ? "*required" : ""}
             id="SSN"
             name="SSN"
             label="Social Security Number"
@@ -205,7 +206,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            helperText={!applicantInfo.validatedSSN ? "*required" : ""}
             id="verifySSN"
             name="verifySSN"
             label="Re-Enter Social Security Number"
@@ -218,6 +219,7 @@ export default function AddressForm(props) {
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid item xs={12} sm={12}>
             <KeyboardDatePicker
+              helperText={!applicantInfo.bday ? "*required" : ""}
               disableToolbar
               variant="inline"
               format="MM/dd/yyyy"
@@ -233,6 +235,6 @@ export default function AddressForm(props) {
           </Grid>
         </MuiPickersUtilsProvider>
       </Grid>
-    </React.Fragment>
+    </Fragment>
   );
 }

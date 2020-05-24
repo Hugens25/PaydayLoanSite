@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +15,7 @@ export default function Review(props) {
   const {applicantInfo, setApplicantInfo} = props;
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Typography align="left" variant="h6" gutterBottom>Application Summary</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
@@ -44,6 +44,6 @@ export default function Review(props) {
         
         </Grid>
       </Grid>
-    </React.Fragment>
+    </Fragment>
   );
 }
