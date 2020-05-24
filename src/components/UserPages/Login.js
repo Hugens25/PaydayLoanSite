@@ -129,7 +129,7 @@ export default function Login(props) {
                   <Grid container spacing={4}>
                       <Grid item xs={12} sm={12}>
                           <TextField 
-                            required={true}
+                            helperText={!email ? "*required" : ""}
                             id="email" 
                             label="Email" 
                             fullWidth 
@@ -140,7 +140,7 @@ export default function Login(props) {
                       </Grid>
                       <Grid item xs={12} sm={12}>
                           <TextField 
-                            required={true}
+                            helperText={!password ? "*required" : ""}
                             id="password" 
                             label="Password" 
                             type="password" 
