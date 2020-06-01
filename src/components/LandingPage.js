@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -53,19 +53,41 @@ export default function LandingPage(props) {
 
   const {applicantInfo, setApplicantInfo} = props;
 
+  const [startedTypingField, setStartedTypingField] = useState({});
+
   const classes = useStyles();
 
   const handleAddApplicantInformation = (key, e) => {
+    handleStartedTypingField(key)
+
     let info = { ...applicantInfo }
     info[key] = e.target.value
+    
     setApplicantInfo(info)
   }
 
+  const handleStartedTypingField = (key) => {
+    let fields = { ...startedTypingField }
+    fields[key] = true
+    setStartedTypingField(fields)
+  }
+
+  const checkAllRequiredFieldsProvided = () => {
+    return applicantInfo.firstName && applicantInfo.lastName && applicantInfo.email
+  }
+
+  const setStartedTypingForAllFields = () => {
+    setStartedTypingField({'firstName':true, 'lastName':true, 'email':true})
+  }
+
   async function handleSaveApplicantInfo() {
-    let url = process.env.REACT_APP_SAVE_APPLICANT_URL
-    let desiredLoanAmount = document.getElementById('desiredLoanAmount').innerText
-    let payload = {...applicantInfo, "desiredLoanAmount":desiredLoanAmount}
-    let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
+    setStartedTypingForAllFields()
+    if (checkAllRequiredFieldsProvided){
+      let url = process.env.REACT_APP_SAVE_APPLICANT_URL
+      let desiredLoanAmount = document.getElementById('desiredLoanAmount').innerText
+      let payload = {...applicantInfo, "desiredLoanAmount":desiredLoanAmount}
+      let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
+    }
   }
 
   return(
@@ -83,32 +105,41 @@ export default function LandingPage(props) {
                   <Typography variant="h6" gutterBottom>Start Your Application!</Typography>
                   <TextField
                     className={classes.textInputs}
+                    helperText={!applicantInfo.firstName && startedTypingField.firstName ? "*required" : ""}
                     id="firstName"
                     name="firstName"
                     label="First Name"
                     fullWidth
                     autoComplete="given-name"
                     variant="outlined"
+                    value={applicantInfo.firstName}
+                    error={!applicantInfo.firstName && startedTypingField.firstName}
                     onChange={(e) => {handleAddApplicantInformation("firstName", e)}}
                   />
                   <TextField
                     className={classes.textInputs}
+                    helperText={!applicantInfo.lastName && startedTypingField.lastName ? "*required" : ""}
                     id="lastName"
                     name="lastName"
                     label="Last Name"
                     fullWidth
                     autoComplete="family-name"
                     variant="outlined"
+                    value={applicantInfo.lastName}
+                    error={!applicantInfo.lastName && startedTypingField.lastName}
                     onChange={(e) => {handleAddApplicantInformation("lastName", e)}}
                   />
                   <TextField
                     className={classes.textInputs}
+                    helperText={!applicantInfo.email && startedTypingField.email ? "*required" : ""}
                     id="email"
                     name="email"
                     label="Email"
                     fullWidth
                     autoComplete="email"
                     variant="outlined"
+                    value={applicantInfo.email}
+                    error={!applicantInfo.email && startedTypingField.email}
                     onChange={(e) => {handleAddApplicantInformation("email", e)}}
                   />
                   <Typography className={classes.textInputs} gutterBottom>
@@ -124,7 +155,7 @@ export default function LandingPage(props) {
                   />
                   <Box className={classes.buttons}>
                     <Button className={classes.button} onClick={handleSaveApplicantInfo}>
-                      <Link style={{ textDecoration: 'none' }} to="/apply">Check My Options!</Link>
+                      <Link style={{ textDecoration: 'none' }} to={checkAllRequiredFieldsProvided() ? "/apply" : ""}>Check My Options!</Link>
                     </Button>
                   </Box>
                 </Paper>
