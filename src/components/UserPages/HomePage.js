@@ -1,29 +1,29 @@
 import React, { useEffect, useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Settings from './Settings';
 
 const useStyles = makeStyles((theme) => ({
     layout: {
-      width: 'auto',
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-        width: 600,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      },
+      width: '98vw',
+      marginLeft: 'auto',
+      marginRight: 'auto',
     },
     paper: {
-      marginTop: theme.spacing(3),
-      marginBottom: theme.spacing(3),
+      width: '80vw',
+      height: '90vh',
+      margin: 'auto',
       padding: theme.spacing(2),
-      [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-        marginTop: theme.spacing(6),
-        marginBottom: theme.spacing(6),
-        padding: theme.spacing(3),
-      },
+    },
+    container: {
+      marginTop: theme.spacing(2),
+      display: 'flex',
+      justifyContent: 'space-between'
     },
     buttons: {
       display: 'flex',
@@ -44,13 +44,14 @@ export default function HomePage(props) {
   async function getUserInfo() {
     let url = process.env.REACT_APP_GET_USER_URL
     let payload = {'email':userInfo.email}
-    let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
-    let firstName = data.user.firstName
-    let lastName = data.user.lastName
-    setUserInfo({...userInfo, "firstName":firstName, "lastName":lastName})
+    // let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
+    // let firstName = data.user.firstName
+    // let lastName = data.user.lastName
+    // setUserInfo({...userInfo, "firstName":firstName, "lastName":lastName})
   }
 
   const handleUserInfoIsFetched = () => {
+    // setUserInfo({firstName: "Hugens", lastName: "Ulysse"})
     setUserInfoIsFetched(true)
   }
 
@@ -64,12 +65,16 @@ export default function HomePage(props) {
       <Fragment>
           <CssBaseline />
           <div className={classes.layout}>
-              <Paper className={classes.paper} elevation={3}>
-                  {
-                    userInfoIsFetched &&
-                    <Typography variant="h5" gutterBottom>{`${userInfo.firstName || ''} ${userInfo.lastName || ''} Home Page`}</Typography>
-                  }
-              </Paper>
+              <Box className={classes.container}>
+                  <Paper className={classes.paper} elevation={3}>
+                      <Typography variant="h5" gutterBottom>My Account</Typography>
+                      {
+                        userInfoIsFetched &&
+                        <Typography >{`Welcome${userInfo.firstName ? ', '+userInfo.firstName : '' }${userInfo.lastName ? ' '+userInfo.lastName : ''}!`}</Typography>
+                      }
+                      <Button><Link to='/settings'>Settings</Link></Button>
+                  </Paper>
+                </Box>
           </div>
       </Fragment>        
   );

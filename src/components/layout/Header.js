@@ -14,6 +14,7 @@ import Logout from '../UserPages/Logout';
 import Apply from '../ApplicationProcess/Apply';
 import LandingPage from '../LandingPage';
 import HomePage from '../UserPages/HomePage';
+import Settings from '../UserPages/Settings';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,6 +78,7 @@ export default function Navbar() {
         <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} />}/>
         <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
         <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+        <Route path="/settings" render={(props) => <Settings userInfo={userInfo} setUserInfo={setUserInfo} />}/>
       </div>
     </Router>
   );

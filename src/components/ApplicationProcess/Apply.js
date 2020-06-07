@@ -12,6 +12,7 @@ import red from '@material-ui/core/colors/red';
 import ApplicantForm from './ApplicantInfo';
 import BankForm from './IncomeAndBankInfo';
 import Review from './Review';
+import ProgressBar from '../misc/ProgressBar';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -92,6 +93,7 @@ export default function Apply(props) {
   const [activeStep, setActiveStep] = useState(0);
   const [startedTypingRequiredFields, setStartedTypingRequiredFields] = useState({});
   const [missingValues, setMissingValues] = useState(false);
+  const [processingComplete, setProcessingComplete] = useState(false);
 
   const handleNext = () => {
     // if (activeStep < 2) {
@@ -129,6 +131,7 @@ export default function Apply(props) {
 
   useEffect(() => {
     if (activeStep === steps.length) {
+      console.log(processingComplete)
       let url = process.env.REACT_APP_ADD_USER_URL
       let now = new Date(); let mm = now.getUTCMonth() + 1; let dd = now.getUTCDate(); let yy = now.getUTCFullYear(); 
       let hh = now.getUTCHours(); let min = now.getUTCMinutes(); let ss = now.getUTCSeconds();
@@ -157,7 +160,7 @@ export default function Apply(props) {
           </Stepper>
           <Fragment>
             {activeStep === steps.length ? (
-              <Fragment>
+              !processingComplete ? (<ProgressBar processingComplete={processingComplete} setProcessingComplete={setProcessingComplete}/>) : (<Fragment>
                 <Typography variant="h5" gutterBottom>
                   You're On Your Way to a Brighter Future!
                 </Typography>
@@ -166,7 +169,7 @@ export default function Apply(props) {
                   Should additional information be required, we will reach out to you via the contact
                   information provided on this application.
                 </Typography>
-              </Fragment>
+              </Fragment>)
             ) : (
               <Fragment>
                 {getStepContent(activeStep, applicantInfo, setApplicantInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation)}
