@@ -19,7 +19,7 @@ export default function LinearBuffer(props) {
   const progressRef = useRef(() => {});
   useEffect(() => {
     progressRef.current = () => {
-      if (progress > 100) {
+      if (progress >= 95) {
         setProcessingComplete(true);
       } else {
         const diff = Math.random() * 10;
