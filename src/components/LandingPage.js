@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Slider from '@material-ui/core/Slider';
+import Spinner from './misc/Spinner';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,15 +54,17 @@ export default function LandingPage(props) {
 
   const {applicantInfo, setApplicantInfo} = props;
 
+  const history = useHistory();
+
   const [startedTypingField, setStartedTypingField] = useState({});
+  const [submitingApplicantInfo, setSubmitingApplicantInfo] = useState(false);
 
   const classes = useStyles();
 
-  const handleAddApplicantInformation = (key, e) => {
+  const handleAddApplicantInformation = (key, value) => {
     handleStartedTypingField(key)
-
     let info = { ...applicantInfo }
-    info[key] = e.target.value
+    info[key] = value
     
     setApplicantInfo(info)
   }
@@ -83,10 +86,11 @@ export default function LandingPage(props) {
   async function handleSaveApplicantInfo() {
     setStartedTypingForAllFields()
     if (checkAllRequiredFieldsProvided){
+      setSubmitingApplicantInfo(true)
       let url = process.env.REACT_APP_SAVE_APPLICANT_URL
-      let desiredLoanAmount = document.getElementById('desiredLoanAmount').innerText
-      let payload = {...applicantInfo, "desiredLoanAmount":desiredLoanAmount}
-      let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
+      let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(applicantInfo)})).json()
+      setSubmitingApplicantInfo(false)
+      history.push("/apply");
     }
   }
 
@@ -114,7 +118,7 @@ export default function LandingPage(props) {
                     variant="outlined"
                     value={applicantInfo.firstName}
                     error={!applicantInfo.firstName && startedTypingField.firstName}
-                    onChange={(e) => {handleAddApplicantInformation("firstName", e)}}
+                    onChange={(e) => {handleAddApplicantInformation("firstName", e.target.value)}}
                   />
                   <TextField
                     className={classes.textInputs}
@@ -127,7 +131,7 @@ export default function LandingPage(props) {
                     variant="outlined"
                     value={applicantInfo.lastName}
                     error={!applicantInfo.lastName && startedTypingField.lastName}
-                    onChange={(e) => {handleAddApplicantInformation("lastName", e)}}
+                    onChange={(e) => {handleAddApplicantInformation("lastName", e.target.value)}}
                   />
                   <TextField
                     className={classes.textInputs}
@@ -140,7 +144,7 @@ export default function LandingPage(props) {
                     variant="outlined"
                     value={applicantInfo.email}
                     error={!applicantInfo.email && startedTypingField.email}
-                    onChange={(e) => {handleAddApplicantInformation("email", e)}}
+                    onChange={(e) => {handleAddApplicantInformation("email", e.target.value)}}
                   />
                   <Typography className={classes.textInputs} gutterBottom>
                     Desired Loan Amount
@@ -148,14 +152,15 @@ export default function LandingPage(props) {
                   <Slider
                     id="desiredLoanAmount"
                     className={classes.slider}
-                    defaultValue={20}
+                    defaultValue={applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount / 20 : 20}
                     step={2.5}
                     scale={(num) => num * 20}
                     valueLabelDisplay="on"
+                    onChange={(e) => {handleAddApplicantInformation("desiredLoanAmount", parseInt(e.target.innerHTML))}}
                   />
                   <Box className={classes.buttons}>
                     <Button className={classes.button} onClick={handleSaveApplicantInfo}>
-                      <Link style={{ textDecoration: 'none' }} to={checkAllRequiredFieldsProvided() ? "/apply" : ""}>Check My Options!</Link>
+                      {submitingApplicantInfo ? <Spinner size={'2rem'}/> : "Check My Options!"}
                     </Button>
                   </Box>
                 </Paper>

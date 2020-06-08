@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Spinner from '../misc/Spinner';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 
@@ -66,6 +67,7 @@ export default function Login(props) {
   const [loginAttempts, setLoginAttempts] = useState(1);
   const [maximumAttemptsReached, setMaximumAttemptsReached] = useState(false);
   const [requiredValuesProvided, setRequiredValuesProvided] = useState(false);
+  const [credentialValidationInProgress, setCredentialValidiationInProgress] = useState(false);
 
   const handleEmaileEntry = (e) => {
     setStartedTypingEmail(true)
@@ -112,11 +114,13 @@ export default function Login(props) {
   });
 
   async function handleValidation() {
+    setCredentialValidiationInProgress(true);
     let url = process.env.REACT_APP_VALIDATE_USER_URL
     let payload = {'email':email, 'password_hash':password}
     let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
     handleValidateCredentials(data.validated)
     handleLoginAttempts(loginAttempts);
+    setCredentialValidiationInProgress(false);
   }
 
     return(
@@ -157,7 +161,7 @@ export default function Login(props) {
                 }
               </Box>
               <Box className={classes.buttons}>
-                  <StyledButton className={classes.button} onClick={!maximumAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>
+                  {credentialValidationInProgress ? <Spinner size={'2rem'}/> : <StyledButton className={classes.button} onClick={!maximumAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>}
               </Box>
           </Paper>
         </div>

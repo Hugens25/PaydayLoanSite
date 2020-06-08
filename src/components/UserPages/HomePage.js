@@ -51,14 +51,15 @@ export default function HomePage(props) {
   async function getUserInfo() {
     let url = process.env.REACT_APP_GET_USER_URL
     let payload = {'email':userInfo.email}
-    // let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
-    // let firstName = data.user.firstName
-    // let lastName = data.user.lastName
-    // setUserInfo({...userInfo, "firstName":firstName, "lastName":lastName})
+    let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
+    let firstName = data.user.firstName
+    let lastName = data.user.lastName
+    setUserInfo({...userInfo, "firstName":firstName, "lastName":lastName})
   }
 
   const handleUserInfoIsFetched = () => {
-    setUserInfoIsFetched(true)
+    setTimeout(() => setUserInfoIsFetched(true), 2000)
+    // setUserInfoIsFetched(true)
   }
 
   useEffect(() => {
@@ -73,7 +74,7 @@ export default function HomePage(props) {
           <div className={classes.layout}>
               <Box className={classes.container}>
                   <Paper className={classes.paper} elevation={3}>
-                      {!userInfoIsFetched ? (<Box className={classes.spinnerContainer}><Spinner /></Box>) : 
+                      {!userInfoIsFetched ? (<Box className={classes.spinnerContainer}><Spinner size={'5rem'}/></Box>) : 
                         (
                           <Box>
                             <Typography variant="h5" gutterBottom>My Account</Typography>
