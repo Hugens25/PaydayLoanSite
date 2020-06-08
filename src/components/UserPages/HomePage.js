@@ -58,12 +58,11 @@ export default function HomePage(props) {
   }
 
   const handleUserInfoIsFetched = () => {
-    setTimeout(() => setUserInfoIsFetched(true), 2000)
-    // setUserInfoIsFetched(true)
+    setUserInfoIsFetched(true)
   }
 
   useEffect(() => {
-    getUserInfo();
+    if(!userInfo.firstName && !userInfo.lastName){getUserInfo()}
     handleUserInfoIsFetched();
   });
   
