@@ -115,7 +115,8 @@ export default function Login(props) {
 
   async function handleValidation() {
     setCredentialValidiationInProgress(true);
-    let url = process.env.REACT_APP_VALIDATE_USER_URL
+    // let url = process.env.REACT_APP_VALIDATE_USER_URL
+    let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/validate-user'
     let payload = {'email':email, 'password_hash':password}
     let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
     handleValidateCredentials(data.validated)

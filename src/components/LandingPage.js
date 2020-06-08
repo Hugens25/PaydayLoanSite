@@ -87,7 +87,8 @@ export default function LandingPage(props) {
     setStartedTypingForAllFields()
     if (checkAllRequiredFieldsProvided){
       setSubmitingApplicantInfo(true)
-      let url = process.env.REACT_APP_SAVE_APPLICANT_URL
+      // let url = process.env.REACT_APP_SAVE_APPLICANT_URL
+      let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/save-applicant'
       let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(applicantInfo)})).json()
       setSubmitingApplicantInfo(false)
       history.push("/apply");
