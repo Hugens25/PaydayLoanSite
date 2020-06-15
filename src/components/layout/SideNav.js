@@ -8,8 +8,14 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import EmailIcon from '@material-ui/icons/Email';
+import DescriptionIcon from '@material-ui/icons/Description';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import PhoneIcon from '@material-ui/icons/Phone';
+import SettingsIcon from '@material-ui/icons/Settings';
+import FolderIcon from '@material-ui/icons/Folder';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
 const drawerWidth = 240;
 
@@ -34,10 +40,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function NavListItem(props){
+    const {item} = props;
+    return (
+        <ListItem button key={item.text}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+        </ListItem>
+    )
+}
+
 export default function PersistentDrawerLeft(props) {
   const classes = useStyles();
 
-  const {isHambugerMenuOpen, setIsHamburgerMenuOpen} = props;
+  const {isHambugerMenuOpen, setIsHamburgerMenuOpen, userInfo} = props;
 
   return (
     <div className={classes.root}>
@@ -52,25 +68,27 @@ export default function PersistentDrawerLeft(props) {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={() => {setIsHamburgerMenuOpen(!isHambugerMenuOpen)}}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon /> <p style={{fontSize: '0.75rem'}}>CLOSE</p>
           </IconButton>
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
+          {[
+              {text:'Account Summary', icon: <MonetizationOnIcon />, needsLogin:true}, 
+              {text:'Account Details', icon: <LibraryBooksIcon />, needsLogin:true},
+              {text:'Messages', icon: <EmailIcon />, needsLogin:true}, 
+              {text:'Documents', icon:<DescriptionIcon />, needsLogin:true}, 
+              {text:'Contact Us', icon:<PhoneIcon />, needsLogin:false}, 
+              {text:'FAQs', icon: <LiveHelpIcon />, needsLogin:false}, 
+              {text:'Settings', icon:<SettingsIcon />, needsLogin:true}
+            ].map((item) => (
+                item.needsLogin === true ? 
+                    userInfo.isLoggedIn === true ?
+                        <NavListItem item={item}/>
+                    :
+                        null
+                :
+                    <NavListItem item={item}/>
           ))}
         </List>
       </Drawer>

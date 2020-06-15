@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
@@ -41,17 +41,27 @@ const useStyles = makeStyles((theme) => ({
         '& > * + *': {
           marginTop: theme.spacing(2),
         },
+        // display: 'flex',
+        // justifyContent: 'center'
+
       },
   }));
 
 export default function Logout(props) {
 
-  const {userInfo, setUserInfo, applicantInfo, setApplicantInfo } = props
+  const {userInfo, setUserInfo, applicantInfo, setApplicantInfo, setLoginAttempts } = props
   const [open, setOpen] = useState(true);
+  const history = useHistory();
 
   const handleLogOut = () => {
     setUserInfo({"isLoggedIn":false})
     setApplicantInfo({})
+    setLoginAttempts(1)  
+    handleRemoveLogOutBanner()
+  }
+
+  const handleRemoveLogOutBanner = () => {
+    setTimeout(() => {setOpen(false); history.push('/')}, 4000)
   }
 
   useEffect(() => {
@@ -78,11 +88,11 @@ export default function Logout(props) {
             </IconButton>
           }
         >
-          Successfully Logged Out.
+          <div style={{width:'90vw'}}>Successfully Logged Out. You will be redirected to the home page within 5 seconds.</div>
         </Alert>
       </Collapse>
-      <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />
-      {!open && <Redirect to="/" />}
+      {/* <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts} /> */}
+      {/* {!open && <Redirect to="/" />} */}
     </div> 
   );
 }
