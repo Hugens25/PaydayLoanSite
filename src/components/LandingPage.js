@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -52,6 +52,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LandingPage(props) {
 
+  const defaultLoanAmount = 400;
+
   const {applicantInfo, setApplicantInfo} = props;
 
   const history = useHistory();
@@ -87,7 +89,9 @@ export default function LandingPage(props) {
     setStartedTypingForAllFields()
     if (checkAllRequiredFieldsProvided){
       setSubmitingApplicantInfo(true)
-      let url = process.env.REACT_APP_SAVE_APPLICANT_URL
+      // let url = process.env.REACT_APP_SAVE_APPLICANT_URL
+      let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/save-applicant'
+      if(!applicantInfo.desiredLoanAmount){handleAddApplicantInformation('desiredLoanAmount', defaultLoanAmount)}
       let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(applicantInfo)})).json()
       setSubmitingApplicantInfo(false)
       history.push("/apply");
@@ -151,12 +155,13 @@ export default function LandingPage(props) {
                   </Typography>
                   <Slider
                     id="desiredLoanAmount"
+                    name="desiredLoanAmount"
                     className={classes.slider}
-                    defaultValue={applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount / 20 : 20}
+                    defaultValue={applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount / 20 : defaultLoanAmount / 20}
                     step={2.5}
                     scale={(num) => num * 20}
                     valueLabelDisplay="on"
-                    onChange={(e) => {handleAddApplicantInformation("desiredLoanAmount", parseInt(e.target.innerHTML))}}
+                    onChange={(e) => {handleAddApplicantInformation("desiredLoanAmount", parseFloat(document.getElementsByName('desiredLoanAmount')[0].value) * 20)}}
                   />
                   <Box className={classes.buttons}>
                     <Button className={classes.button} onClick={handleSaveApplicantInfo}>

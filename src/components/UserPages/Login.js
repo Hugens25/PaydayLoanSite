@@ -57,15 +57,13 @@ export default function Login(props) {
   const classes = useStyles();
   const history = useHistory();
 
-  const {userInfo, setUserInfo} = props
+  const {userInfo, setUserInfo, maximumLoginAttemptsReached, setMaximumLoginAttemptsReached, loginAttempts, setLoginAttempts} = props
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [startedTypingEmail, setStartedTypingEmail] = useState(false);
   const [startedTypingPassword, setStartedTypingPassword] = useState(false);
   const [validateCredentials, setValidateCredentials] = useState(false);
-  const [loginAttempts, setLoginAttempts] = useState(1);
-  const [maximumAttemptsReached, setMaximumAttemptsReached] = useState(false);
   const [requiredValuesProvided, setRequiredValuesProvided] = useState(false);
   const [credentialValidationInProgress, setCredentialValidiationInProgress] = useState(false);
 
@@ -96,8 +94,8 @@ export default function Login(props) {
   };
 
   const handleMaximumAttemptsReached = () => {
-    if(loginAttempts === 3){
-      setMaximumAttemptsReached(true)
+    if(loginAttempts >= 3){
+      setMaximumLoginAttemptsReached(true)
     }
   };
   
@@ -115,7 +113,8 @@ export default function Login(props) {
 
   async function handleValidation() {
     setCredentialValidiationInProgress(true);
-    let url = process.env.REACT_APP_VALIDATE_USER_URL
+    // let url = process.env.REACT_APP_VALIDATE_USER_URL
+    let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/validate-user'
     let payload = {'email':email, 'password_hash':password}
     let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
     handleValidateCredentials(data.validated)
@@ -161,7 +160,7 @@ export default function Login(props) {
                 }
               </Box>
               <Box className={classes.buttons}>
-                  {credentialValidationInProgress ? <Spinner size={'2rem'}/> : <StyledButton className={classes.button} onClick={!maximumAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>}
+                  {credentialValidationInProgress ? <Spinner size={'2rem'}/> : <StyledButton className={classes.button} onClick={!maximumLoginAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>}
               </Box>
           </Paper>
         </div>

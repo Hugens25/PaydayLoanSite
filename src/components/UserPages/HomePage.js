@@ -47,33 +47,34 @@ export default function HomePage(props) {
   const {userInfo, setUserInfo} = props
 
   const [userInfoIsFetched, setUserInfoIsFetched] = useState(false);
+  const [userInfoReceived, setUserInfoReceived] = useState(false);
 
   async function getUserInfo() {
-    let url = process.env.REACT_APP_GET_USER_URL
+    setUserInfoIsFetched(true)
+    console.log('getting user info')
+    // let url = process.env.REACT_APP_GET_USER_URL
+    let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/get-user'
     let payload = {'email':userInfo.email}
     let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
     let firstName = data.user.firstName
     let lastName = data.user.lastName
     setUserInfo({...userInfo, "firstName":firstName, "lastName":lastName})
-  }
-
-  const handleUserInfoIsFetched = () => {
-    setUserInfoIsFetched(true)
+    setUserInfoReceived(true)
   }
 
   useEffect(() => {
-    if(!userInfo.firstName && !userInfo.lastName){getUserInfo()}
-    handleUserInfoIsFetched();
+    if(!userInfoIsFetched){getUserInfo()}
   });
   
   const classes = useStyles();
+
   return(
       <Fragment>
           <CssBaseline />
           <div className={classes.layout}>
               <Box className={classes.container}>
                   <Paper className={classes.paper} elevation={3}>
-                      {!userInfoIsFetched ? (<Box className={classes.spinnerContainer}><Spinner size={'5rem'}/></Box>) : 
+                      {!userInfoReceived ? (<Box className={classes.spinnerContainer}><Spinner size={'5rem'}/></Box>) : 
                         (
                           <Box>
                             <Typography variant="h5" gutterBottom>My Account</Typography>

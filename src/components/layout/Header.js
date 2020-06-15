@@ -56,6 +56,8 @@ export default function Navbar() {
   const handleOpenSideNav = () => {
     setIsHamburgerMenuOpen(!isHambugerMenuOpen)
   }
+  const [maximumLoginAttemptsReached, setMaximumLoginAttemptsReached] = useState(false);
+  const [loginAttempts, setLoginAttempts] = useState(1);
 
   return (
     <Router>
@@ -80,7 +82,7 @@ export default function Navbar() {
           <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
           <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
           <Route path="/settings" render={(props) => <Settings userInfo={userInfo} setUserInfo={setUserInfo} />}/>
-      </div>
+        </div>
     </Router>
   );
 }
