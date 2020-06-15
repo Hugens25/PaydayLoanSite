@@ -57,15 +57,13 @@ export default function Login(props) {
   const classes = useStyles();
   const history = useHistory();
 
-  const {userInfo, setUserInfo} = props
+  const {userInfo, setUserInfo, maximumLoginAttemptsReached, setMaximumLoginAttemptsReached, loginAttempts, setLoginAttempts} = props
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [startedTypingEmail, setStartedTypingEmail] = useState(false);
   const [startedTypingPassword, setStartedTypingPassword] = useState(false);
   const [validateCredentials, setValidateCredentials] = useState(false);
-  const [loginAttempts, setLoginAttempts] = useState(1);
-  const [maximumAttemptsReached, setMaximumAttemptsReached] = useState(false);
   const [requiredValuesProvided, setRequiredValuesProvided] = useState(false);
   const [credentialValidationInProgress, setCredentialValidiationInProgress] = useState(false);
 
@@ -96,8 +94,8 @@ export default function Login(props) {
   };
 
   const handleMaximumAttemptsReached = () => {
-    if(loginAttempts === 3){
-      setMaximumAttemptsReached(true)
+    if(loginAttempts >= 3){
+      setMaximumLoginAttemptsReached(true)
     }
   };
   
@@ -162,7 +160,7 @@ export default function Login(props) {
                 }
               </Box>
               <Box className={classes.buttons}>
-                  {credentialValidationInProgress ? <Spinner size={'2rem'}/> : <StyledButton className={classes.button} onClick={!maximumAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>}
+                  {credentialValidationInProgress ? <Spinner size={'2rem'}/> : <StyledButton className={classes.button} onClick={!maximumLoginAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>}
               </Box>
           </Paper>
         </div>
