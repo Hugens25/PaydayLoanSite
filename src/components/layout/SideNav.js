@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -16,6 +17,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import FolderIcon from '@material-ui/icons/Folder';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import Settings from '../UserPages/Settings';
+import green from '@material-ui/core/colors/green';
 
 const drawerWidth = 240;
 
@@ -43,10 +46,12 @@ const useStyles = makeStyles((theme) => ({
 function NavListItem(props){
     const {item} = props;
     return (
+        <Link style={{ textDecoration: 'none', color: green[500] }} to={item.linkTo}>
         <ListItem button key={item.text}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
         </ListItem>
+        </Link>
     )
 }
 
@@ -74,13 +79,13 @@ export default function PersistentDrawerLeft(props) {
         <Divider />
         <List>
           {[
-              {text:'Account Summary', icon: <MonetizationOnIcon />, needsLogin:true}, 
-              {text:'Account Details', icon: <LibraryBooksIcon />, needsLogin:true},
-              {text:'Messages', icon: <EmailIcon />, needsLogin:true}, 
-              {text:'Documents', icon:<DescriptionIcon />, needsLogin:true}, 
-              {text:'Contact Us', icon:<PhoneIcon />, needsLogin:false}, 
-              {text:'FAQs', icon: <LiveHelpIcon />, needsLogin:false}, 
-              {text:'Settings', icon:<SettingsIcon />, needsLogin:true}
+              {text:'Account Summary', icon: <MonetizationOnIcon />, needsLogin:true, linkTo: '/settings'}, 
+              {text:'Account Details', icon: <LibraryBooksIcon />, needsLogin:true, linkTo: '/settings'},
+              {text:'Messages', icon: <EmailIcon />, needsLogin:true, linkTo: '/settings'}, 
+              {text:'Documents', icon:<DescriptionIcon />, needsLogin:true, linkTo: '/settings'}, 
+              {text:'Contact Us', icon:<PhoneIcon />, needsLogin:false, linkTo:'/settings'}, 
+              {text:'FAQs', icon: <LiveHelpIcon />, needsLogin:false, linkTo:'/settings'}, 
+              {text:'Settings', icon:<SettingsIcon />, needsLogin:true, linkTo:'/settings'}
             ].map((item) => (
                 item.needsLogin === true ? 
                     userInfo.isLoggedIn === true ?
