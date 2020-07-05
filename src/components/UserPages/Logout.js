@@ -6,6 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import LandingPage from '../LandingPage';
+import Cookies from "js-cookie";
+
 
 const useStyles = makeStyles((theme) => ({
     layout: {
@@ -51,6 +53,7 @@ export default function Logout(props) {
 
   const {userInfo, setUserInfo, applicantInfo, setApplicantInfo, setLoginAttempts } = props
   const [open, setOpen] = useState(true);
+  let [timeUntilRedirect, setTimeUntilRedirect] = useState(5);
   const history = useHistory();
 
   const handleLogOut = () => {
@@ -58,10 +61,13 @@ export default function Logout(props) {
     setApplicantInfo({})
     setLoginAttempts(1)  
     handleRemoveLogOutBanner()
+    Cookies.remove("session");
   }
 
   const handleRemoveLogOutBanner = () => {
-    setTimeout(() => {setOpen(false); history.push('/')}, 4000)
+    setTimeUntilRedirect(timeUntilRedirect--)
+    let timer = setInterval(() => {setTimeUntilRedirect(timeUntilRedirect--)}, 1000)
+    setTimeout(() => {setOpen(false); clearInterval(timer); history.push('/')}, 5000)
   }
 
   useEffect(() => {
@@ -88,7 +94,7 @@ export default function Logout(props) {
             </IconButton>
           }
         >
-          <div style={{width:'90vw'}}>Successfully Logged Out. You will be redirected to the home page within 5 seconds.</div>
+          <div style={{width:'90vw'}}>{`Successfully Logged Out. You will be redirected to the home page within ${timeUntilRedirect} seconds.`}</div>
         </Alert>
       </Collapse>
       {/* <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts} /> */}

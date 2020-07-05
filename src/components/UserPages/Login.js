@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Spinner from '../misc/Spinner';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
+import { setSessionCookie } from '../../session';
 
 const StyledButton = withStyles({
     root: {
@@ -21,6 +22,7 @@ const StyledButton = withStyles({
 const useStyles = makeStyles((theme) => ({
     layout: {
       width: 'auto',
+      minHeight: '80vh',
       marginLeft: theme.spacing(2),
       marginRight: theme.spacing(2),
       [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
@@ -84,6 +86,7 @@ export default function Login(props) {
   const handleValidateCredentials = (val) => {
     setValidateCredentials(val);
     if(val) {
+      setSessionCookie({ ...userInfo, email, "isLoggedIn":true, "userInfoIsFetched": false});
       setUserInfo({...userInfo, "email":email, "isLoggedIn":true});
     }
   };
@@ -105,10 +108,16 @@ export default function Login(props) {
   }
 
   useEffect(() => {
-    if(validateCredentials) {
-      history.push("/home");
-    }
     handleValuesExist()
+    
+    if(validateCredentials) {
+      
+      history.push('/home')
+      // history.push({
+      //   pathname: '/home',
+      //   state: {userInfo}
+      // });
+    }
   });
 
   async function handleValidation() {
@@ -139,6 +148,7 @@ export default function Login(props) {
                             autoComplete="email"
                             error={!email && startedTypingEmail} 
                             onChange={handleEmaileEntry}
+                            onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('loginButton').click();}}}
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
@@ -150,6 +160,7 @@ export default function Login(props) {
                             fullWidth
                             error={!password && startedTypingPassword} 
                             onChange={handlePasswordEntry}
+                            onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('loginButton').click();}}}
                           />
                       </Grid>
                   </Grid>
@@ -160,7 +171,7 @@ export default function Login(props) {
                 }
               </Box>
               <Box className={classes.buttons}>
-                  {credentialValidationInProgress ? <Spinner size={'2rem'}/> : <StyledButton className={classes.button} onClick={!maximumLoginAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>}
+                  {credentialValidationInProgress ? <Spinner size={'2rem'}/> : <StyledButton id="loginButton" className={classes.button} onClick={!maximumLoginAttemptsReached && requiredValuesProvided ? handleValidation : handleNotAllValuesProvided}>Login</StyledButton>}
               </Box>
           </Paper>
         </div>

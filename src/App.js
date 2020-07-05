@@ -15,14 +15,20 @@ const AppTheme = createMuiTheme({
   },
 });
 
+const useStyles = makeStyles((theme) => ({
+  layout: {
+    backgroundColor: green[200]
+  },
+}));
+
 function App() {
+  const classes = useStyles();
   return (
     <div className="App">
       <ThemeProvider theme={AppTheme}>
         <Header />
         <Footer />
       </ThemeProvider>
-      
     </div>
   );
 }
