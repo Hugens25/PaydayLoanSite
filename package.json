@@ -21,7 +21,8 @@
     "react-scripts": "3.4.1",
     "react-swipeable-views": "^0.13.9",
     "react-text-mask": "^5.4.3",
-    "save": "^2.4.0"
+    "save": "^2.4.0",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

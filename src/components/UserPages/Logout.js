@@ -67,7 +67,11 @@ export default function Logout(props) {
   const handleRemoveLogOutBanner = () => {
     setTimeUntilRedirect(timeUntilRedirect--)
     let timer = setInterval(() => {setTimeUntilRedirect(timeUntilRedirect--)}, 1000)
-    setTimeout(() => {setOpen(false); clearInterval(timer); history.push('/')}, 5000)
+    setTimeout(() => {setOpen(false); clearInterval(timer); redirectToHome()}, 5000)
+  }
+
+  const redirectToHome = () => {
+    history.push('/')
   }
 
   useEffect(() => {
@@ -88,6 +92,7 @@ export default function Logout(props) {
               size="small"
               onClick={() => {
                 setOpen(false);
+                redirectToHome();
               }}
             >
               <CloseIcon fontSize="inherit" />
