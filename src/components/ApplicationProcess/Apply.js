@@ -13,7 +13,7 @@ import ApplicantForm from './ApplicantInfo';
 import BankForm from './IncomeAndBankInfo';
 import Review from './Review';
 import ProgressBar from '../misc/ProgressBar';
-import { getSessionCookie, setSessionCookie } from '../../session';
+import { setSessionCookie } from '../../session';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -114,7 +114,6 @@ export default function Apply(props) {
     } else {
       setActiveStep(activeStep + 1);
     }
-    // setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
