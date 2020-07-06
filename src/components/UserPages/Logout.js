@@ -93,8 +93,6 @@ export default function Logout(props) {
   const classes = useStyles();
   return(
     <div className={classes.root}>
-      {!session.isLoggedIn ? (<Redirect to="/login"/>) :
-      (
         <Collapse in={open}>
           <Alert
             action={
@@ -114,7 +112,7 @@ export default function Logout(props) {
             <div style={{width:'90vw'}}>{`Successfully Logged Out. You will be redirected to the home page within ${timeUntilRedirect} seconds.`}</div>
           </Alert>
         </Collapse>
-      )}
+      
       </div>
   );
 }

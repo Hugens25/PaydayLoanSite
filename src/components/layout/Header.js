@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { getSessionCookie } from '../../session';
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -83,13 +83,15 @@ export default function Navbar() {
           </Toolbar>
         </AppBar>
         {isHambugerMenuOpen && <SideNav userInfo={userInfo} isHambugerMenuOpen={isHambugerMenuOpen} setIsHamburgerMenuOpen={setIsHamburgerMenuOpen}/>}
-          <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
-          <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
-          <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} maximumLoginAttemptsReached={maximumLoginAttemptsReached} setMaximumLoginAttemptsReached={setMaximumLoginAttemptsReached} loginAttempts={loginAttempts} setLoginAttempts={setLoginAttempts}/>}/>
-          <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts}/>}/>
-          <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
-          <Route path="/settings" render={(props) => <Settings userInfo={userInfo} setUserInfo={setUserInfo} />}/>
-          <Route component={NotFound}/>
+          <Switch>
+            <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
+            <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} maximumLoginAttemptsReached={maximumLoginAttemptsReached} setMaximumLoginAttemptsReached={setMaximumLoginAttemptsReached} loginAttempts={loginAttempts} setLoginAttempts={setLoginAttempts}/>}/>
+            <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts}/>}/>
+            <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
+            <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+            <Route path="/settings" render={(props) => <Settings userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+            <Route component={NotFound}/>
+          </Switch>
         </div>
     </Router>
   );
