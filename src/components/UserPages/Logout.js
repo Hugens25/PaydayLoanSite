@@ -93,7 +93,7 @@ export default function Logout(props) {
       clearInterval(intervalValue);
       clearTimeout(timeoutValue);
     }
-},redirected);
+},[redirected]);
   
   const classes = useStyles();
   return(

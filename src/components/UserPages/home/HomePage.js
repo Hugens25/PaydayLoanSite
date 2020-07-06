@@ -14,6 +14,7 @@ import ViewApplications from './options/application/ViewApplications';
 import ViewPayments from './options/payments/ViewPayments';
 import LoanDetails from './options/loan/LoanDetails';
 import NotFound from '../../misc/NotFound';
+import ViewSettings from './options/settings/ViewSettings';
 
 const useStyles = makeStyles((theme) => ({
     layout: {
@@ -84,6 +85,7 @@ export default function HomePage(props) {
                             <Box className={classes.element}><ViewApplications /></Box>
                             <Box className={classes.element}><LoanDetails /></Box>
                             <Box className={classes.element}><ViewPayments /></Box>
+                            <Box className={classes.element}><ViewSettings /></Box>
                           </Box>
                         )
                       }

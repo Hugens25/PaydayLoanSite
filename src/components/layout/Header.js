@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    paddingLeft: '120px'
   },
   list: {
     width: 250,
