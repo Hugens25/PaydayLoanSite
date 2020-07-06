@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { Redirect, Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import LandingPage from '../LandingPage';
+import {SessionContext, getSessionCookie, setSessionCookie} from '../../session';
 import Cookies from "js-cookie";
 
 
@@ -51,34 +52,48 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Logout(props) {
 
+  let session = getSessionCookie();
+
   const {userInfo, setUserInfo, applicantInfo, setApplicantInfo, setLoginAttempts } = props
   const [open, setOpen] = useState(true);
   let [timeUntilRedirect, setTimeUntilRedirect] = useState(5);
+  const [redirected, setRedirected] = useState(false);
+  const [intervalValue, setIntervalValue] = useState(null);
+  const [timeoutValue, setTimeoutValue] = useState(null);
+  
   const history = useHistory();
 
   const handleLogOut = () => {
     setUserInfo({"isLoggedIn":false})
     setApplicantInfo({})
     setLoginAttempts(1)  
+    setSessionCookie({"isLoggedIn":false})
     handleRemoveLogOutBanner()
-    Cookies.remove("session");
   }
 
   const handleRemoveLogOutBanner = () => {
     setTimeUntilRedirect(timeUntilRedirect--)
-    let timer = setInterval(() => {setTimeUntilRedirect(timeUntilRedirect--)}, 1000)
-    setTimeout(() => {setOpen(false); clearInterval(timer); redirectToHome()}, 5000)
+    setIntervalValue(setInterval(() => {setTimeUntilRedirect(timeUntilRedirect--)}, 1000))
+    setTimeoutValue(setTimeout(() => {setOpen(false); clearInterval(intervalValue); if(!redirected){redirectToHome()}}, 5000))
   }
 
   const redirectToHome = () => {
+    setRedirected(true)    
     history.push('/')
   }
 
   useEffect(() => {
-      if(userInfo.isLoggedIn){
+      if(session.isLoggedIn){
         handleLogOut();
       }
   })
+
+  useEffect(() => {
+    if(redirected){
+      clearInterval(intervalValue);
+      clearTimeout(timeoutValue);
+    }
+},redirected);
   
   const classes = useStyles();
   return(
@@ -102,8 +117,6 @@ export default function Logout(props) {
           <div style={{width:'90vw'}}>{`Successfully Logged Out. You will be redirected to the home page within ${timeUntilRedirect} seconds.`}</div>
         </Alert>
       </Collapse>
-      {/* <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts} /> */}
-      {/* {!open && <Redirect to="/" />} */}
     </div> 
   );
 }

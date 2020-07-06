@@ -18,6 +18,7 @@ import LandingPage from '../LandingPage';
 import HomePage from '../UserPages/home/HomePage';
 import Settings from '../UserPages/Settings';
 import SideNav from './SideNav';
+import NotFound from '../misc/NotFound';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +54,7 @@ export default function Navbar() {
   
   const classes = useStyles();
 
-  const [session, setSession] = useState(getSessionCookie());
+  const session = getSessionCookie();
 
   const [userInfo, setUserInfo] = useState({'isLoggedIn':false});
   const [applicantInfo, setApplicantInfo] = useState({});
@@ -65,39 +66,31 @@ export default function Navbar() {
   const [maximumLoginAttemptsReached, setMaximumLoginAttemptsReached] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(1);
 
-  // useEffect(
-  //   () => {
-  //     setSession(getSessionCookie());
-  //   },
-  //   [session]
-  // );
-
   return (
-    <SessionContext.Provider value={session}>
-      <Router>
-        <div className={classes.root}>
-          <AppBar position="static" color="primary">
-            <Toolbar>
-              <StyledIconButton edge="start" className={classes.menuButton} aria-label="menu" onClick={handleOpenSideNav}>
-                <MenuIcon />
-              </StyledIconButton>
-              <Typography variant="h6" className={classes.title} >
-                <Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/">Company Name</Link>
-              </Typography>
-              <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/apply">Apply Now!</Link></StyledButton>
-              {!userInfo.isLoggedIn && <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/login">LOGIN</Link></StyledButton>}
-              {userInfo.isLoggedIn && <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/logout">LOGOUT</Link></StyledButton>}
-            </Toolbar>
-          </AppBar>
-          {isHambugerMenuOpen && <SideNav userInfo={userInfo} isHambugerMenuOpen={isHambugerMenuOpen} setIsHamburgerMenuOpen={setIsHamburgerMenuOpen}/>}
-            <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
-            <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
-            <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} maximumLoginAttemptsReached={maximumLoginAttemptsReached} setMaximumLoginAttemptsReached={setMaximumLoginAttemptsReached} loginAttempts={loginAttempts} setLoginAttempts={setLoginAttempts}/>}/>
-            <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts}/>}/>
-            <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
-            <Route path="/settings" render={(props) => <Settings userInfo={userInfo} setUserInfo={setUserInfo} />}/>
-          </div>
-      </Router>
-    </SessionContext.Provider>
+    <Router>
+      <div className={classes.root}>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <StyledIconButton edge="start" className={classes.menuButton} aria-label="menu" onClick={handleOpenSideNav}>
+              <MenuIcon />
+            </StyledIconButton>
+            <Typography variant="h6" className={classes.title} >
+              <Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/">Company Name</Link>
+            </Typography>
+            <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/apply">Apply Now!</Link></StyledButton>
+            {!session.isLoggedIn && <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/login">LOGIN</Link></StyledButton>}
+            {session.isLoggedIn && <StyledButton ><Link style={{ textDecoration: 'none', color: '#e8f5e9' }} to="/logout">LOGOUT</Link></StyledButton>}
+          </Toolbar>
+        </AppBar>
+        {isHambugerMenuOpen && <SideNav userInfo={userInfo} isHambugerMenuOpen={isHambugerMenuOpen} setIsHamburgerMenuOpen={setIsHamburgerMenuOpen}/>}
+          <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
+          <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
+          <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} maximumLoginAttemptsReached={maximumLoginAttemptsReached} setMaximumLoginAttemptsReached={setMaximumLoginAttemptsReached} loginAttempts={loginAttempts} setLoginAttempts={setLoginAttempts}/>}/>
+          <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts}/>}/>
+          <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+          <Route path="/settings" render={(props) => <Settings userInfo={userInfo} setUserInfo={setUserInfo} />}/>
+          <Route component={NotFound}/>
+        </div>
+    </Router>
   );
 }

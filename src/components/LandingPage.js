@@ -87,7 +87,7 @@ export default function LandingPage(props) {
 
   async function handleSaveApplicantInfo() {
     setStartedTypingForAllFields()
-    if (checkAllRequiredFieldsProvided){
+    if (checkAllRequiredFieldsProvided()){
       setSubmitingApplicantInfo(true)
       // let url = process.env.REACT_APP_SAVE_APPLICANT_URL
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/save-applicant'
@@ -121,8 +121,9 @@ export default function LandingPage(props) {
                     autoComplete="given-name"
                     variant="outlined"
                     value={applicantInfo.firstName}
-                    error={!applicantInfo.firstName && startedTypingField.firstName}
+                    error={!applicantInfo.firstName && startedTypingField.firstName }
                     onChange={(e) => {handleAddApplicantInformation("firstName", e.target.value)}}
+                    onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <TextField
                     className={classes.textInputs}
@@ -134,8 +135,9 @@ export default function LandingPage(props) {
                     autoComplete="family-name"
                     variant="outlined"
                     value={applicantInfo.lastName}
-                    error={!applicantInfo.lastName && startedTypingField.lastName}
+                    error={!applicantInfo.lastName && startedTypingField.lastName }
                     onChange={(e) => {handleAddApplicantInformation("lastName", e.target.value)}}
+                    onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <TextField
                     className={classes.textInputs}
@@ -147,8 +149,9 @@ export default function LandingPage(props) {
                     autoComplete="email"
                     variant="outlined"
                     value={applicantInfo.email}
-                    error={!applicantInfo.email && startedTypingField.email}
+                    error={!applicantInfo.email && startedTypingField.email }
                     onChange={(e) => {handleAddApplicantInformation("email", e.target.value)}}
+                    onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <Typography className={classes.textInputs} gutterBottom>
                     Desired Loan Amount
@@ -164,7 +167,7 @@ export default function LandingPage(props) {
                     onChange={(e) => {handleAddApplicantInformation("desiredLoanAmount", parseFloat(document.getElementsByName('desiredLoanAmount')[0].value) * 20)}}
                   />
                   <Box className={classes.buttons}>
-                    <Button className={classes.button} onClick={handleSaveApplicantInfo}>
+                    <Button id="checkMyOptionsButton" className={classes.button} onClick={handleSaveApplicantInfo}>
                       {submitingApplicantInfo ? <Spinner size={'2rem'}/> : "Check My Options!"}
                     </Button>
                   </Box>

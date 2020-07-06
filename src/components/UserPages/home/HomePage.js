@@ -1,6 +1,6 @@
-import React, { useEffect, useState, Fragment, useContext } from 'react';
+import React, { useEffect, useState, Fragment, useContext, useCallback } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { SessionContext, setSessionCookie } from '../../../session';
+import { SessionContext, getSessionCookie, setSessionCookie } from '../../../session';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -13,6 +13,7 @@ import Spinner from '../../misc/Spinner';
 import ViewApplications from './options/application/ViewApplications';
 import ViewPayments from './options/payments/ViewPayments';
 import LoanDetails from './options/loan/LoanDetails';
+import NotFound from '../../misc/NotFound';
 
 const useStyles = makeStyles((theme) => ({
     layout: {
@@ -56,36 +57,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HomePage(props) {
 
-  const location = useLocation();
+  let session = getSessionCookie()
+  console.log(session);
 
-  const session = useContext(SessionContext);
-  console.log('session',session);
-
-  // const {userInfo} = location.state
-
-  const {userInfo, setUserInfo} = props
-
-  const [userInfoIsFetched, setUserInfoIsFetched] = useState(session.userInfoIsFetched);
-  const [userInfoReceived, setUserInfoReceived] = useState(false);
-
-  
-
-  async function getUserInfo() {
-    setUserInfoIsFetched(true)
-    console.log("In getUserInfo");
-    // let url = process.env.REACT_APP_GET_USER_URL
-    let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/get-user'
-    let payload = {'email':userInfo.email}
-    let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
-    let firstName = data.user.firstName
-    let lastName = data.user.lastName
-    setUserInfoReceived(true)
-    setSessionCookie({ ...session, 'userInfoIsFetched': true });
-    setUserInfo({...userInfo, "firstName":firstName, "lastName":lastName, "userInfoIsFetched":true})
-  }
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
-    if(!userInfoIsFetched){console.log(session); getUserInfo()}
+    if(!session.userInfoIsFetched){forceUpdate(); setSessionCookie({...session, 'userInfoIsFetched':true})}
   });
   
   const classes = useStyles();
@@ -96,12 +75,12 @@ export default function HomePage(props) {
           <div className={classes.layout}>
               <Box className={classes.container}>
                   <Paper className={classes.paper} elevation={3}>
-                      {!userInfoIsFetched ? (<Box className={classes.spinnerContainer}><Spinner size={'5rem'}/></Box>) : 
+                      {/* {!session.userInfoIsFetched ? (<Box className={classes.spinnerContainer}><Spinner size={'5rem'}/></Box>) :  */}
+                      {!session.isLoggedIn ? (<Redirect to="/login"/>) :
                         (
                           <Box className={classes.root}>
                             <Typography className={classes.headers} variant="h5" gutterBottom>My Account</Typography>
-                            <Typography className={classes.headers}>{`Welcome${userInfo.firstName ? ', '+userInfo.firstName : '' }${userInfo.lastName ? ' '+userInfo.lastName : ''}!`}</Typography>
-                            {/* <Button><Link to='/settings'>Settings</Link></Button> */}
+                            <Typography className={classes.headers}>{`Welcome${session.firstName ? ', '+session.firstName : '' }${session.lastName ? ' '+session.lastName : ''}!`}</Typography>
                             <Box className={classes.element}><ViewApplications /></Box>
                             <Box className={classes.element}><LoanDetails /></Box>
                             <Box className={classes.element}><ViewPayments /></Box>

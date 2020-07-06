@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import Spinner from '../misc/Spinner';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
-import { setSessionCookie } from '../../session';
+import { setSessionCookie, getSessionCookie } from '../../session';
 
 const StyledButton = withStyles({
     root: {
@@ -58,6 +58,7 @@ export default function Login(props) {
 
   const classes = useStyles();
   const history = useHistory();
+  const session = getSessionCookie();
 
   const {userInfo, setUserInfo, maximumLoginAttemptsReached, setMaximumLoginAttemptsReached, loginAttempts, setLoginAttempts} = props
 
@@ -83,13 +84,25 @@ export default function Login(props) {
     setRequiredValuesProvided(email && email.length > 0 && password && password.length > 0 ? true : false)
   }
 
-  const handleValidateCredentials = (val) => {
-    setValidateCredentials(val);
-    if(val) {
-      setSessionCookie({ ...userInfo, email, "isLoggedIn":true, "userInfoIsFetched": false});
+  async function handleValidateCredentials(isCredentialValidated) {
+  // const handleValidateCredentials = (val) => {
+    setValidateCredentials(isCredentialValidated);
+    if(isCredentialValidated) {
+      let data = await handleGetUserInfo()
+      setSessionCookie({...userInfo, email, 'firstName':data.user.firstName, 'lastName':data.user.lastName, "isLoggedIn":true, "userInfoIsFetched": false});
       setUserInfo({...userInfo, "email":email, "isLoggedIn":true});
+      completeLogin();
+    } else {
+      setCredentialValidiationInProgress(false);
     }
   };
+
+  async function handleGetUserInfo() {
+    let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/get-user'
+    let payload = {'email':email}
+    let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
+    return data;
+  }
 
   const handleLoginAttempts = (val) => {
     setLoginAttempts(val + 1);
@@ -109,16 +122,12 @@ export default function Login(props) {
 
   useEffect(() => {
     handleValuesExist()
-    
-    if(validateCredentials) {
-      
-      history.push('/home')
-      // history.push({
-      //   pathname: '/home',
-      //   state: {userInfo}
-      // });
-    }
   });
+
+  const completeLogin = () => {
+    setCredentialValidiationInProgress(false);
+    history.push('/home')
+  }
 
   async function handleValidation() {
     setCredentialValidiationInProgress(true);
@@ -128,7 +137,6 @@ export default function Login(props) {
     let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
     handleValidateCredentials(data.validated)
     handleLoginAttempts(loginAttempts);
-    setCredentialValidiationInProgress(false);
   }
 
     return(
