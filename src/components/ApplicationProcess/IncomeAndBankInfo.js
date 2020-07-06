@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { getSessionCookie } from '../../session';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PaymentForm(props) {
-
+  const session = getSessionCookie();
   const classes = useStyles();
 
   const {
@@ -60,7 +61,7 @@ export default function PaymentForm(props) {
                 labelId="sourceOfIncome"
                 id="sourceOfIncomeSelect"
                 value={applicantInfo.incomeType}
-                error={!applicantInfo.incomeType && startedTypingRequiredFields.incomeType}
+                error={!applicantInfo.incomeType && (startedTypingRequiredFields.incomeType || session.attemptedPageSubmit)}
                 onChange={(e) => {handleAddApplicantInformation("incomeType", e)}}
               >
                 <MenuItem value={"Employed"}>Employed</MenuItem>
@@ -79,7 +80,7 @@ export default function PaymentForm(props) {
                   labelId="payFrequency"
                   id="payFrequencySelect"
                   value={applicantInfo.payFrequency}
-                  error={!applicantInfo.payFrequency && startedTypingRequiredFields.payFrequency}
+                  error={!applicantInfo.payFrequency && (startedTypingRequiredFields.payFrequency || session.attemptedPageSubmit)}
                   onChange={(e) => {handleAddApplicantInformation("payFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
@@ -99,7 +100,7 @@ export default function PaymentForm(props) {
               InputProps={{
                 startAdornment: <InputAdornment position="start">$</InputAdornment>,
               }}
-              error={!applicantInfo.recentCheck && startedTypingRequiredFields.recentCheck}
+              error={!applicantInfo.recentCheck && (startedTypingRequiredFields.recentCheck || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddApplicantInformation("recentCheck", e)}}
               value={applicantInfo.recentCheck}
             />
@@ -111,7 +112,7 @@ export default function PaymentForm(props) {
                 helperText={!applicantInfo.additionalSourceOfIncome ? "*required" : ""}
                 labelId="additionalSourceOfIncome"
                 id="additionalSourceOfIncomeSelect"
-                value={secondaryIncomeType}
+                error={!applicantInfo.additionalSourceOfIncome && session.attemptedPageSubmit}
                 onChange={handleSecondaryIncomeTypeChange} 
                 value={applicantInfo.additionalSourceOfIncome}
               >
@@ -134,7 +135,7 @@ export default function PaymentForm(props) {
                 id="additionalIncomeAmount" 
                 label="Additional Income Amount" 
                 fullWidth
-                error={!applicantInfo.additionalIncomeAmount && startedTypingRequiredFields.additionalIncomeAmount}
+                error={!applicantInfo.additionalIncomeAmount && (startedTypingRequiredFields.additionalIncomeAmount || session.attemptedPageSubmit)}
                 onChange={(e) => {handleAddApplicantInformation("additionalIncomeAmount", e)}}
                 value={applicantInfo.additionalIncomeAmount}
                 />
@@ -147,7 +148,7 @@ export default function PaymentForm(props) {
               label="Company or Employer Name" 
               fullWidth 
               onChange={(e) => {handleAddApplicantInformation("employerName", e)}}  
-              error={!applicantInfo.employerName && startedTypingRequiredFields.employerName}
+              error={!applicantInfo.employerName && (startedTypingRequiredFields.employerName || session.attemptedPageSubmit)}
               value={applicantInfo.employerName}
             />
           </Grid>
@@ -157,7 +158,7 @@ export default function PaymentForm(props) {
               id="routingNumber" 
               label="Bank Routing Number" 
               fullWidth 
-              error={!applicantInfo.routingNumber && startedTypingRequiredFields.routingNumber}
+              error={!applicantInfo.routingNumber && (startedTypingRequiredFields.routingNumber || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddApplicantInformation("routingNumber", e)}}
               value={applicantInfo.routingNumber}
             />
@@ -168,7 +169,7 @@ export default function PaymentForm(props) {
               id="accountNumber" 
               label="Bank Account Number" 
               fullWidth 
-              error={!applicantInfo.bankAccountNumber && startedTypingRequiredFields.bankAccountNumber}
+              error={!applicantInfo.bankAccountNumber && (startedTypingRequiredFields.bankAccountNumber || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddApplicantInformation("bankAccountNumber", e)}}
               value={applicantInfo.bankAccountNumber}
             />

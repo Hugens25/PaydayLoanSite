@@ -13,6 +13,8 @@ import ApplicantForm from './ApplicantInfo';
 import BankForm from './IncomeAndBankInfo';
 import Review from './Review';
 import ProgressBar from '../misc/ProgressBar';
+import { getSessionCookie, setSessionCookie } from '../../session';
+
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -82,6 +84,7 @@ function getStepContent(step, applicantInfo, setApplicantInfo, startedTypingRequ
 }
 
 export default function Apply(props) {
+
   const classes = useStyles();
 
   const {applicantInfo, setApplicantInfo} = props;
@@ -96,20 +99,22 @@ export default function Apply(props) {
   const [processingComplete, setProcessingComplete] = useState(false);
 
   const handleNext = () => {
-    // if (activeStep < 2) {
-    //   let fieldValues = requiredFields[activeStep].fields.map((field) => {
-    //     return applicantInfo[field] ? true : false
-    //   })
-    //   if(!fieldValues.includes(false)){
-    //     setMissingValues(false)
-    //     setActiveStep(activeStep + 1);
-    //   } else {
-    //     setMissingValues(true)
-    //   }
-    // } else {
-    //   setActiveStep(activeStep + 1);
-    // }
-    setActiveStep(activeStep + 1);
+    setSessionCookie({'attemptedPageSubmit':true})
+    if (activeStep < 2) {
+      let fieldValues = requiredFields[activeStep].fields.map((field) => {
+        return applicantInfo[field] ? true : false
+      })
+      if(!fieldValues.includes(false)){
+        setMissingValues(false)
+        setActiveStep(activeStep + 1);
+        setSessionCookie({'attemptedPageSubmit':false})
+      } else {
+        setMissingValues(true)
+      }
+    } else {
+      setActiveStep(activeStep + 1);
+    }
+    // setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {

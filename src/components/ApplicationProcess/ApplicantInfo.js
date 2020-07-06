@@ -4,17 +4,21 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { getSessionCookie } from '../../session';
+import red from '@material-ui/core/colors/red';
 
 export default function AddressForm(props) {
 
   const date = new Date();
   let minimumValidDOB = date.setFullYear(date.getFullYear() - 18);
   
+  const session = getSessionCookie();
+
   const {
           applicantInfo, 
           setApplicantInfo, 
           startedTypingRequiredFields, 
-          handleAddApplicantInformation
+          handleAddApplicantInformation,
         } = props;
 
   const [passwordValidated, setValidatedPassword] = useState(true);
@@ -56,7 +60,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="given-name"
             value={applicantInfo.firstName}
-            error={!applicantInfo.firstName && startedTypingRequiredFields.firstName}
+            error={!applicantInfo.firstName && (startedTypingRequiredFields.firstName || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("firstName", e)}}
           />
         </Grid>
@@ -69,7 +73,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="family-name"
             value={applicantInfo.lastName}
-            error={!applicantInfo.lastName && startedTypingRequiredFields.lastName}
+            error={!applicantInfo.lastName && (startedTypingRequiredFields.lastName || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("lastName", e)}}
           />
         </Grid>
@@ -82,7 +86,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing address-line1"
             value={applicantInfo.address1}
-            error={!applicantInfo.address1 && startedTypingRequiredFields.address1}
+            error={!applicantInfo.address1 && (startedTypingRequiredFields.address1 || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("address1", e)}}
           />
         </Grid>
@@ -106,7 +110,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing address-level2"
             value={applicantInfo.city}
-            error={!applicantInfo.city && startedTypingRequiredFields.city}
+            error={!applicantInfo.city && (startedTypingRequiredFields.city || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("city", e)}}
           />
         </Grid>
@@ -118,7 +122,7 @@ export default function AddressForm(props) {
             label="State/Province/Region" 
             fullWidth
             value={applicantInfo.state}
-            error={!applicantInfo.state && startedTypingRequiredFields.state}
+            error={!applicantInfo.state && (startedTypingRequiredFields.state || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("state", e)}}
           />
         </Grid>
@@ -131,7 +135,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing postal-code"
             value={applicantInfo.zipCode}
-            error={!applicantInfo.zipCode && startedTypingRequiredFields.zipCode}
+            error={!applicantInfo.zipCode && (startedTypingRequiredFields.zipCode || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("zipCode", e)}}
           />
         </Grid>
@@ -144,7 +148,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing country"
             value={applicantInfo.country}
-            error={!applicantInfo.country && startedTypingRequiredFields.country}
+            error={!applicantInfo.country && (startedTypingRequiredFields.country || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("country", e)}}
           />
         </Grid>
@@ -157,7 +161,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="email"
             value={applicantInfo.email}
-            error={!applicantInfo.email && startedTypingRequiredFields.email}
+            error={!applicantInfo.email && (startedTypingRequiredFields.email || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("email", e)}}
           />
         </Grid>
@@ -172,7 +176,7 @@ export default function AddressForm(props) {
             type="password"
             error={!passwordValidated}
             value={applicantInfo.password}
-            error={!applicantInfo.password && startedTypingRequiredFields.password}
+            error={!applicantInfo.password && (startedTypingRequiredFields.password || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("password", e)}}
           />
         </Grid>
@@ -200,7 +204,7 @@ export default function AddressForm(props) {
             autoComplete="SSN"
             error={!ssnValidated}
             value={applicantInfo.ssn}
-            error={!applicantInfo.ssn && startedTypingRequiredFields.ssn}
+            error={!applicantInfo.ssn && (startedTypingRequiredFields.ssn || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("ssn", e)}}
           />
         </Grid>
@@ -220,7 +224,6 @@ export default function AddressForm(props) {
           <Grid item xs={12} sm={12}>
             <KeyboardDatePicker
               helperText={!applicantInfo.bday ? "*required" : ""}
-              disableToolbar
               variant="inline"
               format="MM/dd/yyyy"
               margin="normal"
@@ -228,6 +231,7 @@ export default function AddressForm(props) {
               label="Date of Birth"
               value={applicantInfo.bday}
               onChange={handleDateChange}
+              style={!applicantInfo.bday && session.attemptedPageSubmit ? {'border-bottom': '2px solid red'} : {}}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
