@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -7,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Switch from '@material-ui/core/Switch';
 import Box from '@material-ui/core/Box';
+import { getSessionCookie } from '../../session';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlledExpansionPanels() {
   const classes = useStyles();
+  const session = getSessionCookie();
   const [panelExpanded, setPanelExpanded] = React.useState(false);
   const [settings, setSettings] = React.useState({
     emailNotifications: true,
@@ -56,6 +59,7 @@ export default function ControlledExpansionPanels() {
 
   return (
     <div className={classes.root}>
+      {!session.isLoggedIn && <Redirect to="/login"/>}
         <Typography variant="h5" gutterBottom>Settings</Typography>
         <ExpansionPanel expanded={panelExpanded === 'panel1'} onChange={handlePanelChange('panel1')}>
             <ExpansionPanelSummary
