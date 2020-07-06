@@ -76,7 +76,6 @@ export default function HomePage(props) {
           <div className={classes.layout}>
               <Box className={classes.container}>
                   <Paper className={classes.paper} elevation={3}>
-                      {/* {!session.userInfoIsFetched ? (<Box className={classes.spinnerContainer}><Spinner size={'5rem'}/></Box>) :  */}
                       {!session.isLoggedIn ? (<Redirect to="/login"/>) :
                         (
                           <Box className={classes.root}>
