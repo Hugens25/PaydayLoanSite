@@ -1,19 +1,15 @@
-import React, { useEffect, useState, Fragment, useContext, useCallback } from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
-import { SessionContext, getSessionCookie, setSessionCookie } from '../../../session';
+import React, { useEffect, useState, Fragment, useCallback } from 'react';
+import { Redirect } from 'react-router-dom';
+import { getSessionCookie, setSessionCookie } from '../../../session';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import green from '@material-ui/core/colors/green';
 import Box from '@material-ui/core/Box';
-import Spinner from '../../misc/Spinner';
 import ViewApplications from './options/application/ViewApplications';
 import ViewPayments from './options/payments/ViewPayments';
 import LoanDetails from './options/loan/LoanDetails';
-import NotFound from '../../misc/NotFound';
 import ViewSettings from './options/settings/ViewSettings';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 export default function HomePage(props) {
 
   let session = getSessionCookie()
-  console.log(session);
 
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);

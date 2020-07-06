@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { createBrowserHistory } from "history";
-import { SessionContext, getSessionCookie } from '../../session';
+import { getSessionCookie } from '../../session';
 
-import { makeStyles, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';

@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
-import { Redirect, Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
-import LandingPage from '../LandingPage';
-import {SessionContext, getSessionCookie, setSessionCookie} from '../../session';
-import Cookies from "js-cookie";
+import { getSessionCookie, setSessionCookie} from '../../session';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,9 +42,6 @@ const useStyles = makeStyles((theme) => ({
         '& > * + *': {
           marginTop: theme.spacing(2),
         },
-        // display: 'flex',
-        // justifyContent: 'center'
-
       },
   }));
 

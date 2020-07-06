@@ -14,10 +14,8 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import PhoneIcon from '@material-ui/icons/Phone';
 import SettingsIcon from '@material-ui/icons/Settings';
-import FolderIcon from '@material-ui/icons/Folder';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import Settings from '../UserPages/Settings';
 import green from '@material-ui/core/colors/green';
 
 const drawerWidth = 240;

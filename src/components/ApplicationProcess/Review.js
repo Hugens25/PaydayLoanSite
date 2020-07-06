@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Review(props) {
   const classes = useStyles();
 
-  const {applicantInfo, setApplicantInfo} = props;
+  const {applicantInfo} = props;
 
   return (
     <Fragment>
