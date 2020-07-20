@@ -17,6 +17,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import green from '@material-ui/core/colors/green';
+import { getSessionCookie } from '../../session';
 
 const drawerWidth = 240;
 
@@ -53,8 +54,9 @@ function NavListItem(props){
     )
 }
 
-export default function PersistentDrawerLeft(props) {
+export default function SideNav(props) {
   const classes = useStyles();
+  let session = getSessionCookie()
 
   const {isHambugerMenuOpen, setIsHamburgerMenuOpen, userInfo} = props;
 
@@ -86,7 +88,7 @@ export default function PersistentDrawerLeft(props) {
               {text:'Settings', icon:<SettingsIcon />, needsLogin:true, linkTo:'/settings'}
             ].map((item) => (
                 item.needsLogin === true ? 
-                    userInfo.isLoggedIn === true ?
+                    session.isLoggedIn === true ?
                         <NavListItem item={item}/>
                     :
                         null
