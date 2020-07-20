@@ -11,7 +11,7 @@ const useStyles = makeStyles({
 export default function LinearBuffer(props) {
   const classes = useStyles();
 
-  const {processingComplete, setProcessingComplete} = props;
+  const {setProcessingComplete} = props;
 
   const [progress, setProgress] = useState(0);
   const [buffer, setBuffer] = useState(10);

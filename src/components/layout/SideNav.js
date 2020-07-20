@@ -58,7 +58,7 @@ export default function SideNav(props) {
   const classes = useStyles();
   let session = getSessionCookie()
 
-  const {isHambugerMenuOpen, setIsHamburgerMenuOpen, userInfo} = props;
+  const {isHambugerMenuOpen, setIsHamburgerMenuOpen} = props;
 
   return (
     <div className={classes.root}>

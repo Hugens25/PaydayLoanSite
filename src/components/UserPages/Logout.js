@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
@@ -50,7 +50,7 @@ export default function Logout(props) {
   let session = getSessionCookie();
   
   let [timeUntilRedirect, setTimeUntilRedirect] = useState(5);
-  const {userInfo, setUserInfo, applicantInfo, setApplicantInfo, setLoginAttempts } = props
+  const {setUserInfo, setApplicantInfo, setLoginAttempts } = props
   const [open, setOpen] = useState(true);
   const [intervalValue, setIntervalValue] = useState(null);
   const [timeoutValue, setTimeoutValue] = useState(null);

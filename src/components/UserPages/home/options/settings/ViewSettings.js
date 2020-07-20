@@ -1,18 +1,12 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Switch from '@material-ui/core/Switch';
 import Box from '@material-ui/core/Box';
-import SettingTabs from './SettingTabs';
-import green from '@material-ui/core/colors/green';
+import SettingTabs from './SettingTabs'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,13 +43,6 @@ export default function ViewSettings(props) {
   const classes = useStyles();
 
 const [panelExpanded, setPanelExpanded] = React.useState(false);
-  const [settings, setSettings] = React.useState({
-    emailNotifications: true,
-  });
-
-  const handleSwitchChange = (event) => {
-    setSettings({ ...settings, [event.target.name]: event.target.checked });
-  };
 
   const handlePanelChange = (panel) => (event, isExpanded) => {
     setPanelExpanded(isExpanded ? panel : false);

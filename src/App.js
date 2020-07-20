@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import './App.css';
 import Header from './components/layout/Header';
@@ -16,14 +16,7 @@ const AppTheme = createMuiTheme({
   },
 });
 
-const useStyles = makeStyles((theme) => ({
-  layout: {
-    backgroundColor: green[200]
-  },
-}));
-
 function App() {
-  const classes = useStyles();
   const [session, setSession] = useState(getSessionCookie());
 
   return (

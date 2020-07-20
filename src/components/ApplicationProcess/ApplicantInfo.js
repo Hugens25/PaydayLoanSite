@@ -5,7 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { getSessionCookie } from '../../session';
-import red from '@material-ui/core/colors/red';
 
 export default function AddressForm(props) {
 

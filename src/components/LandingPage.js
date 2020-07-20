@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React, { Fragment, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -93,8 +93,7 @@ export default function LandingPage(props) {
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/save-applicant'
       if(!applicantInfo.desiredLoanAmount){handleAddApplicantInformation('desiredLoanAmount', defaultLoanAmount)}
       let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(applicantInfo)})).json()
-      setSubmitingApplicantInfo(false)
-      history.push("/apply");
+      if(data === "Successful Entry!"){setSubmitingApplicantInfo(false); history.push("/apply");}
     }
   }
 

@@ -89,7 +89,7 @@ export default function Login(props) {
     setValidateCredentials(isCredentialValidated);
     if(isCredentialValidated) {
       let data = await handleGetUserInfo()
-      setSessionCookie({...userInfo, email, 'firstName':data.user.firstName, 'lastName':data.user.lastName, "isLoggedIn":true, "userInfoIsFetched": false});
+      setSessionCookie({...userInfo, ...data.user, "isLoggedIn":true, "userInfoIsFetched": false})
       setUserInfo({...userInfo, "email":email, "isLoggedIn":true});
       completeLogin();
     } else {
