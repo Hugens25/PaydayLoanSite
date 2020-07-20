@@ -48,11 +48,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Logout(props) {
 
   let session = getSessionCookie();
-
+  
+  let [timeUntilRedirect, setTimeUntilRedirect] = useState(5);
   const {userInfo, setUserInfo, applicantInfo, setApplicantInfo, setLoginAttempts } = props
   const [open, setOpen] = useState(true);
-  let [timeUntilRedirect, setTimeUntilRedirect] = useState(5);
-  const [redirected, setRedirected] = useState(false);
   const [intervalValue, setIntervalValue] = useState(null);
   const [timeoutValue, setTimeoutValue] = useState(null);
   
@@ -69,11 +68,12 @@ export default function Logout(props) {
   const handleRemoveLogOutBanner = () => {
     setTimeUntilRedirect(timeUntilRedirect--)
     setIntervalValue(setInterval(() => {setTimeUntilRedirect(timeUntilRedirect--)}, 1000))
-    setTimeoutValue(setTimeout(() => {setOpen(false); clearInterval(intervalValue); if(!redirected){redirectToHome()}}, 5000))
+    setTimeoutValue(setTimeout(() => {setOpen(false); clearInterval(intervalValue); redirectToHome()}, 5000))
   }
 
   const redirectToHome = () => {
-    setRedirected(true)    
+    clearInterval(intervalValue);
+    clearTimeout(timeoutValue);  
     history.push('/')
   }
 
@@ -81,14 +81,7 @@ export default function Logout(props) {
       if(session.isLoggedIn){
         handleLogOut();
       }
-  })
-
-  useEffect(() => {
-    if(redirected){
-      clearInterval(intervalValue);
-      clearTimeout(timeoutValue);
-    }
-},[redirected]);
+  });
   
   const classes = useStyles();
   return(
