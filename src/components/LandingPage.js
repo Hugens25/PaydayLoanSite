@@ -92,6 +92,7 @@ export default function LandingPage(props) {
       // let url = process.env.REACT_APP_SAVE_APPLICANT_URL
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/save-applicant'
       if(!applicantInfo.desiredLoanAmount){handleAddApplicantInformation('desiredLoanAmount', defaultLoanAmount)}
+      applicantInfo.desiredLoanAmount = applicantInfo.desiredLoanAmount.toString()
       let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(applicantInfo)})).json()
       if(data.status === 200){setSubmitingApplicantInfo(false); history.push("/apply");}
     }

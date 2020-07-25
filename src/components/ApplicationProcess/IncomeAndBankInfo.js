@@ -31,7 +31,7 @@ export default function PaymentForm(props) {
         } = props;
 
   const [secondaryIncomeType, setsecondaryIncomeType] = useState('');
-  const [hasSecondaryIncome, setHasSecondaryIncome] = useState('');
+  const [hasSecondaryIncome, setHasSecondaryIncome] = useState(applicantInfo.additionalSourceOfIncome ? true : false);
   const [accountNumberVerified, setAccountNumberVerified] = useState(true);
 
   const handleSecondaryIncomeTypeChange = (e) => {
@@ -128,24 +128,49 @@ export default function PaymentForm(props) {
             </FormControl>
           </Grid>
           { 
-            hasSecondaryIncome && 
+            hasSecondaryIncome &&
             <Grid item xs={12} sm={6}>
-              <TextField 
-                helperText={!applicantInfo.additionalIncomeAmount ? "*required" : ""} 
-                id="additionalIncomeAmount" 
-                label="Additional Income Amount" 
-                fullWidth
-                error={!applicantInfo.additionalIncomeAmount && (startedTypingRequiredFields.additionalIncomeAmount || session.attemptedPageSubmit)}
-                onChange={(e) => {handleAddApplicantInformation("additionalIncomeAmount", e)}}
-                value={applicantInfo.additionalIncomeAmount}
-                />
+              <FormControl className={classes.formControl}>
+                <InputLabel id="additionalPayFrequency">How often are you paid?</InputLabel>
+                <Select
+                  helperText={!applicantInfo.payFrequency ? "*required" : ""}
+                  labelId="additionalPayFrequency"
+                  id="additionalPayFrequencySelect"
+                  value={applicantInfo.additionalPayFrequency}
+                  error={!applicantInfo.additionalPayFrequency && (startedTypingRequiredFields.additionalPayFrequency || session.attemptedPageSubmit)}
+                  onChange={(e) => {handleAddApplicantInformation("additionalPayFrequency", e)}}
+                  renderValue={(value) => `${value}`}
+                >
+                  <MenuItem value={"Every Week"}>Weekly</MenuItem>
+                  <MenuItem value={"Bi-Weekly"}>Bi-Weekly (Every other week)</MenuItem>
+                  <MenuItem value={"Semi-Monthly"}>Semi-Monthly (Twice a Month)</MenuItem>
+                  <MenuItem value={"Monthly"}>Monthly</MenuItem>
+                  <MenuItem value={"Quarterly"}>Quarterly</MenuItem>
+                  <MenuItem value={"Semi-Annually"}>Semi-Annually</MenuItem>
+                  <MenuItem value={"Annually"}>Annually</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
+          }
+          {hasSecondaryIncome &&
+              <Grid item xs={12}>
+                <TextField 
+                  helperText={!applicantInfo.additionalIncomeAmount ? "*required" : ""} 
+                  id="additionalIncomeAmount" 
+                  label="Additional Income Amount" 
+                  fullWidth
+                  error={!applicantInfo.additionalIncomeAmount && (startedTypingRequiredFields.additionalIncomeAmount || session.attemptedPageSubmit)}
+                  onChange={(e) => {handleAddApplicantInformation("additionalIncomeAmount", e)}}
+                  value={applicantInfo.additionalIncomeAmount}
+                  />
+              </Grid>
+            
           }
           <Grid item xs={12} sm={8}>
             <TextField 
               helperText={!applicantInfo.employerName ? "*required" : ""} 
               id="employerName" 
-              label="Company or Employer Name" 
+              label="Primary Employer Name" 
               fullWidth 
               onChange={(e) => {handleAddApplicantInformation("employerName", e)}}  
               error={!applicantInfo.employerName && (startedTypingRequiredFields.employerName || session.attemptedPageSubmit)}

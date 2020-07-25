@@ -13,18 +13,15 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function PersonalDetails() {
+export default function BankDetails() {
     const classes = useStyles();
 
     const session = getSessionCookie();
 
     return (
         <div className={classes.root}>
-            <Typography>Name: {session.firstName} {session.lastName}</Typography>
-            <Typography >
-              {`Address: ${session.address1}\n${session.address2 ? session.address2 : ''}\n${session.city}, ${session.state} ${session.zipCode}`}
-            </Typography>
-            <Typography>Email: {session.email}</Typography>
+            <Typography>Account Number: {session.bankAccountNumber}</Typography>
+            <Typography>Routing Number: {session.routingNumber}</Typography>
         </div>
     )
 }

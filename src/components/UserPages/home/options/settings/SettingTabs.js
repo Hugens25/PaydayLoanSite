@@ -8,6 +8,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import PersonalDetails from './details/PersonalDetails';
+import BankDetails from './details/BankDetails';
+import IncomeDetails from './details/IncomeDetails';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -89,10 +91,10 @@ export default function SettingTabs() {
           <PersonalDetails />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Bank Details
+          <BankDetails />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Income Information
+          <IncomeDetails />
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
           Communication Preferences

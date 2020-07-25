@@ -13,18 +13,18 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function PersonalDetails() {
+export default function IncomeDetails() {
     const classes = useStyles();
 
     const session = getSessionCookie();
 
     return (
         <div className={classes.root}>
-            <Typography>Name: {session.firstName} {session.lastName}</Typography>
-            <Typography >
-              {`Address: ${session.address1}\n${session.address2 ? session.address2 : ''}\n${session.city}, ${session.state} ${session.zipCode}`}
-            </Typography>
-            <Typography>Email: {session.email}</Typography>
+            <Typography>Employment Status: {session.incomeType}</Typography>
+            <Typography>Employer Name: {session.employerName}</Typography>
+            <Typography>Paycheck: ${session.recentCheck} {session.payFrequency}</Typography>
+            {session.additionalSourceOfIncome && <Typography>Additional Income: {session.additionalSourceOfIncome} ${session.additionalIncomeAmount}</Typography>}
+    {/* <Typography>{`${JSON.stringify(session)}`}</Typography> */}
         </div>
     )
 }
