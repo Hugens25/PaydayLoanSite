@@ -87,7 +87,7 @@ export default function Apply(props) {
 
   const classes = useStyles();
 
-  const {applicantInfo, setApplicantInfo} = props;
+  const {applicantInfo, setApplicantInfo, setUserInfo} = props;
 
   let page1 = {'fields':['firstName', 'lastName', 'address1', 'city', 'state', 'zipCode', 'country', 'email', 'password', 'validatedPassword', 'ssn', 'validatedSSN', 'bday']}
   let page2 = {'fields':['incomeType', 'payFrequency', 'recentCheck', 'additionalSourceOfIncome', 'employerName', 'routingNumber', 'bankAccountNumber', 'verifyBankAccountNumber']}
@@ -142,7 +142,14 @@ export default function Apply(props) {
       
       let payload = {...applicantInfo, "dateOfApplication": `${mm}-${dd}-${yy} ${hh}:${min}:${ss}`}
       fetch(url, {method: 'POST', body: JSON.stringify(payload)})
-      .then((data) => null)
+      .then((data) => {
+        if(data.status == 200){
+          setApplicantInfo({}) 
+          setStartedTypingRequiredFields({})
+          setUserInfo({})
+          setSessionCookie({})
+        }
+      })
       .catch((err) => null)
     }
   });
@@ -153,7 +160,7 @@ export default function Apply(props) {
       <main className={classes.layout}>
         <Paper className={classes.paper} elevation={3}>
           <Typography component="h1" variant="h4" align="center">
-            {`Loan Application for $${applicantInfo.desiredLoanAmount}`}
+            {`Loan Application for $${applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount : '400'}`}
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
