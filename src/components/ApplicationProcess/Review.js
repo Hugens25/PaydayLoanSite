@@ -30,10 +30,13 @@ export default function Review(props) {
           <Typography align="left">{`Employment Type: ${applicantInfo.incomeType}`}</Typography>
           <Typography align="left">{`Employer: ${applicantInfo.employerName}`}</Typography>
           <Typography align="left">{`Income Per Check: ${applicantInfo.recentCheck}`}</Typography>
-
-          <Typography align="left">{`Additional Source of Income: ${applicantInfo.additionalSourceOfIncome}`}</Typography>
-          <Typography align="left">{`Additional Income Amount: ${applicantInfo.additionalSourceOfIncome !== 'N / A' ? applicantInfo.additionalIncomeAmount : ''}`}</Typography>
-        
+          {applicantInfo.additionalSourceOfIncome !== 'N / A' &&
+            <div>
+                <Typography align="left">{`Additional Source of Income: ${applicantInfo.additionalSourceOfIncome}`}</Typography>
+                <Typography align="left">{`Additional Income Amount: ${applicantInfo.additionalIncomeAmount}`}</Typography>
+            </div>
+          }
+          
         </Grid>
         <Grid item container direction="column" xs={12} sm={12}>
           
