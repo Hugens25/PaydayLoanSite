@@ -97,6 +97,9 @@ export default function Apply(props) {
   const [startedTypingRequiredFields, setStartedTypingRequiredFields] = useState({});
   const [missingValues, setMissingValues] = useState(false);
   const [processingComplete, setProcessingComplete] = useState(false);
+  const [errorSendingUpdate, setErrorSendingUpdate] = useState(false);
+  const [sentUserInfo, setSentUserInfo] = useState(false);
+  const [date, setDate] = useState(Date.now());
 
   const handleNext = () => {
     setSessionCookie({'attemptedPageSubmit':true})
@@ -105,6 +108,7 @@ export default function Apply(props) {
         return applicantInfo[field] ? true : false
       })
       if(!fieldValues.includes(false)){
+        handleSendUserInfo(false);
         setMissingValues(false)
         setActiveStep(activeStep + 1);
         setSessionCookie({'attemptedPageSubmit':false})
@@ -133,6 +137,22 @@ export default function Apply(props) {
     handleStartedTypingRequiredFields(key)
   }
 
+  const handleSendUserInfo = (applicationComplete) => {
+    let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/add-application'
+    let now = new Date(date); let mm = now.getUTCMonth() + 1; let dd = now.getUTCDate(); let yy = now.getUTCFullYear(); 
+    let hh = now.getUTCHours(); let min = now.getUTCMinutes(); let ss = now.getUTCSeconds();
+    
+    if(applicantInfo.additionalSourceOfIncome === 'N / A'){applicantInfo.additionalIncomeAmount = 'N / A'; applicantInfo.additionalPayFrequency = 'N / A'}
+    let payload = {...applicantInfo, "applicationComplete": applicationComplete, "date": `${mm}-${dd}-${yy}@${hh}:${min}:${ss}`}
+    fetch(url, {method: 'POST', body: JSON.stringify(payload)})
+    .then((data) => {
+      if(data.status != 200){
+        setErrorSendingUpdate(true)
+      }
+    })
+    .catch((err) => {console.log(err)})
+  }
+
   useEffect(() => {
     if(applicantInfo.additionalSourceOfIncome && applicantInfo.additionalSourceOfIncome != 'N / A'){
       requiredFields[1]['fields'].push('additionalPayFrequency', 'additionalIncomeAmount')
@@ -142,24 +162,52 @@ export default function Apply(props) {
   useEffect(() => {
     if (activeStep === steps.length) {
       // let url = process.env.REACT_APP_ADD_USER_URL
+      handleSendUserInfo(true)
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/add-user'
       let now = new Date(); let mm = now.getUTCMonth() + 1; let dd = now.getUTCDate(); let yy = now.getUTCFullYear(); 
-      let hh = now.getUTCHours(); let min = now.getUTCMinutes(); let ss = now.getUTCSeconds();
+      let userFields = [
+        'firstName', 
+        'lastName', 
+        'email',
+        'password', 
+        'address1', 
+        'address2', 
+        'city', 
+        'state', 
+        'zipCode', 
+        'bankAccountNumber', 
+        'routingNumber', 
+        'ssn',
+        'payFrequency',
+        'incomeType',
+        'employerName',
+        'additionalSourceOfIncome',
+        'additionalIncomeAmount',
+        'additionalPayFrequency',
+        'recentCheck',
+      ]  
+      if(!sentUserInfo){
+        const userDetails = {}
+        Object.keys(applicantInfo)
+          .filter((key) => userFields.includes(key))
+          .map((key) => {userDetails[key] = applicantInfo[key]})
       
-      if(applicantInfo.additionalSourceOfIncome === 'N / A'){applicantInfo.additionalIncomeAmount = null; applicantInfo.additionalPayFrequency = null}
-      let payload = {...applicantInfo, "dateOfApplication": `${mm}-${dd}-${yy} ${hh}:${min}:${ss}`}
-      fetch(url, {method: 'POST', body: JSON.stringify(payload)})
-      .then((data) => {
-        if(data.status == 200){
-          setApplicantInfo({}) 
-          setStartedTypingRequiredFields({})
-          setUserInfo({})
-          setSessionCookie({})
-        }
-      })
-      .catch((err) => null)
+        if(userDetails.additionalSourceOfIncome === 'N / A'){userDetails.additionalIncomeAmount = 'N / A'; userDetails.additionalPayFrequency = 'N / A'}
+        let payload = {...userDetails, "memberSince": `${mm}-${dd}-${yy}`}
+        fetch(url, {method: 'POST', body: JSON.stringify(payload)})
+        .then((data) => {
+          if(data.status == 200){
+            setSentUserInfo(true)
+            setApplicantInfo({}) 
+            setStartedTypingRequiredFields({})
+            setUserInfo({})
+            setSessionCookie({})
+          }
+        })
+        .catch((err) => console.log(err))
+      }
     }
-  });
+  }, [activeStep, sentUserInfo]);
 
   return (
     <Fragment>
