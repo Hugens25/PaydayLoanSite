@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import PersonalDetails from './details/PersonalDetails';
 import BankDetails from './details/BankDetails';
 import IncomeDetails from './details/IncomeDetails';
+import CommunicationPreferences from './details/CommunicationPreferences';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -97,7 +98,7 @@ export default function SettingTabs() {
           <IncomeDetails />
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-          Communication Preferences
+          <CommunicationPreferences />
         </TabPanel>
       </SwipeableViews>
     </div>
