@@ -32,7 +32,7 @@ export default function Review(props) {
           <Typography align="left">{`Income Per Check: ${applicantInfo.recentCheck}`}</Typography>
 
           <Typography align="left">{`Additional Source of Income: ${applicantInfo.additionalSourceOfIncome}`}</Typography>
-          <Typography align="left">{`Additional Income Amount: ${applicantInfo.additionalIncomeAmount}`}</Typography>
+          <Typography align="left">{`Additional Income Amount: ${applicantInfo.additionalSourceOfIncome !== 'N / A' ? applicantInfo.additionalIncomeAmount : ''}`}</Typography>
         
         </Grid>
         <Grid item container direction="column" xs={12} sm={12}>

@@ -134,12 +134,19 @@ export default function Apply(props) {
   }
 
   useEffect(() => {
+    if(applicantInfo.additionalSourceOfIncome && applicantInfo.additionalSourceOfIncome != 'N / A'){
+      requiredFields[1]['fields'].push('additionalPayFrequency', 'additionalIncomeAmount')
+    }
+  })
+
+  useEffect(() => {
     if (activeStep === steps.length) {
       // let url = process.env.REACT_APP_ADD_USER_URL
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/add-user'
       let now = new Date(); let mm = now.getUTCMonth() + 1; let dd = now.getUTCDate(); let yy = now.getUTCFullYear(); 
       let hh = now.getUTCHours(); let min = now.getUTCMinutes(); let ss = now.getUTCSeconds();
       
+      if(applicantInfo.additionalSourceOfIncome === 'N / A'){applicantInfo.additionalIncomeAmount = null; applicantInfo.additionalPayFrequency = null}
       let payload = {...applicantInfo, "dateOfApplication": `${mm}-${dd}-${yy} ${hh}:${min}:${ss}`}
       fetch(url, {method: 'POST', body: JSON.stringify(payload)})
       .then((data) => {

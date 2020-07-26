@@ -31,7 +31,7 @@ export default function PaymentForm(props) {
         } = props;
 
   const [secondaryIncomeType, setsecondaryIncomeType] = useState('');
-  const [hasSecondaryIncome, setHasSecondaryIncome] = useState(applicantInfo.additionalSourceOfIncome ? true : false);
+  const [hasSecondaryIncome, setHasSecondaryIncome] = useState(applicantInfo.additionalSourceOfIncome && applicantInfo.additionalSourceOfIncome !== 'N / A' ? true : false);
   const [accountNumberVerified, setAccountNumberVerified] = useState(true);
 
   const handleSecondaryIncomeTypeChange = (e) => {
@@ -84,7 +84,7 @@ export default function PaymentForm(props) {
                   onChange={(e) => {handleAddApplicantInformation("payFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
-                  <MenuItem value={"Every Week"}>Weekly</MenuItem>
+                  <MenuItem value={"Weekly"}>Weekly</MenuItem>
                   <MenuItem value={"Bi-Weekly"}>Bi-Weekly (Every other week)</MenuItem>
                   <MenuItem value={"Semi-Monthly"}>Semi-Monthly (Twice a Month)</MenuItem>
                   <MenuItem value={"Monthly"}>Monthly</MenuItem>
@@ -141,7 +141,7 @@ export default function PaymentForm(props) {
                   onChange={(e) => {handleAddApplicantInformation("additionalPayFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
-                  <MenuItem value={"Every Week"}>Weekly</MenuItem>
+                  <MenuItem value={"Weekly"}>Weekly</MenuItem>
                   <MenuItem value={"Bi-Weekly"}>Bi-Weekly (Every other week)</MenuItem>
                   <MenuItem value={"Semi-Monthly"}>Semi-Monthly (Twice a Month)</MenuItem>
                   <MenuItem value={"Monthly"}>Monthly</MenuItem>

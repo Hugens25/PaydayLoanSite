@@ -23,8 +23,14 @@ export default function IncomeDetails() {
             <Typography>Employment Status: {session.incomeType}</Typography>
             <Typography>Employer Name: {session.employerName}</Typography>
             <Typography>Paycheck: ${session.recentCheck} {session.payFrequency}</Typography>
-            {session.additionalSourceOfIncome && <Typography>Additional Income: {session.additionalSourceOfIncome} ${session.additionalIncomeAmount}</Typography>}
-    {/* <Typography>{`${JSON.stringify(session)}`}</Typography> */}
+            {
+            session.additionalSourceOfIncome !== 'N / A' 
+            && 
+            <div>
+              <Typography>Additional Income Source: {session.additionalSourceOfIncome}</Typography>
+            <Typography>Additional Income Amount: ${session.additionalIncomeAmount} {session.additionalPayFrequency}</Typography>
+            </div>
+            }
         </div>
     )
 }
