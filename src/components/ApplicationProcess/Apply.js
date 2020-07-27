@@ -108,7 +108,7 @@ export default function Apply(props) {
         return applicantInfo[field] ? true : false
       })
       if(!fieldValues.includes(false)){
-        handleSendApplicationInfo(false);
+        handleSendApplicationInfo('false');
         setMissingValues(false)
         setActiveStep(activeStep + 1);
         setSessionCookie({'attemptedPageSubmit':false})
@@ -143,7 +143,7 @@ export default function Apply(props) {
     let hh = now.getUTCHours(); let min = now.getUTCMinutes(); let ss = now.getUTCSeconds();
     
     if(applicantInfo.additionalSourceOfIncome === 'N / A'){applicantInfo.additionalIncomeAmount = 'N / A'; applicantInfo.additionalPayFrequency = 'N / A'}
-    let payload = {...applicantInfo, "applicationComplete": applicationComplete, "date": `${mm}-${dd}-${yy}@${hh}:${min}:${ss}`}
+    let payload = {...applicantInfo, "applicationComplete": applicationComplete, "date": `${yy}-${mm}-${dd}@${hh}:${min}:${ss}`}
     fetch(url, {method: 'POST', body: JSON.stringify(payload)})
     .then((data) => {
       if(data.status != 200){
@@ -206,7 +206,7 @@ export default function Apply(props) {
 
   useEffect(() => {
     if (activeStep === steps.length) {
-      handleSendApplicationInfo(true)
+      handleSendApplicationInfo('true')
       if(!sentUserInfo){handleSendUserInfo()}
     }
   }, [activeStep, sentUserInfo]);

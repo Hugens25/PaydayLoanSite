@@ -73,7 +73,7 @@ export default function ApplicationTabs() {
           scrollButtons="auto"
           aria-label="full width tabs example"
         >
-          <Tab label="Open Applications" {...a11yProps(0)} />
+          <Tab label="Incomplete Applications" {...a11yProps(0)} />
           <Tab label="Pending Applications" {...a11yProps(1)} />
           <Tab label="Approved Applications" {...a11yProps(2)} />
           <Tab label="Denied Applications" {...a11yProps(3)} />
