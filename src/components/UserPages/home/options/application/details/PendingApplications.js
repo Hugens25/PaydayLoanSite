@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function IncompleteApplications() {
+export default function PendingApplications() {
     const classes = useStyles();
 
     const session = getSessionCookie();
@@ -23,7 +23,7 @@ export default function IncompleteApplications() {
 
     async function getIncompleteApplications() {
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/get-applications'
-      let payload = {"email": session.email, "searchCriteria": {"attribute":"applicationComplete", "value":"false"}}
+      let payload = {"email": session.email, "searchCriteria": {"attribute":"applicationComplete", "value":"true"}}
       let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
       setRetrievedApplications(true)
       return data

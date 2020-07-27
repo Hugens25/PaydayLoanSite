@@ -7,6 +7,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import IncompleteApplications from './details/IncompleteApplications';
+import PendingApplications from './details/PendingApplications';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -85,10 +87,10 @@ export default function ApplicationTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Open Applications
+          <IncompleteApplications />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Pending Applications
+          <PendingApplications />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Approved Applications
