@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import green from '@material-ui/core/colors/green';
 import Login from '../UserPages/Login';
 import Logout from '../UserPages/Logout';
-import Apply from '../ApplicationProcess/Apply';
+import Apply from '../ApplicationProcess/ApplicationFlow';
 import LandingPage from '../LandingPage';
 import HomePage from '../UserPages/home/HomePage';
 import Settings from '../UserPages/Settings';

@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { getSessionCookie } from '../../session';
+import { getSessionCookie } from '../../../session';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

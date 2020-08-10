@@ -9,9 +9,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import red from '@material-ui/core/colors/red';
-import ApplicantForm from './ApplicantInfo';
-import BankForm from './IncomeAndBankInfo';
-import Review from './Review';
+import ApplicantForm from './pages/ApplicantInfo';
+import BankForm from './pages/IncomeAndBankInfo';
+import Review from './pages/Review';
 import ProgressBar from '../misc/ProgressBar';
 import { setSessionCookie } from '../../session';
 

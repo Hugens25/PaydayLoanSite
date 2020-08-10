@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { getSessionCookie } from '../../session';
+import { getSessionCookie } from '../../../session';
 
 export default function AddressForm(props) {
 
