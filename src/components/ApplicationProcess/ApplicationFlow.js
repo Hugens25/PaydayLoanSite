@@ -51,9 +51,15 @@ const useStyles = makeStyles((theme) => ({
   warning : {
     color: red[500],
   },
+  label: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    width: '100%',
+  },
 }));
 
-const steps = ['Applicant Info', 'Income and Bank Details', 'Review and Submit'];
+const steps = ['Applicant Info', 'Income & Bank Info', 'Review and Submit'];
 
 function getStepContent(step, applicantInfo, setApplicantInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation) {
   switch (step) {
@@ -106,6 +112,7 @@ export default function Apply(props) {
     if (activeStep < 2) {
       let fieldValues = requiredFields[activeStep].fields.map((field) => {
         return applicantInfo[field] ? true : false
+        // return true // uncomment to bypass application validation
       })
       if(!fieldValues.includes(false)){
         handleSendApplicationInfo('false');
@@ -221,7 +228,7 @@ export default function Apply(props) {
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
-              <Step key={label}>
+              <Step key={label} className={steps.indexOf(label) === activeStep ? '' : classes.label}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}

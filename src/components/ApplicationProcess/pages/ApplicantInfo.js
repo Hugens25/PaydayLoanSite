@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -6,7 +7,19 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { getSessionCookie } from '../../../session';
 
+const useStyles = makeStyles((theme) => ({
+  
+  inputLabel: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    width: '100%',
+  },
+}));
+
 export default function AddressForm(props) {
+
+  const classes = useStyles();
 
   const date = new Date();
   let minimumValidDOB = date.setFullYear(date.getFullYear() - 18);
@@ -52,6 +65,7 @@ export default function AddressForm(props) {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.firstName ? "*required" : ""}
             id="firstName"
             name="firstName"
@@ -65,6 +79,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.lastName ? "*required" : ""}
             id="lastName"
             name="lastName"
@@ -78,6 +93,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.address1 ? "*required" : ""}
             id="address1"
             name="address1"
@@ -91,6 +107,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12}>
           <TextField
+            variant="outlined"
             id="address2"
             name="address2"
             label="Address line 2"
@@ -102,6 +119,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.city ? "*required" : ""}
             id="city"
             name="city"
@@ -115,6 +133,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField 
+            variant="outlined"
             helperText={!applicantInfo.state ? "*required" : ""}
             id="state" 
             name="state" 
@@ -127,6 +146,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.zipCode ? "*required" : ""}
             id="zip"
             name="zip"
@@ -140,6 +160,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.country ? "*required" : ""}
             id="country"
             name="country"
@@ -153,6 +174,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.email ? "*required" : ""}
             id="email"
             name="email"
@@ -166,10 +188,12 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.password ? "*required" : ""}
             id="password"
             name="password"
             label="Choose a Password"
+            className={classes.inputLabel}
             fullWidth
             autoComplete="password"
             type="password"
@@ -181,10 +205,12 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.validatedPassword ? "*required" : ""}
             id="validatePassword"
             name="validatePassword"
             label="Re-Enter Password"
+            className={classes.inputLabel}
             fullWidth
             autoComplete="password"
             type="password"
@@ -194,6 +220,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.ssn ? "*required" : ""}
             id="SSN"
             name="SSN"
@@ -209,6 +236,7 @@ export default function AddressForm(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             helperText={!applicantInfo.validatedSSN ? "*required" : ""}
             id="verifySSN"
             name="verifySSN"

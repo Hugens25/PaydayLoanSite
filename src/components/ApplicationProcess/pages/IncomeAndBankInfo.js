@@ -57,6 +57,8 @@ export default function PaymentForm(props) {
             <FormControl className={classes.formControl}>
               <InputLabel id="sourceOfIncome">Primary Income</InputLabel>
               <Select
+                variant="outlined"
+                className={classes.selectLabel}
                 helperText={!applicantInfo.incomeType ? "*required" : ""}
                 labelId="sourceOfIncome"
                 id="sourceOfIncomeSelect"
@@ -76,6 +78,7 @@ export default function PaymentForm(props) {
             <FormControl className={classes.formControl}>
               <InputLabel id="payFrequency">How often are you paid?</InputLabel>
                 <Select
+                  variant="outlined"
                   helperText={!applicantInfo.payFrequency ? "*required" : ""}
                   labelId="payFrequency"
                   id="payFrequencySelect"
@@ -93,6 +96,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12}>
             <TextField 
+              variant="outlined"
               helperText={!applicantInfo.recentCheck ? "*required" : ""} 
               id="recentCheck" 
               label="What was the amount of your most recent check?" 
@@ -109,6 +113,7 @@ export default function PaymentForm(props) {
             <FormControl className={classes.formControl}>
               <InputLabel id="additionalSourceOfIncome">Additional Source of Income</InputLabel>
               <Select
+                variant="outlined"
                 helperText={!applicantInfo.additionalSourceOfIncome ? "*required" : ""}
                 labelId="additionalSourceOfIncome"
                 id="additionalSourceOfIncomeSelect"
@@ -133,6 +138,7 @@ export default function PaymentForm(props) {
               <FormControl className={classes.formControl}>
                 <InputLabel id="additionalPayFrequency">How often are you paid?</InputLabel>
                 <Select
+                  variant="outlined"
                   helperText={!applicantInfo.payFrequency ? "*required" : ""}
                   labelId="additionalPayFrequency"
                   id="additionalPayFrequencySelect"
@@ -155,6 +161,7 @@ export default function PaymentForm(props) {
           {hasSecondaryIncome &&
               <Grid item xs={12}>
                 <TextField 
+                  variant="outlined"
                   helperText={!applicantInfo.additionalIncomeAmount ? "*required" : ""} 
                   id="additionalIncomeAmount" 
                   label="Additional Income Amount" 
@@ -168,6 +175,7 @@ export default function PaymentForm(props) {
           }
           <Grid item xs={12} sm={8}>
             <TextField 
+              variant="outlined"
               helperText={!applicantInfo.employerName ? "*required" : ""} 
               id="employerName" 
               label="Primary Employer Name" 
@@ -179,6 +187,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <TextField 
+              variant="outlined"
               helperText={!applicantInfo.routingNumber ? "*required" : ""} 
               id="routingNumber" 
               label="Bank Routing Number" 
@@ -190,6 +199,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <TextField 
+              variant="outlined"
               helperText={!applicantInfo.bankAccountNumber ? "*required" : ""} 
               id="accountNumber" 
               label="Bank Account Number" 
@@ -201,6 +211,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <TextField 
+              variant="outlined"
               helperText={!applicantInfo.verifyBankAccountNumber ? "*required" : ""} 
               id="verifyAccountNumber" 
               label="Re-Enter Bank Account Number" 
