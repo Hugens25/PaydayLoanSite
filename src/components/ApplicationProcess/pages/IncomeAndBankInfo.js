@@ -18,6 +18,17 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  selectLabel: {
+    paddingLeft: theme.spacing(2),
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
+  inputLabel: {
+    textOverflow: 'ellipsis',
+    // whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
 }));
 
 export default function PaymentForm(props) {
@@ -55,10 +66,9 @@ export default function PaymentForm(props) {
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <FormControl className={classes.formControl}>
-              <InputLabel id="sourceOfIncome">Primary Income</InputLabel>
+              <InputLabel id="sourceOfIncome" className={classes.selectLabel}>Primary Income</InputLabel>
               <Select
                 variant="outlined"
-                className={classes.selectLabel}
                 helperText={!applicantInfo.incomeType ? "*required" : ""}
                 labelId="sourceOfIncome"
                 id="sourceOfIncomeSelect"
@@ -76,7 +86,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl className={classes.formControl}>
-              <InputLabel id="payFrequency">How often are you paid?</InputLabel>
+              <InputLabel id="payFrequency" className={classes.selectLabel}>How often are you paid?</InputLabel>
                 <Select
                   variant="outlined"
                   helperText={!applicantInfo.payFrequency ? "*required" : ""}
@@ -96,14 +106,15 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12}>
             <TextField 
+              // className={classes.inputLabel}
               variant="outlined"
               helperText={!applicantInfo.recentCheck ? "*required" : ""} 
               id="recentCheck" 
               label="What was the amount of your most recent check?" 
               fullWidth 
-              InputProps={{
-                startAdornment: <InputAdornment position="start">$</InputAdornment>,
-              }}
+              // InputProps={{
+              //   startAdornment: <InputAdornment position="start">$</InputAdornment>,
+              // }}
               error={!applicantInfo.recentCheck && (startedTypingRequiredFields.recentCheck || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddApplicantInformation("recentCheck", e)}}
               value={applicantInfo.recentCheck}
@@ -111,7 +122,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl className={classes.formControl}>
-              <InputLabel id="additionalSourceOfIncome">Additional Source of Income</InputLabel>
+              <InputLabel id="additionalSourceOfIncome" className={classes.selectLabel}>Additional Source of Income</InputLabel>
               <Select
                 variant="outlined"
                 helperText={!applicantInfo.additionalSourceOfIncome ? "*required" : ""}
@@ -136,7 +147,7 @@ export default function PaymentForm(props) {
             hasSecondaryIncome &&
             <Grid item xs={12} sm={6}>
               <FormControl className={classes.formControl}>
-                <InputLabel id="additionalPayFrequency">How often are you paid?</InputLabel>
+                <InputLabel id="additionalPayFrequency" className={classes.selectLabel}>How often are you paid?</InputLabel>
                 <Select
                   variant="outlined"
                   helperText={!applicantInfo.payFrequency ? "*required" : ""}
@@ -161,6 +172,7 @@ export default function PaymentForm(props) {
           {hasSecondaryIncome &&
               <Grid item xs={12}>
                 <TextField 
+                  // className={classes.inputLabel}
                   variant="outlined"
                   helperText={!applicantInfo.additionalIncomeAmount ? "*required" : ""} 
                   id="additionalIncomeAmount" 
@@ -173,8 +185,9 @@ export default function PaymentForm(props) {
               </Grid>
             
           }
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={6}>
             <TextField 
+              // className={classes.inputLabel}
               variant="outlined"
               helperText={!applicantInfo.employerName ? "*required" : ""} 
               id="employerName" 
@@ -185,8 +198,9 @@ export default function PaymentForm(props) {
               value={applicantInfo.employerName}
             />
           </Grid>
-          <Grid item xs={12} sm={8}>
-            <TextField 
+          <Grid item xs={12} sm={6}>
+            <TextField  
+              // className={classes.inputLabel}
               variant="outlined"
               helperText={!applicantInfo.routingNumber ? "*required" : ""} 
               id="routingNumber" 
@@ -197,8 +211,9 @@ export default function PaymentForm(props) {
               value={applicantInfo.routingNumber}
             />
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={6}>
             <TextField 
+              // className={classes.inputLabel}
               variant="outlined"
               helperText={!applicantInfo.bankAccountNumber ? "*required" : ""} 
               id="accountNumber" 
@@ -209,8 +224,9 @@ export default function PaymentForm(props) {
               value={applicantInfo.bankAccountNumber}
             />
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={6}>
             <TextField 
+              // className={classes.inputLabel}
               variant="outlined"
               helperText={!applicantInfo.verifyBankAccountNumber ? "*required" : ""} 
               id="verifyAccountNumber" 

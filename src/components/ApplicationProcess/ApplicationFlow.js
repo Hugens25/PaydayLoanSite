@@ -18,27 +18,27 @@ import { setSessionCookie } from '../../session';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
-    width: 'auto',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+    width: '98vw',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    width: '80vw',
+    minHeight: '85vh',
+    margin: 'auto',
     padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  container: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   stepper: {
-    padding: theme.spacing(3, 0, 5),
+    width: '100%'
   },
   buttons: {
     display: 'flex',
@@ -52,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
     color: red[500],
   },
   label: {
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    width: '100%',
+    // textOverflow: 'ellipsis',
+    // whiteSpace: 'nowrap',
+    // overflow: 'hidden',
+    // width: '100%',
   },
 }));
 
@@ -111,8 +111,8 @@ export default function Apply(props) {
     setSessionCookie({'attemptedPageSubmit':true})
     if (activeStep < 2) {
       let fieldValues = requiredFields[activeStep].fields.map((field) => {
-        return applicantInfo[field] ? true : false
-        // return true // uncomment to bypass application validation
+        // return applicantInfo[field] ? true : false
+        return true // uncomment to bypass application validation
       })
       if(!fieldValues.includes(false)){
         handleSendApplicationInfo('false');
@@ -221,7 +221,8 @@ export default function Apply(props) {
   return (
     <Fragment>
       <CssBaseline />
-      <main className={classes.layout}>
+      <div className={classes.layout}>
+        <Box className={classes.container}>
         <Paper className={classes.paper} elevation={3}>
           <Typography component="h1" variant="h4" align="center">
             {`Loan Application for $${applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount : '400'}`}
@@ -270,7 +271,8 @@ export default function Apply(props) {
             )}
           </Fragment>
         </Paper>
-      </main>
+        </Box>
+      </div>
     </Fragment>
   );
 }

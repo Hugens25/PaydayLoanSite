@@ -10,10 +10,6 @@ import { getSessionCookie } from '../../../session';
 const useStyles = makeStyles((theme) => ({
   
   inputLabel: {
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    width: '100%',
   },
 }));
 
@@ -193,7 +189,6 @@ export default function AddressForm(props) {
             id="password"
             name="password"
             label="Choose a Password"
-            className={classes.inputLabel}
             fullWidth
             autoComplete="password"
             type="password"
@@ -210,7 +205,6 @@ export default function AddressForm(props) {
             id="validatePassword"
             name="validatePassword"
             label="Re-Enter Password"
-            className={classes.inputLabel}
             fullWidth
             autoComplete="password"
             type="password"
