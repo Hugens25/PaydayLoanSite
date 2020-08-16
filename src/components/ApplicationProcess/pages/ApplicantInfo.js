@@ -37,10 +37,17 @@ export default function AddressForm(props) {
   const [ssnValidated, setValidatedSSN] = useState(true); 
 
   const handleDateChange = (date) => {
+    let mm, dd, yyyy, formattedBday;
     if (date > minimumValidDOB) {
       alert("Unable to Proceed:\n\nYou must be 18 years old or older to apply for a Payday Loan.")
     } else {
-      setApplicantInfo({...applicantInfo, "bday":date})
+      if (date){
+        mm = date.getUTCMonth() + 1
+        dd = date.getUTCDate()
+        yyyy = date.getUTCFullYear()
+        formattedBday = `${mm}/${dd}/${yyyy}`
+      }
+      setApplicantInfo({...applicantInfo, "bday":formattedBday})
     }
   };
 

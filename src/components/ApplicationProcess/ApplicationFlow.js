@@ -177,6 +177,7 @@ export default function Apply(props) {
       'bankAccountNumber', 
       'routingNumber', 
       'ssn',
+      'bday',
       'payFrequency',
       'incomeType',
       'employerName',
