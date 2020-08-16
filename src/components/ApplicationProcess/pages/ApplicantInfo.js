@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
   
   inputLabel: {
   },
+  datePicker: {
+    bottom: '0.5rem',
+    width: '100%'
+  }
 }));
 
 export default function AddressForm(props) {
@@ -168,7 +172,65 @@ export default function AddressForm(props) {
             onChange={(e) => {handleAddApplicantInformation("country", e)}}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            variant="outlined"
+            helperText={!applicantInfo.ssn ? "*required" : ""}
+            id="SSN"
+            name="SSN"
+            label="Social Security Number"
+            // type="number"
+            fullWidth
+            autoComplete="SSN"
+            error={!ssnValidated}
+            value={applicantInfo.ssn}
+            error={!applicantInfo.ssn && (startedTypingRequiredFields.ssn || session.attemptedPageSubmit)}
+            onChange={(e) => {handleAddApplicantInformation("ssn", e)}}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            variant="outlined"
+            helperText={!applicantInfo.validatedSSN ? "*required" : ""}
+            id="verifySSN"
+            name="verifySSN"
+            label="Re-Enter Social Security Number"
+            fullWidth
+            autoComplete="SSN"
+            error={!ssnValidated}
+            onChange={(e) => {handleAddApplicantInformation("validatedSSN", e)}}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            variant="outlined"
+            helperText={!applicantInfo.validatedSSN ? "*required" : ""}
+            id="desiredLoanAmount"
+            name="desiredLoanAmount"
+            label="Desired Loan Amount"
+            fullWidth
+            autoComplete="desiredLoanAmount"
+            // error={!ssnValidated}
+            onChange={(e) => {handleAddApplicantInformation("validatedSSN", e)}}
+          />
+        </Grid>
+          <Grid item xs={12} sm={6}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} >
+              <KeyboardDatePicker
+                helperText={!applicantInfo.bday ? "*required" : ""}
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Date of Birth"
+                value={applicantInfo.bday}
+                onChange={handleDateChange}
+                className={classes.datePicker}
+                style={!applicantInfo.bday && session.attemptedPageSubmit ? {'border-bottom': '2px solid red'} : {}}
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid item xs={12}>
           <TextField
             variant="outlined"
             helperText={!applicantInfo.email ? "*required" : ""}
@@ -212,53 +274,6 @@ export default function AddressForm(props) {
             onChange={(e) => {handleAddApplicantInformation("validatedPassword", e)}}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            helperText={!applicantInfo.ssn ? "*required" : ""}
-            id="SSN"
-            name="SSN"
-            label="Social Security Number"
-            // type="number"
-            fullWidth
-            autoComplete="SSN"
-            error={!ssnValidated}
-            value={applicantInfo.ssn}
-            error={!applicantInfo.ssn && (startedTypingRequiredFields.ssn || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("ssn", e)}}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            helperText={!applicantInfo.validatedSSN ? "*required" : ""}
-            id="verifySSN"
-            name="verifySSN"
-            label="Re-Enter Social Security Number"
-            fullWidth
-            autoComplete="SSN"
-            error={!ssnValidated}
-            onChange={(e) => {handleAddApplicantInformation("validatedSSN", e)}}
-          />
-        </Grid>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid item xs={12} sm={12}>
-            <KeyboardDatePicker
-              helperText={!applicantInfo.bday ? "*required" : ""}
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="date-picker-inline"
-              label="Date of Birth"
-              value={applicantInfo.bday}
-              onChange={handleDateChange}
-              style={!applicantInfo.bday && session.attemptedPageSubmit ? {'border-bottom': '2px solid red'} : {}}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-            />
-          </Grid>
-        </MuiPickersUtilsProvider>
       </Grid>
     </Fragment>
   );
