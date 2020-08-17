@@ -42,11 +42,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ViewApplications(props) {
   const classes = useStyles();
 
-const [panelExpanded, setPanelExpanded] = React.useState(false);
+  const [panelExpanded, setPanelExpanded] = React.useState(false);
 
   const handlePanelChange = (panel) => (event, isExpanded) => {
     setPanelExpanded(isExpanded ? panel : false);
   };
+
+  const {userInfo, setUserInfo} = props;
 
   return(
     <ExpansionPanel expanded={panelExpanded === 'panel1'} onChange={handlePanelChange('panel1')}>
@@ -60,7 +62,7 @@ const [panelExpanded, setPanelExpanded] = React.useState(false);
     </ExpansionPanelSummary>
     <ExpansionPanelDetails>
         <Box className={classes.settingOption}>
-            <ApplicationOptions />
+            <ApplicationOptions userInfo={userInfo} setUserInfo={setUserInfo} />
         </Box>
     </ExpansionPanelDetails>
 </ExpansionPanel>

@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ApplicationTabs() {
+export default function ApplicationTabs(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -62,6 +62,8 @@ export default function ApplicationTabs() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
+  const {userInfo, setUserInfo} = props;
 
   return (
     <div className={classes.root}>
@@ -87,10 +89,10 @@ export default function ApplicationTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <IncompleteApplications />
+          <IncompleteApplications userInfo={userInfo} setUserInfo={setUserInfo}/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <PendingApplications />
+          <PendingApplications userInfo={userInfo} setUserInfo={setUserInfo}/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Approved Applications

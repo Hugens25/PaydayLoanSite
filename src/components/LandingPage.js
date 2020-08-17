@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -10,6 +10,9 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Slider from '@material-ui/core/Slider';
 import Spinner from './misc/Spinner';
+
+import { handleGetUserInfo } from '../utilities/utils'
+import { getSessionCookie } from '../session';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +57,8 @@ export default function LandingPage(props) {
 
   const defaultLoanAmount = 400;
 
+  const session = getSessionCookie;
+
   const {applicantInfo, setApplicantInfo} = props;
 
   const history = useHistory();
@@ -61,13 +66,14 @@ export default function LandingPage(props) {
   const [startedTypingField, setStartedTypingField] = useState({});
   const [submitingApplicantInfo, setSubmitingApplicantInfo] = useState(false);
 
+  const [fetchedUserInfo, setFetchedUserInfo] = useState(false);
+
   const classes = useStyles();
 
   const handleAddApplicantInformation = (key, value) => {
     handleStartedTypingField(key)
     let info = { ...applicantInfo }
     info[key] = value
-    
     setApplicantInfo(info)
   }
 
@@ -91,12 +97,28 @@ export default function LandingPage(props) {
       setSubmitingApplicantInfo(true)
       // let url = process.env.REACT_APP_SAVE_APPLICANT_URL
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/save-applicant'
-      if(!applicantInfo.desiredLoanAmount){handleAddApplicantInformation('desiredLoanAmount', defaultLoanAmount)}
-      applicantInfo.desiredLoanAmount = applicantInfo.desiredLoanAmount.toString()
+      applicantInfo.desiredLoanAmount = applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount.toString() : defaultLoanAmount.toString()
       let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(applicantInfo)})).json()
       if(data.status === 200){setSubmitingApplicantInfo(false); history.push("/apply");}
     }
   }
+
+  useEffect(() => {
+    if(submitingApplicantInfo && !applicantInfo.desiredLoanAmount){handleAddApplicantInformation('desiredLoanAmount', defaultLoanAmount.toString())}
+  }, [applicantInfo, submitingApplicantInfo])
+
+  useEffect(() => {
+    if(!fetchedUserInfo && session.isLoggedIn){
+      handleGetUserInfo(session.email)
+      .then((data) => {
+        if (data.statusCode === 200){
+          let user = data.user
+          setApplicantInfo({...applicantInfo, ...user})
+          setFetchedUserInfo(true)
+        }
+      })
+    }
+  })
 
   return(
       <Fragment>

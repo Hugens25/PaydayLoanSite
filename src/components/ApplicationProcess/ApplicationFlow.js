@@ -13,7 +13,8 @@ import ApplicantForm from './pages/ApplicantInfo';
 import BankForm from './pages/IncomeAndBankInfo';
 import Review from './pages/Review';
 import ProgressBar from '../misc/ProgressBar';
-import { setSessionCookie } from '../../session';
+import { getSessionCookie, setSessionCookie } from '../../session';
+import { handleGetUserInfo } from '../../utilities/utils';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -107,8 +108,25 @@ export default function Apply(props) {
   const [sentUserInfo, setSentUserInfo] = useState(false);
   const [date, setDate] = useState(Date.now());
 
+  const session = getSessionCookie();
+
+  const [fetchedUserInfo, setFetchedUserInfo] = useState(false);
+
+  useEffect(() => {
+    if(!fetchedUserInfo && session.isLoggedIn){
+      handleGetUserInfo(session.email)
+      .then((data) => {
+        if (data.statusCode === 200){
+          let user = data.user
+          setApplicantInfo({...applicantInfo, ...user})
+          setFetchedUserInfo(true)
+        }
+      })
+    }
+  })
+
   const handleNext = () => {
-    setSessionCookie({'attemptedPageSubmit':true})
+    setSessionCookie({...session, 'attemptedPageSubmit':true})
     if (activeStep < 2) {
       let fieldValues = requiredFields[activeStep].fields.map((field) => {
         // return applicantInfo[field] ? true : false
@@ -118,7 +136,7 @@ export default function Apply(props) {
         handleSendApplicationInfo('false');
         setMissingValues(false)
         setActiveStep(activeStep + 1);
-        setSessionCookie({'attemptedPageSubmit':false})
+        setSessionCookie({...session, 'attemptedPageSubmit':false})
       } else {
         setMissingValues(true)
       }
@@ -173,6 +191,7 @@ export default function Apply(props) {
       'address2', 
       'city', 
       'state', 
+      'country',
       'zipCode', 
       'bankAccountNumber', 
       'routingNumber', 

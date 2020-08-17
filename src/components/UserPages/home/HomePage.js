@@ -12,6 +12,8 @@ import ViewPayments from './options/payments/ViewPayments';
 import LoanDetails from './options/loan/LoanDetails';
 import ViewSettings from './options/settings/ViewSettings';
 
+import { handleGetUserInfo } from '../../../utilities/utils'
+
 const useStyles = makeStyles((theme) => ({
     layout: {
       width: '98vw',
@@ -56,12 +58,22 @@ export default function HomePage(props) {
 
   let session = getSessionCookie()
 
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
+  const [userInfo, setUserInfo] = useState({});
+  
+  const [fetchedUserInfo, setFetchedUserInfo] = useState(false);
 
   useEffect(() => {
-    if(!session.userInfoIsFetched){forceUpdate(); setSessionCookie({...session, 'userInfoIsFetched':true})}
-  });
+    if(!fetchedUserInfo && session.isLoggedIn){
+      handleGetUserInfo(session.email)
+      .then((data) => {
+        if (data.statusCode === 200){
+          let user = data.user
+          setUserInfo({...userInfo, ...user})
+          setFetchedUserInfo(true)
+        }
+      })
+    }
+  })
   
   const classes = useStyles();
 
@@ -75,11 +87,11 @@ export default function HomePage(props) {
                         (
                           <Box className={classes.root}>
                             <Typography className={classes.headers} variant="h5" gutterBottom>My Account</Typography>
-                            <Typography className={classes.headers}>{`Welcome${session.firstName ? ', '+session.firstName : '' }${session.lastName ? ' '+session.lastName : ''}!`}</Typography>
-                            <Box className={classes.element}><ViewApplications /></Box>
-                            <Box className={classes.element}><LoanDetails /></Box>
-                            <Box className={classes.element}><ViewPayments /></Box>
-                            <Box className={classes.element}><ViewSettings /></Box>
+                            <Typography className={classes.headers}>{`Welcome${userInfo.firstName ? ', '+userInfo.firstName : '' }${userInfo.lastName ? ' '+userInfo.lastName : ''}!`}</Typography>
+                            <Box className={classes.element}><ViewApplications userInfo={userInfo} setUserInfo={setUserInfo} /></Box>
+                            <Box className={classes.element}><LoanDetails userInfo={userInfo} setUserInfo={setUserInfo} /></Box>
+                            <Box className={classes.element}><ViewPayments userInfo={userInfo} setUserInfo={setUserInfo} /></Box>
+                            <Box className={classes.element}><ViewSettings userInfo={userInfo} setUserInfo={setUserInfo} /></Box>
                           </Box>
                         )
                       }

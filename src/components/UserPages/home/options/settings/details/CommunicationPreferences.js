@@ -35,7 +35,7 @@ function SwitchOption(props) {
     )
 }
 
-export default function CommunicationPreferences() {
+export default function CommunicationPreferences(props) {
     const classes = useStyles();
 
     const session = getSessionCookie();
@@ -45,6 +45,8 @@ export default function CommunicationPreferences() {
     const handleSwitchChange = (event) => {
         setSettings({ ...settings, [event.target.name]: event.target.checked });
     };
+
+    const {userInfo, setUserInfo} = props;
 
     return (
         <div className={classes.root}>

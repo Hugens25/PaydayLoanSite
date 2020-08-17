@@ -56,15 +56,22 @@ export default function Navbar() {
 
   const session = getSessionCookie();
 
+  const keysToRemove = ['ssn', 'validatedSSN']
+
+  const filteredSession = {}
+    Object.keys(session)
+      .filter((key) => !keysToRemove.includes(key))
+      .map((key) => {filteredSession[key] = session[key]})
+
   const [userInfo, setUserInfo] = useState({'isLoggedIn':false});
   const [applicantInfo, setApplicantInfo] = useState({});
+  const [maximumLoginAttemptsReached, setMaximumLoginAttemptsReached] = useState(false);
+  const [loginAttempts, setLoginAttempts] = useState(1);
   const [isHambugerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
 
   const handleOpenSideNav = () => {
     setIsHamburgerMenuOpen(!isHambugerMenuOpen)
   }
-  const [maximumLoginAttemptsReached, setMaximumLoginAttemptsReached] = useState(false);
-  const [loginAttempts, setLoginAttempts] = useState(1);
 
   return (
     <Router>
@@ -84,10 +91,10 @@ export default function Navbar() {
         </AppBar>
         {isHambugerMenuOpen && <SideNav userInfo={userInfo} isHambugerMenuOpen={isHambugerMenuOpen} setIsHamburgerMenuOpen={setIsHamburgerMenuOpen}/>}
           <Switch>
-            <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
+            <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={session.isLoggedIn ? filteredSession : applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
             <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} maximumLoginAttemptsReached={maximumLoginAttemptsReached} setMaximumLoginAttemptsReached={setMaximumLoginAttemptsReached} loginAttempts={loginAttempts} setLoginAttempts={setLoginAttempts}/>}/>
             <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts}/>}/>
-            <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={session.isLoggedIn ? session : applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
+            <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={session.isLoggedIn ? filteredSession : applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
             <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
             <Route path="/settings" render={(props) => <Settings userInfo={userInfo} setUserInfo={setUserInfo} />}/>
             <Route component={NotFound}/>

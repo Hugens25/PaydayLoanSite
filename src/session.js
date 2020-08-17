@@ -10,7 +10,7 @@ export const getSessionCookie = () => {
   const sessionCookie = Cookies.get("session");
 
   if (sessionCookie === undefined) {
-    return {};
+    return {'isLoggedIn': false};
   } else {
     return JSON.parse(sessionCookie);
   }

@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { getSessionCookie } from '../../../../../../session';
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,15 +11,15 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function BankDetails() {
+export default function BankDetails(props) {
     const classes = useStyles();
 
-    const session = getSessionCookie();
+    const {userInfo, setUserInfo} = props;
 
     return (
         <div className={classes.root}>
-            <Typography>Account Number: {session.bankAccountNumber}</Typography>
-            <Typography>Routing Number: {session.routingNumber}</Typography>
+            <Typography>Account Number: {userInfo.bankAccountNumber}</Typography>
+            <Typography>Routing Number: {userInfo.routingNumber}</Typography>
         </div>
     )
 }

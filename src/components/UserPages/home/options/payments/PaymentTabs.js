@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaymentTabs() {
+export default function PaymentTabs(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -60,6 +60,8 @@ export default function PaymentTabs() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
+  const {userInfo, setUserInfo} = props;
 
   return (
     <div className={classes.root}>

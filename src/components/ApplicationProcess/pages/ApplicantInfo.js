@@ -31,7 +31,7 @@ export default function AddressForm(props) {
           setApplicantInfo, 
           startedTypingRequiredFields, 
           handleAddApplicantInformation,
-        } = props;
+        } = props;    
 
   const [passwordValidated, setValidatedPassword] = useState(true);
   const [ssnValidated, setValidatedSSN] = useState(true); 
@@ -215,13 +215,13 @@ export default function AddressForm(props) {
             id="desiredLoanAmount"
             name="desiredLoanAmount"
             label="Desired Loan Amount"
+            value={applicantInfo.desiredLoanAmount}
             fullWidth
             autoComplete="desiredLoanAmount"
-            // error={!ssnValidated}
-            onChange={(e) => {handleAddApplicantInformation("validatedSSN", e)}}
+            onChange={(e) => {handleAddApplicantInformation("desiredLoanAmount", e)}}
           />
         </Grid>
-          <Grid item xs={12} sm={6}>
+          {!session.isLoggedIn && <Grid item xs={12} sm={6}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} >
               <KeyboardDatePicker
                 helperText={!applicantInfo.bday ? "*required" : ""}
@@ -236,8 +236,8 @@ export default function AddressForm(props) {
                 style={!applicantInfo.bday && session.attemptedPageSubmit ? {'border-bottom': '2px solid red'} : {}}
               />
             </MuiPickersUtilsProvider>
-          </Grid>
-          <Grid item xs={12}>
+          </Grid>}
+          {!session.isLoggedIn && <Grid item xs={12}>
           <TextField
             variant="outlined"
             helperText={!applicantInfo.email ? "*required" : ""}
@@ -250,8 +250,8 @@ export default function AddressForm(props) {
             error={!applicantInfo.email && (startedTypingRequiredFields.email || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("email", e)}}
           />
-        </Grid>
-        <Grid item xs={6}>
+          </Grid>}
+          {!session.isLoggedIn && <Grid item xs={6}>
           <TextField
             variant="outlined"
             helperText={!applicantInfo.password ? "*required" : ""}
@@ -266,8 +266,8 @@ export default function AddressForm(props) {
             error={!applicantInfo.password && (startedTypingRequiredFields.password || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("password", e)}}
           />
-        </Grid>
-        <Grid item xs={6}>
+        </Grid>}
+        {!session.isLoggedIn && <Grid item xs={6}>
           <TextField
             variant="outlined"
             helperText={!applicantInfo.validatedPassword ? "*required" : ""}
@@ -280,7 +280,7 @@ export default function AddressForm(props) {
             error={!passwordValidated}
             onChange={(e) => {handleAddApplicantInformation("validatedPassword", e)}}
           />
-        </Grid>
+        </Grid>}
       </Grid>
     </Fragment>
   );

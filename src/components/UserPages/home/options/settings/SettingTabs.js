@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SettingTabs() {
+export default function SettingTabs(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -64,6 +64,8 @@ export default function SettingTabs() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
+  const {userInfo, setUserInfo} = props;
 
   return (
     <div className={classes.root}>
@@ -89,16 +91,16 @@ export default function SettingTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <PersonalDetails />
+          <PersonalDetails userInfo={userInfo} setUserInfo={setUserInfo}/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <BankDetails />
+          <BankDetails userInfo={userInfo} setUserInfo={setUserInfo}/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <IncomeDetails />
+          <IncomeDetails userInfo={userInfo} setUserInfo={setUserInfo}/>
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-          <CommunicationPreferences />
+          <CommunicationPreferences userInfo={userInfo} setUserInfo={setUserInfo}/>
         </TabPanel>
       </SwipeableViews>
     </div>
