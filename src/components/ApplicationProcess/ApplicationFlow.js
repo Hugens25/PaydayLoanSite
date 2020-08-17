@@ -62,20 +62,20 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Applicant Info', 'Income & Bank Info', 'Review and Submit'];
 
-function getStepContent(step, userInfo, setUserInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation) {
+function getStepContent(step, userInfo, setUserInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddUserInformation) {
   switch (step) {
     case 0:
       return <ApplicantForm 
               userInfo={userInfo} 
               setUserInfo={setUserInfo} 
               startedTypingRequiredFields={startedTypingRequiredFields}
-              handleAddApplicantInformation={handleAddApplicantInformation}
+              handleAddUserInformation={handleAddUserInformation}
             />;
     case 1:
       return <BankForm 
               userInfo={userInfo} 
               startedTypingRequiredFields={startedTypingRequiredFields}
-              handleAddApplicantInformation={handleAddApplicantInformation}
+              handleAddUserInformation={handleAddUserInformation}
             />;
     case 2:
       return <Review 
@@ -83,7 +83,7 @@ function getStepContent(step, userInfo, setUserInfo, startedTypingRequiredFields
               setUserInfo={setUserInfo} 
               startedTypingRequiredFields={startedTypingRequiredFields}
               handleStartedTypingRequiredFields={handleStartedTypingRequiredFields}
-              handleAddApplicantInformation={handleAddApplicantInformation}
+              handleAddUserInformation={handleAddUserInformation}
             />;
     default:
       throw new Error('Unknown step');
@@ -129,7 +129,7 @@ export default function Apply(props) {
     setSessionCookie({...session, 'attemptedPageSubmit':true})
     if (activeStep < 2) {
       let fieldValues = requiredFields[activeStep].fields.map((field) => {
-        // return applicantInfo[field] ? true : false
+        // return userInfo[field] ? true : false
         return true // uncomment to bypass application validation
       })
       if(!fieldValues.includes(false)){
@@ -155,7 +155,7 @@ export default function Apply(props) {
     setStartedTypingRequiredFields(field)
   }
 
-  const handleAddApplicantInformation = (key, e) => {
+  const handleAddUserInformation = (key, e) => {
     let info = { ...userInfo }
     info[key] = e.target.value
     setUserInfo(info)
@@ -267,7 +267,7 @@ export default function Apply(props) {
               </Fragment>)
             ) : (
               <Fragment>
-                {getStepContent(activeStep, userInfo, setUserInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation)}
+                {getStepContent(activeStep, userInfo, setUserInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddUserInformation)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>

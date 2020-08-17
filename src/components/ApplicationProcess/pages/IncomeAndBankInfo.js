@@ -38,7 +38,7 @@ export default function PaymentForm(props) {
   const {
           userInfo, 
           startedTypingRequiredFields, 
-          handleAddApplicantInformation
+          handleAddUserInformation
         } = props;
 
   const [secondaryIncomeType, setsecondaryIncomeType] = useState('');
@@ -48,7 +48,7 @@ export default function PaymentForm(props) {
   const handleSecondaryIncomeTypeChange = (e) => {
     setHasSecondaryIncome(e.target.value !== "N / A" ? true : false)
     setsecondaryIncomeType(e.target.value);
-    handleAddApplicantInformation("additionalSourceOfIncome", e)
+    handleAddUserInformation("additionalSourceOfIncome", e)
   };
 
   const handleVerifyAccountNumber = (original, validated) => {
@@ -74,7 +74,7 @@ export default function PaymentForm(props) {
                 id="sourceOfIncomeSelect"
                 value={userInfo.incomeType}
                 error={!userInfo.incomeType && (startedTypingRequiredFields.incomeType || session.attemptedPageSubmit)}
-                onChange={(e) => {handleAddApplicantInformation("incomeType", e)}}
+                onChange={(e) => {handleAddUserInformation("incomeType", e)}}
               >
                 <MenuItem value={"Employed"}>Employed</MenuItem>
                 <MenuItem value={"Self-Employed"}>Self-Employed</MenuItem>
@@ -94,7 +94,7 @@ export default function PaymentForm(props) {
                   id="payFrequencySelect"
                   value={userInfo.payFrequency}
                   error={!userInfo.payFrequency && (startedTypingRequiredFields.payFrequency || session.attemptedPageSubmit)}
-                  onChange={(e) => {handleAddApplicantInformation("payFrequency", e)}}
+                  onChange={(e) => {handleAddUserInformation("payFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
                   <MenuItem value={"Weekly"}>Weekly</MenuItem>
@@ -116,7 +116,7 @@ export default function PaymentForm(props) {
               //   startAdornment: <InputAdornment position="start">$</InputAdornment>,
               // }}
               error={!userInfo.recentCheck && (startedTypingRequiredFields.recentCheck || session.attemptedPageSubmit)}
-              onChange={(e) => {handleAddApplicantInformation("recentCheck", e)}}
+              onChange={(e) => {handleAddUserInformation("recentCheck", e)}}
               value={userInfo.recentCheck}
             />
           </Grid>
@@ -155,7 +155,7 @@ export default function PaymentForm(props) {
                   id="additionalPayFrequencySelect"
                   value={userInfo.additionalPayFrequency}
                   error={!userInfo.additionalPayFrequency && (startedTypingRequiredFields.additionalPayFrequency || session.attemptedPageSubmit)}
-                  onChange={(e) => {handleAddApplicantInformation("additionalPayFrequency", e)}}
+                  onChange={(e) => {handleAddUserInformation("additionalPayFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
                   <MenuItem value={"Weekly"}>Weekly</MenuItem>
@@ -179,7 +179,7 @@ export default function PaymentForm(props) {
                   label="Additional Income Amount" 
                   fullWidth
                   error={!userInfo.additionalIncomeAmount && (startedTypingRequiredFields.additionalIncomeAmount || session.attemptedPageSubmit)}
-                  onChange={(e) => {handleAddApplicantInformation("additionalIncomeAmount", e)}}
+                  onChange={(e) => {handleAddUserInformation("additionalIncomeAmount", e)}}
                   value={userInfo.additionalIncomeAmount}
                   />
               </Grid>
@@ -193,7 +193,7 @@ export default function PaymentForm(props) {
               id="employerName" 
               label="Primary Employer Name" 
               fullWidth 
-              onChange={(e) => {handleAddApplicantInformation("employerName", e)}}  
+              onChange={(e) => {handleAddUserInformation("employerName", e)}}  
               error={!userInfo.employerName && (startedTypingRequiredFields.employerName || session.attemptedPageSubmit)}
               value={userInfo.employerName}
             />
@@ -207,7 +207,7 @@ export default function PaymentForm(props) {
               label="Bank Routing Number" 
               fullWidth 
               error={!userInfo.routingNumber && (startedTypingRequiredFields.routingNumber || session.attemptedPageSubmit)}
-              onChange={(e) => {handleAddApplicantInformation("routingNumber", e)}}
+              onChange={(e) => {handleAddUserInformation("routingNumber", e)}}
               value={userInfo.routingNumber}
             />
           </Grid>
@@ -220,7 +220,7 @@ export default function PaymentForm(props) {
               label="Bank Account Number" 
               fullWidth 
               error={!userInfo.bankAccountNumber && (startedTypingRequiredFields.bankAccountNumber || session.attemptedPageSubmit)}
-              onChange={(e) => {handleAddApplicantInformation("bankAccountNumber", e)}}
+              onChange={(e) => {handleAddUserInformation("bankAccountNumber", e)}}
               value={userInfo.bankAccountNumber}
             />
           </Grid>
@@ -233,7 +233,7 @@ export default function PaymentForm(props) {
               label="Re-Enter Bank Account Number" 
               fullWidth 
               error={!accountNumberVerified}
-              onChange={(e) => {handleAddApplicantInformation("verifyBankAccountNumber", e)}}
+              onChange={(e) => {handleAddUserInformation("verifyBankAccountNumber", e)}}
             />
           </Grid>
         </Grid>

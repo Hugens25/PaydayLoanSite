@@ -7,7 +7,7 @@ export const handleStartedTypingRequiredFields = (key, startedTypingRequiredFiel
     setStartedTypingRequiredFields(field)
 }
 
-export const handleAddApplicantInformation = (key, e, userInfo, setUserInfo) => {
+export const handleAddUserInformation = (key, e, userInfo, setUserInfo) => {
     let info = { ...userInfo }
     info[key] = e.target.value
     setUserInfo(info)

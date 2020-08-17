@@ -30,7 +30,7 @@ export default function AddressForm(props) {
           userInfo, 
           setUserInfo, 
           startedTypingRequiredFields, 
-          handleAddApplicantInformation,
+          handleAddUserInformation,
         } = props;    
 
   const [passwordValidated, setValidatedPassword] = useState(true);
@@ -81,7 +81,7 @@ export default function AddressForm(props) {
             autoComplete="given-name"
             value={userInfo.firstName}
             error={!userInfo.firstName && (startedTypingRequiredFields.firstName || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("firstName", e)}}
+            onChange={(e) => {handleAddUserInformation("firstName", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -95,7 +95,7 @@ export default function AddressForm(props) {
             autoComplete="family-name"
             value={userInfo.lastName}
             error={!userInfo.lastName && (startedTypingRequiredFields.lastName || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("lastName", e)}}
+            onChange={(e) => {handleAddUserInformation("lastName", e)}}
           />
         </Grid>
         <Grid item xs={12}>
@@ -109,7 +109,7 @@ export default function AddressForm(props) {
             autoComplete="billing address-line1"
             value={userInfo.address1}
             error={!userInfo.address1 && (startedTypingRequiredFields.address1 || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("address1", e)}}
+            onChange={(e) => {handleAddUserInformation("address1", e)}}
           />
         </Grid>
         <Grid item xs={12}>
@@ -121,7 +121,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="billing address-line2"
             value={userInfo.address2}
-            onChange={(e) => {handleAddApplicantInformation("address2", e)}}
+            onChange={(e) => {handleAddUserInformation("address2", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -135,7 +135,7 @@ export default function AddressForm(props) {
             autoComplete="billing address-level2"
             value={userInfo.city}
             error={!userInfo.city && (startedTypingRequiredFields.city || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("city", e)}}
+            onChange={(e) => {handleAddUserInformation("city", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -148,7 +148,7 @@ export default function AddressForm(props) {
             fullWidth
             value={userInfo.state}
             error={!userInfo.state && (startedTypingRequiredFields.state || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("state", e)}}
+            onChange={(e) => {handleAddUserInformation("state", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -162,7 +162,7 @@ export default function AddressForm(props) {
             autoComplete="billing postal-code"
             value={userInfo.zipCode}
             error={!userInfo.zipCode && (startedTypingRequiredFields.zipCode || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("zipCode", e)}}
+            onChange={(e) => {handleAddUserInformation("zipCode", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -176,7 +176,7 @@ export default function AddressForm(props) {
             autoComplete="billing country"
             value={userInfo.country}
             error={!userInfo.country && (startedTypingRequiredFields.country || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("country", e)}}
+            onChange={(e) => {handleAddUserInformation("country", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -192,7 +192,7 @@ export default function AddressForm(props) {
             error={!ssnValidated}
             value={userInfo.ssn}
             error={!userInfo.ssn && (startedTypingRequiredFields.ssn || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("ssn", e)}}
+            onChange={(e) => {handleAddUserInformation("ssn", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -205,7 +205,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="SSN"
             error={!ssnValidated}
-            onChange={(e) => {handleAddApplicantInformation("validatedSSN", e)}}
+            onChange={(e) => {handleAddUserInformation("validatedSSN", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -218,7 +218,7 @@ export default function AddressForm(props) {
             value={userInfo.desiredLoanAmount}
             fullWidth
             autoComplete="desiredLoanAmount"
-            onChange={(e) => {handleAddApplicantInformation("desiredLoanAmount", e)}}
+            onChange={(e) => {handleAddUserInformation("desiredLoanAmount", e)}}
           />
         </Grid>
           {!session.isLoggedIn && <Grid item xs={12} sm={6}>
@@ -248,7 +248,7 @@ export default function AddressForm(props) {
             autoComplete="email"
             value={userInfo.email}
             error={!userInfo.email && (startedTypingRequiredFields.email || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("email", e)}}
+            onChange={(e) => {handleAddUserInformation("email", e)}}
           />
           </Grid>}
           {!session.isLoggedIn && <Grid item xs={6}>
@@ -264,7 +264,7 @@ export default function AddressForm(props) {
             error={!passwordValidated}
             value={userInfo.password}
             error={!userInfo.password && (startedTypingRequiredFields.password || session.attemptedPageSubmit)}
-            onChange={(e) => {handleAddApplicantInformation("password", e)}}
+            onChange={(e) => {handleAddUserInformation("password", e)}}
           />
         </Grid>}
         {!session.isLoggedIn && <Grid item xs={6}>
@@ -278,7 +278,7 @@ export default function AddressForm(props) {
             autoComplete="password"
             type="password"
             error={!passwordValidated}
-            onChange={(e) => {handleAddApplicantInformation("validatedPassword", e)}}
+            onChange={(e) => {handleAddUserInformation("validatedPassword", e)}}
           />
         </Grid>}
       </Grid>

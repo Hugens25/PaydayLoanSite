@@ -64,13 +64,13 @@ export default function LandingPage(props) {
   const history = useHistory();
 
   const [startedTypingField, setStartedTypingField] = useState({});
-  const [submitingApplicantInfo, setSubmitingApplicantInfo] = useState(false);
+  const [submitingUserInfo, setSubmitingUserInfo] = useState(false);
 
   const [fetchedUserInfo, setFetchedUserInfo] = useState(false);
 
   const classes = useStyles();
 
-  const handleAddApplicantInformation = (key, value) => {
+  const handleAddUserInformation = (key, value) => {
     handleStartedTypingField(key)
     let info = { ...userInfo }
     info[key] = value
@@ -91,21 +91,21 @@ export default function LandingPage(props) {
     setStartedTypingField({'firstName':true, 'lastName':true, 'email':true})
   }
 
-  async function handleSaveApplicantInfo() {
+  async function handleSaveUserInfo() {
     setStartedTypingForAllFields()
     if (checkAllRequiredFieldsProvided()){
-      setSubmitingApplicantInfo(true)
+      setSubmitingUserInfo(true)
       // let url = process.env.REACT_APP_SAVE_APPLICANT_URL
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/save-applicant'
       userInfo.desiredLoanAmount = userInfo.desiredLoanAmount ? userInfo.desiredLoanAmount.toString() : defaultLoanAmount.toString()
       let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(userInfo)})).json()
-      if(data.status === 200){setSubmitingApplicantInfo(false); history.push("/apply");}
+      if(data.status === 200){setSubmitingUserInfo(false); history.push("/apply");}
     }
   }
 
   useEffect(() => {
-    if(submitingApplicantInfo && !userInfo.desiredLoanAmount){handleAddApplicantInformation('desiredLoanAmount', defaultLoanAmount.toString())}
-  }, [userInfo, submitingApplicantInfo])
+    if(submitingUserInfo && !userInfo.desiredLoanAmount){handleAddUserInformation('desiredLoanAmount', defaultLoanAmount.toString())}
+  }, [userInfo, submitingUserInfo])
 
   useEffect(() => {
     if(!fetchedUserInfo && session.isLoggedIn){
@@ -144,7 +144,7 @@ export default function LandingPage(props) {
                     variant="outlined"
                     value={userInfo.firstName}
                     error={!userInfo.firstName && startedTypingField.firstName }
-                    onChange={(e) => {handleAddApplicantInformation("firstName", e.target.value)}}
+                    onChange={(e) => {handleAddUserInformation("firstName", e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <TextField
@@ -158,7 +158,7 @@ export default function LandingPage(props) {
                     variant="outlined"
                     value={userInfo.lastName}
                     error={!userInfo.lastName && startedTypingField.lastName }
-                    onChange={(e) => {handleAddApplicantInformation("lastName", e.target.value)}}
+                    onChange={(e) => {handleAddUserInformation("lastName", e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <TextField
@@ -172,7 +172,7 @@ export default function LandingPage(props) {
                     variant="outlined"
                     value={userInfo.email}
                     error={!userInfo.email && startedTypingField.email }
-                    onChange={(e) => {handleAddApplicantInformation("email", e.target.value)}}
+                    onChange={(e) => {handleAddUserInformation("email", e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <Typography className={classes.textInputs} gutterBottom>
@@ -186,11 +186,11 @@ export default function LandingPage(props) {
                     step={2.5}
                     scale={(num) => num * 20}
                     valueLabelDisplay="on"
-                    onChange={(e) => {handleAddApplicantInformation("desiredLoanAmount", parseFloat(document.getElementsByName('desiredLoanAmount')[0].value) * 20)}}
+                    onChange={(e) => {handleAddUserInformation("desiredLoanAmount", parseFloat(document.getElementsByName('desiredLoanAmount')[0].value) * 20)}}
                   />
                   <Box className={classes.buttons}>
-                    <Button id="checkMyOptionsButton" className={classes.button} onClick={handleSaveApplicantInfo}>
-                      {submitingApplicantInfo ? <Spinner size={'2rem'}/> : "Check My Options!"}
+                    <Button id="checkMyOptionsButton" className={classes.button} onClick={handleSaveUserInfo}>
+                      {submitingUserInfo ? <Spinner size={'2rem'}/> : "Check My Options!"}
                     </Button>
                   </Box>
                 </Paper>
