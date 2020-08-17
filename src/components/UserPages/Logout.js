@@ -50,7 +50,7 @@ export default function Logout(props) {
   let session = getSessionCookie();
   
   let [timeUntilRedirect, setTimeUntilRedirect] = useState(5);
-  const {setUserInfo, setApplicantInfo, setLoginAttempts } = props
+  const {setUserInfo, setLoginAttempts } = props
   const [open, setOpen] = useState(true);
   const [intervalValue, setIntervalValue] = useState(null);
   const [timeoutValue, setTimeoutValue] = useState(null);
@@ -59,7 +59,6 @@ export default function Logout(props) {
 
   const handleLogOut = () => {
     setUserInfo({"isLoggedIn":false})
-    setApplicantInfo({})
     setLoginAttempts(1)  
     setSessionCookie({"isLoggedIn":false})
     handleRemoveLogOutBanner()
