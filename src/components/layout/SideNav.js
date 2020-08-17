@@ -16,6 +16,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import HomeIcon from '@material-ui/icons/Home';
 import green from '@material-ui/core/colors/green';
 import { getSessionCookie } from '../../session';
 
@@ -79,6 +80,7 @@ export default function SideNav(props) {
         <Divider />
         <List>
           {[
+              {text:'Home', icon: <HomeIcon />, needsLogin:true, linkTo: '/home'}, 
               {text:'Account Summary', icon: <MonetizationOnIcon />, needsLogin:true, linkTo: '/settings'}, 
               {text:'Account Details', icon: <LibraryBooksIcon />, needsLogin:true, linkTo: '/settings'},
               {text:'Messages', icon: <EmailIcon />, needsLogin:true, linkTo: '/settings'}, 
