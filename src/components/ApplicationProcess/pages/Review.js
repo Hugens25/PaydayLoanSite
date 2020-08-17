@@ -12,28 +12,28 @@ const useStyles = makeStyles((theme) => ({
 export default function Review(props) {
   const classes = useStyles();
 
-  const {applicantInfo} = props;
+  const {userInfo} = props;
 
   return (
     <Fragment>
       <Typography align="left" variant="h6" gutterBottom>Application Summary</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
-          <Typography align="left">{`Applicant Name: ${applicantInfo.firstName} ${applicantInfo.lastName}`}</Typography>
-          <Typography align="left">{`Applicant Address: ${applicantInfo.address1} ${applicantInfo.address2 || ''} ${applicantInfo.city}, ${applicantInfo.state} ${applicantInfo.zipCode}`}</Typography>
-          <Typography align="left">{`Applicant Email: ${applicantInfo.email}`}</Typography>
+          <Typography align="left">{`Applicant Name: ${userInfo.firstName} ${userInfo.lastName}`}</Typography>
+          <Typography align="left">{`Applicant Address: ${userInfo.address1} ${userInfo.address2 || ''} ${userInfo.city}, ${userInfo.state} ${userInfo.zipCode}`}</Typography>
+          <Typography align="left">{`Applicant Email: ${userInfo.email}`}</Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
 
           <Typography align="left" variant="h6" gutterBottom className={classes.title}>Income Details</Typography>
           
-          <Typography align="left">{`Employment Type: ${applicantInfo.incomeType}`}</Typography>
-          <Typography align="left">{`Employer: ${applicantInfo.employerName}`}</Typography>
-          <Typography align="left">{`Income Per Check: ${applicantInfo.recentCheck}`}</Typography>
-          {applicantInfo.additionalSourceOfIncome !== 'N / A' &&
+          <Typography align="left">{`Employment Type: ${userInfo.incomeType}`}</Typography>
+          <Typography align="left">{`Employer: ${userInfo.employerName}`}</Typography>
+          <Typography align="left">{`Income Per Check: ${userInfo.recentCheck}`}</Typography>
+          {userInfo.additionalSourceOfIncome !== 'N / A' &&
             <div>
-                <Typography align="left">{`Additional Source of Income: ${applicantInfo.additionalSourceOfIncome}`}</Typography>
-                <Typography align="left">{`Additional Income Amount: ${applicantInfo.additionalIncomeAmount}`}</Typography>
+                <Typography align="left">{`Additional Source of Income: ${userInfo.additionalSourceOfIncome}`}</Typography>
+                <Typography align="left">{`Additional Income Amount: ${userInfo.additionalIncomeAmount}`}</Typography>
             </div>
           }
           
@@ -42,8 +42,8 @@ export default function Review(props) {
           
           <Typography align="left" variant="h6" gutterBottom className={classes.title}>Bank details</Typography>
           
-          <Typography align="left">{`Bank Routing Number: ${applicantInfo.routingNumber}`}</Typography>
-          <Typography align="left">{`Bank Account Number: ${applicantInfo.bankAccountNumber}`}</Typography>
+          <Typography align="left">{`Bank Routing Number: ${userInfo.routingNumber}`}</Typography>
+          <Typography align="left">{`Bank Account Number: ${userInfo.bankAccountNumber}`}</Typography>
         
         </Grid>
       </Grid>

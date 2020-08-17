@@ -27,8 +27,8 @@ export default function AddressForm(props) {
   const session = getSessionCookie();
 
   const {
-          applicantInfo, 
-          setApplicantInfo, 
+          userInfo, 
+          setUserInfo, 
           startedTypingRequiredFields, 
           handleAddApplicantInformation,
         } = props;    
@@ -47,7 +47,7 @@ export default function AddressForm(props) {
         yyyy = date.getUTCFullYear()
         formattedBday = `${mm}/${dd}/${yyyy}`
       }
-      setApplicantInfo({...applicantInfo, "bday":formattedBday})
+      setUserInfo({...userInfo, "bday":formattedBday})
     }
   };
 
@@ -60,8 +60,8 @@ export default function AddressForm(props) {
   }
 
   useEffect(() => {
-    handleValidatePassword(applicantInfo.password, applicantInfo.validatedPassword)
-    handleValidateSSN(applicantInfo.ssn, applicantInfo.validatedSSN)
+    handleValidatePassword(userInfo.password, userInfo.validatedPassword)
+    handleValidateSSN(userInfo.ssn, userInfo.validatedSSN)
   });
 
   return (
@@ -73,42 +73,42 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.firstName ? "*required" : ""}
+            helperText={!userInfo.firstName ? "*required" : ""}
             id="firstName"
             name="firstName"
             label="First name"
             fullWidth
             autoComplete="given-name"
-            value={applicantInfo.firstName}
-            error={!applicantInfo.firstName && (startedTypingRequiredFields.firstName || session.attemptedPageSubmit)}
+            value={userInfo.firstName}
+            error={!userInfo.firstName && (startedTypingRequiredFields.firstName || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("firstName", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.lastName ? "*required" : ""}
+            helperText={!userInfo.lastName ? "*required" : ""}
             id="lastName"
             name="lastName"
             label="Last name"
             fullWidth
             autoComplete="family-name"
-            value={applicantInfo.lastName}
-            error={!applicantInfo.lastName && (startedTypingRequiredFields.lastName || session.attemptedPageSubmit)}
+            value={userInfo.lastName}
+            error={!userInfo.lastName && (startedTypingRequiredFields.lastName || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("lastName", e)}}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.address1 ? "*required" : ""}
+            helperText={!userInfo.address1 ? "*required" : ""}
             id="address1"
             name="address1"
             label="Address line 1"
             fullWidth
             autoComplete="billing address-line1"
-            value={applicantInfo.address1}
-            error={!applicantInfo.address1 && (startedTypingRequiredFields.address1 || session.attemptedPageSubmit)}
+            value={userInfo.address1}
+            error={!userInfo.address1 && (startedTypingRequiredFields.address1 || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("address1", e)}}
           />
         </Grid>
@@ -120,69 +120,69 @@ export default function AddressForm(props) {
             label="Address line 2"
             fullWidth
             autoComplete="billing address-line2"
-            value={applicantInfo.address2}
+            value={userInfo.address2}
             onChange={(e) => {handleAddApplicantInformation("address2", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.city ? "*required" : ""}
+            helperText={!userInfo.city ? "*required" : ""}
             id="city"
             name="city"
             label="City"
             fullWidth
             autoComplete="billing address-level2"
-            value={applicantInfo.city}
-            error={!applicantInfo.city && (startedTypingRequiredFields.city || session.attemptedPageSubmit)}
+            value={userInfo.city}
+            error={!userInfo.city && (startedTypingRequiredFields.city || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("city", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField 
             variant="outlined"
-            helperText={!applicantInfo.state ? "*required" : ""}
+            helperText={!userInfo.state ? "*required" : ""}
             id="state" 
             name="state" 
             label="State/Province/Region" 
             fullWidth
-            value={applicantInfo.state}
-            error={!applicantInfo.state && (startedTypingRequiredFields.state || session.attemptedPageSubmit)}
+            value={userInfo.state}
+            error={!userInfo.state && (startedTypingRequiredFields.state || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("state", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.zipCode ? "*required" : ""}
+            helperText={!userInfo.zipCode ? "*required" : ""}
             id="zip"
             name="zip"
             label="Zip / Postal Code"
             fullWidth
             autoComplete="billing postal-code"
-            value={applicantInfo.zipCode}
-            error={!applicantInfo.zipCode && (startedTypingRequiredFields.zipCode || session.attemptedPageSubmit)}
+            value={userInfo.zipCode}
+            error={!userInfo.zipCode && (startedTypingRequiredFields.zipCode || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("zipCode", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.country ? "*required" : ""}
+            helperText={!userInfo.country ? "*required" : ""}
             id="country"
             name="country"
             label="Country"
             fullWidth
             autoComplete="billing country"
-            value={applicantInfo.country}
-            error={!applicantInfo.country && (startedTypingRequiredFields.country || session.attemptedPageSubmit)}
+            value={userInfo.country}
+            error={!userInfo.country && (startedTypingRequiredFields.country || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("country", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.ssn ? "*required" : ""}
+            helperText={!userInfo.ssn ? "*required" : ""}
             id="SSN"
             name="SSN"
             label="Social Security Number"
@@ -190,15 +190,15 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="SSN"
             error={!ssnValidated}
-            value={applicantInfo.ssn}
-            error={!applicantInfo.ssn && (startedTypingRequiredFields.ssn || session.attemptedPageSubmit)}
+            value={userInfo.ssn}
+            error={!userInfo.ssn && (startedTypingRequiredFields.ssn || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("ssn", e)}}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.validatedSSN ? "*required" : ""}
+            helperText={!userInfo.validatedSSN ? "*required" : ""}
             id="verifySSN"
             name="verifySSN"
             label="Re-Enter Social Security Number"
@@ -211,11 +211,11 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.validatedSSN ? "*required" : ""}
+            helperText={!userInfo.validatedSSN ? "*required" : ""}
             id="desiredLoanAmount"
             name="desiredLoanAmount"
             label="Desired Loan Amount"
-            value={applicantInfo.desiredLoanAmount}
+            value={userInfo.desiredLoanAmount}
             fullWidth
             autoComplete="desiredLoanAmount"
             onChange={(e) => {handleAddApplicantInformation("desiredLoanAmount", e)}}
@@ -224,37 +224,37 @@ export default function AddressForm(props) {
           {!session.isLoggedIn && <Grid item xs={12} sm={6}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} >
               <KeyboardDatePicker
-                helperText={!applicantInfo.bday ? "*required" : ""}
+                helperText={!userInfo.bday ? "*required" : ""}
                 variant="inline"
                 format="MM/dd/yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label="Date of Birth"
-                value={applicantInfo.bday}
+                value={userInfo.bday}
                 onChange={handleDateChange}
                 className={classes.datePicker}
-                style={!applicantInfo.bday && session.attemptedPageSubmit ? {'border-bottom': '2px solid red'} : {}}
+                style={!userInfo.bday && session.attemptedPageSubmit ? {'border-bottom': '2px solid red'} : {}}
               />
             </MuiPickersUtilsProvider>
           </Grid>}
           {!session.isLoggedIn && <Grid item xs={12}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.email ? "*required" : ""}
+            helperText={!userInfo.email ? "*required" : ""}
             id="email"
             name="email"
             label="Email"
             fullWidth
             autoComplete="email"
-            value={applicantInfo.email}
-            error={!applicantInfo.email && (startedTypingRequiredFields.email || session.attemptedPageSubmit)}
+            value={userInfo.email}
+            error={!userInfo.email && (startedTypingRequiredFields.email || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("email", e)}}
           />
           </Grid>}
           {!session.isLoggedIn && <Grid item xs={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.password ? "*required" : ""}
+            helperText={!userInfo.password ? "*required" : ""}
             id="password"
             name="password"
             label="Choose a Password"
@@ -262,15 +262,15 @@ export default function AddressForm(props) {
             autoComplete="password"
             type="password"
             error={!passwordValidated}
-            value={applicantInfo.password}
-            error={!applicantInfo.password && (startedTypingRequiredFields.password || session.attemptedPageSubmit)}
+            value={userInfo.password}
+            error={!userInfo.password && (startedTypingRequiredFields.password || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddApplicantInformation("password", e)}}
           />
         </Grid>}
         {!session.isLoggedIn && <Grid item xs={6}>
           <TextField
             variant="outlined"
-            helperText={!applicantInfo.validatedPassword ? "*required" : ""}
+            helperText={!userInfo.validatedPassword ? "*required" : ""}
             id="validatePassword"
             name="validatePassword"
             label="Re-Enter Password"

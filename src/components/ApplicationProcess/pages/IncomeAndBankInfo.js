@@ -36,13 +36,13 @@ export default function PaymentForm(props) {
   const classes = useStyles();
 
   const {
-          applicantInfo, 
+          userInfo, 
           startedTypingRequiredFields, 
           handleAddApplicantInformation
         } = props;
 
   const [secondaryIncomeType, setsecondaryIncomeType] = useState('');
-  const [hasSecondaryIncome, setHasSecondaryIncome] = useState(applicantInfo.additionalSourceOfIncome && applicantInfo.additionalSourceOfIncome !== 'N / A' ? true : false);
+  const [hasSecondaryIncome, setHasSecondaryIncome] = useState(userInfo.additionalSourceOfIncome && userInfo.additionalSourceOfIncome !== 'N / A' ? true : false);
   const [accountNumberVerified, setAccountNumberVerified] = useState(true);
 
   const handleSecondaryIncomeTypeChange = (e) => {
@@ -56,7 +56,7 @@ export default function PaymentForm(props) {
   }
 
   useEffect(() => {
-    handleVerifyAccountNumber(applicantInfo.bankAccountNumber, applicantInfo.verifyBankAccountNumber)
+    handleVerifyAccountNumber(userInfo.bankAccountNumber, userInfo.verifyBankAccountNumber)
   });
 
   return (
@@ -69,11 +69,11 @@ export default function PaymentForm(props) {
               <InputLabel id="sourceOfIncome" className={classes.selectLabel}>Primary Income</InputLabel>
               <Select
                 variant="outlined"
-                helperText={!applicantInfo.incomeType ? "*required" : ""}
+                helperText={!userInfo.incomeType ? "*required" : ""}
                 labelId="sourceOfIncome"
                 id="sourceOfIncomeSelect"
-                value={applicantInfo.incomeType}
-                error={!applicantInfo.incomeType && (startedTypingRequiredFields.incomeType || session.attemptedPageSubmit)}
+                value={userInfo.incomeType}
+                error={!userInfo.incomeType && (startedTypingRequiredFields.incomeType || session.attemptedPageSubmit)}
                 onChange={(e) => {handleAddApplicantInformation("incomeType", e)}}
               >
                 <MenuItem value={"Employed"}>Employed</MenuItem>
@@ -89,11 +89,11 @@ export default function PaymentForm(props) {
               <InputLabel id="payFrequency" className={classes.selectLabel}>How often are you paid?</InputLabel>
                 <Select
                   variant="outlined"
-                  helperText={!applicantInfo.payFrequency ? "*required" : ""}
+                  helperText={!userInfo.payFrequency ? "*required" : ""}
                   labelId="payFrequency"
                   id="payFrequencySelect"
-                  value={applicantInfo.payFrequency}
-                  error={!applicantInfo.payFrequency && (startedTypingRequiredFields.payFrequency || session.attemptedPageSubmit)}
+                  value={userInfo.payFrequency}
+                  error={!userInfo.payFrequency && (startedTypingRequiredFields.payFrequency || session.attemptedPageSubmit)}
                   onChange={(e) => {handleAddApplicantInformation("payFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
@@ -108,16 +108,16 @@ export default function PaymentForm(props) {
             <TextField 
               // className={classes.inputLabel}
               variant="outlined"
-              helperText={!applicantInfo.recentCheck ? "*required" : ""} 
+              helperText={!userInfo.recentCheck ? "*required" : ""} 
               id="recentCheck" 
               label="What was the amount of your most recent check?" 
               fullWidth 
               // InputProps={{
               //   startAdornment: <InputAdornment position="start">$</InputAdornment>,
               // }}
-              error={!applicantInfo.recentCheck && (startedTypingRequiredFields.recentCheck || session.attemptedPageSubmit)}
+              error={!userInfo.recentCheck && (startedTypingRequiredFields.recentCheck || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddApplicantInformation("recentCheck", e)}}
-              value={applicantInfo.recentCheck}
+              value={userInfo.recentCheck}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -125,12 +125,12 @@ export default function PaymentForm(props) {
               <InputLabel id="additionalSourceOfIncome" className={classes.selectLabel}>Additional Source of Income</InputLabel>
               <Select
                 variant="outlined"
-                helperText={!applicantInfo.additionalSourceOfIncome ? "*required" : ""}
+                helperText={!userInfo.additionalSourceOfIncome ? "*required" : ""}
                 labelId="additionalSourceOfIncome"
                 id="additionalSourceOfIncomeSelect"
-                error={!applicantInfo.additionalSourceOfIncome && session.attemptedPageSubmit}
+                error={!userInfo.additionalSourceOfIncome && session.attemptedPageSubmit}
                 onChange={handleSecondaryIncomeTypeChange} 
-                value={applicantInfo.additionalSourceOfIncome}
+                value={userInfo.additionalSourceOfIncome}
               >
                 <MenuItem value={"N / A"}>N / A</MenuItem>
                 <MenuItem value={"Second Job"}>Second Job</MenuItem>
@@ -150,11 +150,11 @@ export default function PaymentForm(props) {
                 <InputLabel id="additionalPayFrequency" className={classes.selectLabel}>How often are you paid?</InputLabel>
                 <Select
                   variant="outlined"
-                  helperText={!applicantInfo.payFrequency ? "*required" : ""}
+                  helperText={!userInfo.payFrequency ? "*required" : ""}
                   labelId="additionalPayFrequency"
                   id="additionalPayFrequencySelect"
-                  value={applicantInfo.additionalPayFrequency}
-                  error={!applicantInfo.additionalPayFrequency && (startedTypingRequiredFields.additionalPayFrequency || session.attemptedPageSubmit)}
+                  value={userInfo.additionalPayFrequency}
+                  error={!userInfo.additionalPayFrequency && (startedTypingRequiredFields.additionalPayFrequency || session.attemptedPageSubmit)}
                   onChange={(e) => {handleAddApplicantInformation("additionalPayFrequency", e)}}
                   renderValue={(value) => `${value}`}
                 >
@@ -174,13 +174,13 @@ export default function PaymentForm(props) {
                 <TextField 
                   // className={classes.inputLabel}
                   variant="outlined"
-                  helperText={!applicantInfo.additionalIncomeAmount ? "*required" : ""} 
+                  helperText={!userInfo.additionalIncomeAmount ? "*required" : ""} 
                   id="additionalIncomeAmount" 
                   label="Additional Income Amount" 
                   fullWidth
-                  error={!applicantInfo.additionalIncomeAmount && (startedTypingRequiredFields.additionalIncomeAmount || session.attemptedPageSubmit)}
+                  error={!userInfo.additionalIncomeAmount && (startedTypingRequiredFields.additionalIncomeAmount || session.attemptedPageSubmit)}
                   onChange={(e) => {handleAddApplicantInformation("additionalIncomeAmount", e)}}
-                  value={applicantInfo.additionalIncomeAmount}
+                  value={userInfo.additionalIncomeAmount}
                   />
               </Grid>
             
@@ -189,46 +189,46 @@ export default function PaymentForm(props) {
             <TextField 
               // className={classes.inputLabel}
               variant="outlined"
-              helperText={!applicantInfo.employerName ? "*required" : ""} 
+              helperText={!userInfo.employerName ? "*required" : ""} 
               id="employerName" 
               label="Primary Employer Name" 
               fullWidth 
               onChange={(e) => {handleAddApplicantInformation("employerName", e)}}  
-              error={!applicantInfo.employerName && (startedTypingRequiredFields.employerName || session.attemptedPageSubmit)}
-              value={applicantInfo.employerName}
+              error={!userInfo.employerName && (startedTypingRequiredFields.employerName || session.attemptedPageSubmit)}
+              value={userInfo.employerName}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField  
               // className={classes.inputLabel}
               variant="outlined"
-              helperText={!applicantInfo.routingNumber ? "*required" : ""} 
+              helperText={!userInfo.routingNumber ? "*required" : ""} 
               id="routingNumber" 
               label="Bank Routing Number" 
               fullWidth 
-              error={!applicantInfo.routingNumber && (startedTypingRequiredFields.routingNumber || session.attemptedPageSubmit)}
+              error={!userInfo.routingNumber && (startedTypingRequiredFields.routingNumber || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddApplicantInformation("routingNumber", e)}}
-              value={applicantInfo.routingNumber}
+              value={userInfo.routingNumber}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField 
               // className={classes.inputLabel}
               variant="outlined"
-              helperText={!applicantInfo.bankAccountNumber ? "*required" : ""} 
+              helperText={!userInfo.bankAccountNumber ? "*required" : ""} 
               id="accountNumber" 
               label="Bank Account Number" 
               fullWidth 
-              error={!applicantInfo.bankAccountNumber && (startedTypingRequiredFields.bankAccountNumber || session.attemptedPageSubmit)}
+              error={!userInfo.bankAccountNumber && (startedTypingRequiredFields.bankAccountNumber || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddApplicantInformation("bankAccountNumber", e)}}
-              value={applicantInfo.bankAccountNumber}
+              value={userInfo.bankAccountNumber}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField 
               // className={classes.inputLabel}
               variant="outlined"
-              helperText={!applicantInfo.verifyBankAccountNumber ? "*required" : ""} 
+              helperText={!userInfo.verifyBankAccountNumber ? "*required" : ""} 
               id="verifyAccountNumber" 
               label="Re-Enter Bank Account Number" 
               fullWidth 

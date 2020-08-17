@@ -62,25 +62,25 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Applicant Info', 'Income & Bank Info', 'Review and Submit'];
 
-function getStepContent(step, applicantInfo, setApplicantInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation) {
+function getStepContent(step, userInfo, setUserInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation) {
   switch (step) {
     case 0:
       return <ApplicantForm 
-              applicantInfo={applicantInfo} 
-              setApplicantInfo={setApplicantInfo} 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo} 
               startedTypingRequiredFields={startedTypingRequiredFields}
               handleAddApplicantInformation={handleAddApplicantInformation}
             />;
     case 1:
       return <BankForm 
-              applicantInfo={applicantInfo} 
+              userInfo={userInfo} 
               startedTypingRequiredFields={startedTypingRequiredFields}
               handleAddApplicantInformation={handleAddApplicantInformation}
             />;
     case 2:
       return <Review 
-              applicantInfo={applicantInfo} 
-              setApplicantInfo={setApplicantInfo} 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo} 
               startedTypingRequiredFields={startedTypingRequiredFields}
               handleStartedTypingRequiredFields={handleStartedTypingRequiredFields}
               handleAddApplicantInformation={handleAddApplicantInformation}
@@ -94,7 +94,7 @@ export default function Apply(props) {
 
   const classes = useStyles();
 
-  const {applicantInfo, setApplicantInfo, setUserInfo} = props;
+  const {applicantInfo, setApplicantInfo, userInfo, setUserInfo} = props;
 
   let page1 = {'fields':['firstName', 'lastName', 'address1', 'city', 'state', 'zipCode', 'country', 'email', 'password', 'validatedPassword', 'ssn', 'validatedSSN', 'bday']}
   let page2 = {'fields':['incomeType', 'payFrequency', 'recentCheck', 'additionalSourceOfIncome', 'employerName', 'routingNumber', 'bankAccountNumber', 'verifyBankAccountNumber']}
@@ -114,11 +114,11 @@ export default function Apply(props) {
 
   useEffect(() => {
     if(!fetchedUserInfo && session.isLoggedIn){
-      handleGetUserInfo(applicantInfo.email)
+      handleGetUserInfo(userInfo.email)
       .then((data) => {
         if (data.statusCode === 200){
           let user = data.user
-          setApplicantInfo({...applicantInfo, ...user})
+          setUserInfo({...userInfo, ...user})
           setFetchedUserInfo(true)
         }
       })
@@ -156,9 +156,9 @@ export default function Apply(props) {
   }
 
   const handleAddApplicantInformation = (key, e) => {
-    let info = { ...applicantInfo }
+    let info = { ...userInfo }
     info[key] = e.target.value
-    setApplicantInfo(info)
+    setUserInfo(info)
     handleStartedTypingRequiredFields(key)
   }
 
@@ -167,8 +167,8 @@ export default function Apply(props) {
     let now = new Date(date); let mm = now.getUTCMonth() + 1; let dd = now.getUTCDate(); let yy = now.getUTCFullYear(); 
     let hh = now.getUTCHours(); let min = now.getUTCMinutes(); let ss = now.getUTCSeconds();
     
-    if(applicantInfo.additionalSourceOfIncome === 'N / A'){applicantInfo.additionalIncomeAmount = 'N / A'; applicantInfo.additionalPayFrequency = 'N / A'}
-    let payload = {...applicantInfo, "applicationComplete": applicationComplete, "date": `${yy}-${mm}-${dd}@${hh}:${min}:${ss}`}
+    if(userInfo.additionalSourceOfIncome === 'N / A'){userInfo.additionalIncomeAmount = 'N / A'; userInfo.additionalPayFrequency = 'N / A'}
+    let payload = {...userInfo, "applicationComplete": applicationComplete, "date": `${yy}-${mm}-${dd}@${hh}:${min}:${ss}`}
     fetch(url, {method: 'POST', body: JSON.stringify(payload)})
     .then((data) => {
       if(data.status != 200){
@@ -206,9 +206,9 @@ export default function Apply(props) {
       'recentCheck',
     ]  
     const userDetails = {}
-    Object.keys(applicantInfo)
+    Object.keys(userInfo)
       .filter((key) => userFields.includes(key))
-      .map((key) => {userDetails[key] = applicantInfo[key]})
+      .map((key) => {userDetails[key] = userInfo[key]})
   
     if(userDetails.additionalSourceOfIncome === 'N / A'){userDetails.additionalIncomeAmount = 'N / A'; userDetails.additionalPayFrequency = 'N / A'}
     let payload = {...userDetails, "memberSince": `${mm}-${dd}-${yy}`}
@@ -216,7 +216,6 @@ export default function Apply(props) {
     .then((data) => {
       if(data.status == 200){
         setSentUserInfo(true)
-        setApplicantInfo({}) 
         setStartedTypingRequiredFields({})
         setUserInfo({})
         setSessionCookie({})
@@ -226,7 +225,7 @@ export default function Apply(props) {
   }
 
   useEffect(() => {
-    if(applicantInfo.additionalSourceOfIncome && applicantInfo.additionalSourceOfIncome != 'N / A'){
+    if(userInfo.additionalSourceOfIncome && userInfo.additionalSourceOfIncome != 'N / A'){
       requiredFields[1]['fields'].push('additionalPayFrequency', 'additionalIncomeAmount')
     }
   })
@@ -245,7 +244,7 @@ export default function Apply(props) {
         <Box className={classes.container}>
         <Paper className={classes.paper} elevation={3}>
           <Typography component="h1" variant="h4" align="center">
-            {`Loan Application for $${applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount : '400'}`}
+            {`Loan Application for $${userInfo.desiredLoanAmount ? userInfo.desiredLoanAmount : '400'}`}
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
@@ -268,7 +267,7 @@ export default function Apply(props) {
               </Fragment>)
             ) : (
               <Fragment>
-                {getStepContent(activeStep, applicantInfo, setApplicantInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation)}
+                {getStepContent(activeStep, userInfo, setUserInfo, startedTypingRequiredFields, handleStartedTypingRequiredFields, handleAddApplicantInformation)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
