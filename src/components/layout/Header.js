@@ -64,7 +64,6 @@ export default function Navbar() {
       .map((key) => {filteredSession[key] = session[key]})
 
   const [userInfo, setUserInfo] = useState({'isLoggedIn':false});
-  const [applicantInfo, setApplicantInfo] = useState({});
   const [maximumLoginAttemptsReached, setMaximumLoginAttemptsReached] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(1);
   const [isHambugerMenuOpen, setIsHamburgerMenuOpen] = useState(false);

@@ -94,7 +94,7 @@ export default function Apply(props) {
 
   const classes = useStyles();
 
-  const {applicantInfo, setApplicantInfo, userInfo, setUserInfo} = props;
+  const {userInfo, setUserInfo} = props;
 
   let page1 = {'fields':['firstName', 'lastName', 'address1', 'city', 'state', 'zipCode', 'country', 'email', 'password', 'validatedPassword', 'ssn', 'validatedSSN', 'bday']}
   let page2 = {'fields':['incomeType', 'payFrequency', 'recentCheck', 'additionalSourceOfIncome', 'employerName', 'routingNumber', 'bankAccountNumber', 'verifyBankAccountNumber']}
