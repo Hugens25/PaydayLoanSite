@@ -59,7 +59,7 @@ export default function LandingPage(props) {
 
   const session = getSessionCookie;
 
-  const {applicantInfo, setApplicantInfo} = props;
+  const {userInfo, setUserInfo} = props;
 
   const history = useHistory();
 
@@ -72,9 +72,9 @@ export default function LandingPage(props) {
 
   const handleAddApplicantInformation = (key, value) => {
     handleStartedTypingField(key)
-    let info = { ...applicantInfo }
+    let info = { ...userInfo }
     info[key] = value
-    setApplicantInfo(info)
+    setUserInfo(info)
   }
 
   const handleStartedTypingField = (key) => {
@@ -84,7 +84,7 @@ export default function LandingPage(props) {
   }
 
   const checkAllRequiredFieldsProvided = () => {
-    return applicantInfo.firstName && applicantInfo.lastName && applicantInfo.email
+    return userInfo.firstName && userInfo.lastName && userInfo.email
   }
 
   const setStartedTypingForAllFields = () => {
@@ -97,15 +97,15 @@ export default function LandingPage(props) {
       setSubmitingApplicantInfo(true)
       // let url = process.env.REACT_APP_SAVE_APPLICANT_URL
       let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/save-applicant'
-      applicantInfo.desiredLoanAmount = applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount.toString() : defaultLoanAmount.toString()
-      let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(applicantInfo)})).json()
+      userInfo.desiredLoanAmount = userInfo.desiredLoanAmount ? userInfo.desiredLoanAmount.toString() : defaultLoanAmount.toString()
+      let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(userInfo)})).json()
       if(data.status === 200){setSubmitingApplicantInfo(false); history.push("/apply");}
     }
   }
 
   useEffect(() => {
-    if(submitingApplicantInfo && !applicantInfo.desiredLoanAmount){handleAddApplicantInformation('desiredLoanAmount', defaultLoanAmount.toString())}
-  }, [applicantInfo, submitingApplicantInfo])
+    if(submitingApplicantInfo && !userInfo.desiredLoanAmount){handleAddApplicantInformation('desiredLoanAmount', defaultLoanAmount.toString())}
+  }, [userInfo, submitingApplicantInfo])
 
   useEffect(() => {
     if(!fetchedUserInfo && session.isLoggedIn){
@@ -113,7 +113,7 @@ export default function LandingPage(props) {
       .then((data) => {
         if (data.statusCode === 200){
           let user = data.user
-          setApplicantInfo({...applicantInfo, ...user})
+          setUserInfo({...userInfo, ...user})
           setFetchedUserInfo(true)
         }
       })
@@ -135,43 +135,43 @@ export default function LandingPage(props) {
                   <Typography variant="h6" gutterBottom>Start Your Application!</Typography>
                   <TextField
                     className={classes.textInputs}
-                    helperText={!applicantInfo.firstName && startedTypingField.firstName ? "*required" : ""}
+                    helperText={!userInfo.firstName && startedTypingField.firstName ? "*required" : ""}
                     id="firstName"
                     name="firstName"
                     label="First Name"
                     fullWidth
                     autoComplete="given-name"
                     variant="outlined"
-                    value={applicantInfo.firstName}
-                    error={!applicantInfo.firstName && startedTypingField.firstName }
+                    value={userInfo.firstName}
+                    error={!userInfo.firstName && startedTypingField.firstName }
                     onChange={(e) => {handleAddApplicantInformation("firstName", e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <TextField
                     className={classes.textInputs}
-                    helperText={!applicantInfo.lastName && startedTypingField.lastName ? "*required" : ""}
+                    helperText={!userInfo.lastName && startedTypingField.lastName ? "*required" : ""}
                     id="lastName"
                     name="lastName"
                     label="Last Name"
                     fullWidth
                     autoComplete="family-name"
                     variant="outlined"
-                    value={applicantInfo.lastName}
-                    error={!applicantInfo.lastName && startedTypingField.lastName }
+                    value={userInfo.lastName}
+                    error={!userInfo.lastName && startedTypingField.lastName }
                     onChange={(e) => {handleAddApplicantInformation("lastName", e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <TextField
                     className={classes.textInputs}
-                    helperText={!applicantInfo.email && startedTypingField.email ? "*required" : ""}
+                    helperText={!userInfo.email && startedTypingField.email ? "*required" : ""}
                     id="email"
                     name="email"
                     label="Email"
                     fullWidth
                     autoComplete="email"
                     variant="outlined"
-                    value={applicantInfo.email}
-                    error={!applicantInfo.email && startedTypingField.email }
+                    value={userInfo.email}
+                    error={!userInfo.email && startedTypingField.email }
                     onChange={(e) => {handleAddApplicantInformation("email", e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
@@ -182,7 +182,7 @@ export default function LandingPage(props) {
                     id="desiredLoanAmount"
                     name="desiredLoanAmount"
                     className={classes.slider}
-                    defaultValue={applicantInfo.desiredLoanAmount ? applicantInfo.desiredLoanAmount / 20 : defaultLoanAmount / 20}
+                    defaultValue={userInfo.desiredLoanAmount ? userInfo.desiredLoanAmount / 20 : defaultLoanAmount / 20}
                     step={2.5}
                     scale={(num) => num * 20}
                     valueLabelDisplay="on"

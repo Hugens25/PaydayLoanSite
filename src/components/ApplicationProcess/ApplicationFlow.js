@@ -114,7 +114,7 @@ export default function Apply(props) {
 
   useEffect(() => {
     if(!fetchedUserInfo && session.isLoggedIn){
-      handleGetUserInfo(session.email)
+      handleGetUserInfo(applicantInfo.email)
       .then((data) => {
         if (data.statusCode === 200){
           let user = data.user
@@ -123,7 +123,7 @@ export default function Apply(props) {
         }
       })
     }
-  })
+  }, [fetchedUserInfo])
 
   const handleNext = () => {
     setSessionCookie({...session, 'attemptedPageSubmit':true})

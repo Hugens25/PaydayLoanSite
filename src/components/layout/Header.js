@@ -91,7 +91,7 @@ export default function Navbar() {
         </AppBar>
         {isHambugerMenuOpen && <SideNav userInfo={userInfo} isHambugerMenuOpen={isHambugerMenuOpen} setIsHamburgerMenuOpen={setIsHamburgerMenuOpen}/>}
           <Switch>
-            <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={session.isLoggedIn ? filteredSession : applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
+            <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
             <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} maximumLoginAttemptsReached={maximumLoginAttemptsReached} setMaximumLoginAttemptsReached={setMaximumLoginAttemptsReached} loginAttempts={loginAttempts} setLoginAttempts={setLoginAttempts}/>}/>
             <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={applicantInfo} setApplicantInfo={setApplicantInfo} setLoginAttempts={setLoginAttempts}/>}/>
             <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} applicantInfo={session.isLoggedIn ? filteredSession : applicantInfo} setApplicantInfo={setApplicantInfo} />}/>
