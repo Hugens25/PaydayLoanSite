@@ -57,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
 export default function HomePage(props) {
 
   let session = getSessionCookie()
-  console.log(session);
 
   const {userInfo, setUserInfo} = props;
   
