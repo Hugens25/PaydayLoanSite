@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Switch from '@material-ui/core/Switch';
 import Box from '@material-ui/core/Box';
-import { getSessionCookie } from '../../session';
+import { getSessionCookie } from '../../session/session';
 
 const useStyles = makeStyles((theme) => ({
   root: {

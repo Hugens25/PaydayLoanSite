@@ -5,7 +5,7 @@ import green from '@material-ui/core/colors/green';
 import './App.css';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import { SessionContext, getSessionCookie } from './session';
+import { SessionContext, getSessionCookie } from './session/session';
 
 const AppTheme = createMuiTheme({
   palette: {

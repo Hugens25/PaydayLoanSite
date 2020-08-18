@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
-import { getSessionCookie, setSessionCookie } from '../../../session';
+import { getSessionCookie, setSessionCookie } from '../../../session/session';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -57,8 +57,9 @@ const useStyles = makeStyles((theme) => ({
 export default function HomePage(props) {
 
   let session = getSessionCookie()
+  console.log(session);
 
-  const [userInfo, setUserInfo] = useState({});
+  const {userInfo, setUserInfo} = props;
   
   const [fetchedUserInfo, setFetchedUserInfo] = useState(false);
 

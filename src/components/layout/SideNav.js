@@ -18,7 +18,7 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import HomeIcon from '@material-ui/icons/Home';
 import green from '@material-ui/core/colors/green';
-import { getSessionCookie } from '../../session';
+import { getSessionCookie } from '../../session/session';
 
 const drawerWidth = 240;
 

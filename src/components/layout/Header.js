@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { getSessionCookie } from '../../session';
+import { getSessionCookie } from '../../session/session';
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -58,7 +58,7 @@ export default function Navbar() {
 
   const keysToRemove = ['ssn', 'desiredLoanAmount', 'bankAccountNumber']
 
-  const [userInfo, setUserInfo] = useState({'isLoggedIn':false});
+  const [userInfo, setUserInfo] = useState(session);
   const [maximumLoginAttemptsReached, setMaximumLoginAttemptsReached] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(1);
   const [isHambugerMenuOpen, setIsHamburgerMenuOpen] = useState(false);

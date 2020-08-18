@@ -12,7 +12,10 @@ import Slider from '@material-ui/core/Slider';
 import Spinner from './misc/Spinner';
 
 import { handleGetUserInfo } from '../utilities/utils'
-import { getSessionCookie } from '../session';
+import { getSessionCookie } from '../session/session';
+
+import * as CryptoJS from "crypto-js";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +60,7 @@ export default function LandingPage(props) {
 
   const defaultLoanAmount = 400;
 
-  const session = getSessionCookie;
+  const session = getSessionCookie();
 
   const {userInfo, setUserInfo} = props;
 
@@ -118,7 +121,7 @@ export default function LandingPage(props) {
         }
       })
     }
-  })
+  }, [fetchedUserInfo])
 
   return(
       <Fragment>

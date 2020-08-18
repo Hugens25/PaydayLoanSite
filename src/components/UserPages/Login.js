@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import Spinner from '../misc/Spinner';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
-import { setSessionCookie, getSessionCookie } from '../../session';
+import { setSessionCookie, getSessionCookie } from '../../session/session';
 import { handleGetUserInfo } from '../../utilities/utils'
 
 const StyledButton = withStyles({
@@ -86,14 +86,13 @@ export default function Login(props) {
   }
 
   async function handleValidateCredentials(isCredentialValidated) {
-  // const handleValidateCredentials = (val) => {
     setValidateCredentials(isCredentialValidated);
     if(isCredentialValidated) {
       handleGetUserInfo(email)
       .then((data) => {
         if (data.statusCode === 200){
-          setSessionCookie({"isLoggedIn":true, "email": email})
-          setUserInfo({...userInfo, ...data.user, "email":email, "isLoggedIn":true});
+          setSessionCookie({"isLoggedIn":true, "email":email})
+          setUserInfo({...data.user, "email":email, "isLoggedIn":true});
           completeLogin();
         }
       })
@@ -102,13 +101,6 @@ export default function Login(props) {
       setCredentialValidiationInProgress(false);
     }
   };
-
-  // async function handleGetUserInfo() {
-  //   let url = 'https://8e7wggf57e.execute-api.us-east-1.amazonaws.com/default/get-user'
-  //   let payload = {'email':email}
-  //   let data = await (await fetch(url, {method: 'POST', body: JSON.stringify(payload)})).json()
-  //   return data;
-  // }
 
   const handleLoginAttempts = (val) => {
     setLoginAttempts(val + 1);

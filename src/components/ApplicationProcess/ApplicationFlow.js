@@ -13,7 +13,7 @@ import ApplicantForm from './pages/ApplicantInfo';
 import BankForm from './pages/IncomeAndBankInfo';
 import Review from './pages/Review';
 import ProgressBar from '../misc/ProgressBar';
-import { getSessionCookie, setSessionCookie } from '../../session';
+import { getSessionCookie, setSessionCookie } from '../../session/session';
 import { handleGetUserInfo } from '../../utilities/utils';
 
 
@@ -114,7 +114,7 @@ export default function Apply(props) {
 
   useEffect(() => {
     if(!fetchedUserInfo && session.isLoggedIn){
-      handleGetUserInfo(userInfo.email)
+      handleGetUserInfo(session.email)
       .then((data) => {
         if (data.statusCode === 200){
           let user = data.user
@@ -217,7 +217,6 @@ export default function Apply(props) {
       if(data.status == 200){
         setSentUserInfo(true)
         setStartedTypingRequiredFields({})
-        setUserInfo({})
         setSessionCookie({})
       }
     })

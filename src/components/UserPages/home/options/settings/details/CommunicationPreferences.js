@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box'
 import Switch from '@material-ui/core/Switch';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { getSessionCookie } from '../../../../../../session';
+import { getSessionCookie } from '../../../../../../session/session';
 
 
 const useStyles = makeStyles((theme) => ({
