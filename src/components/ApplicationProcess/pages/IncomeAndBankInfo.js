@@ -54,7 +54,6 @@ export default function PaymentForm(props) {
   };
 
   const handleVerifyAccountNumber = (original, validated) => {
-    console.log(original, validated);
     setAccountNumberVerified(original === validated ? true : false)
   }
 
