@@ -40,7 +40,6 @@ export default function CommunicationPreferences(props) {
     const session = getSessionCookie();
 
     const {userInfo, setUserInfo} = props;
-
     const [settings, setSettings] = useState({
         'emailNotifications':userInfo.emailNotifications, 
         'smsNotifications': userInfo.smsNotifications, 
@@ -59,7 +58,9 @@ export default function CommunicationPreferences(props) {
       }
 
     useEffect(() => {
+        console.log(settings);
         setUserCommunicationPreferences()
+        setUserInfo({...userInfo, ...settings})
     }, [settings])
 
     return (
