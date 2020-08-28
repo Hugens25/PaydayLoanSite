@@ -58,7 +58,6 @@ export default function CommunicationPreferences(props) {
       }
 
     useEffect(() => {
-        console.log(settings);
         setUserCommunicationPreferences()
         setUserInfo({...userInfo, ...settings})
     }, [settings])
