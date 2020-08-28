@@ -63,11 +63,12 @@ export default function Navbar() {
   const [loginAttempts, setLoginAttempts] = useState(1);
   const [isHambugerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
 
-  const filteredUserInfo = {}
-  Object.keys(userInfo)
-    .filter((key) => !keysToRemove.includes(key))
-    .map((key) => {filteredUserInfo[key] = userInfo[key]})
-  
+  if(userInfo.isLoggedIn){
+    Object.keys(userInfo)
+    .filter((key) => keysToRemove.includes(key))
+    .map((key) => {delete userInfo[key]})
+  }
+
   const handleOpenSideNav = () => {
     setIsHamburgerMenuOpen(!isHambugerMenuOpen)
   }
@@ -93,7 +94,7 @@ export default function Navbar() {
             <Route exact path="/" render={(props) => <LandingPage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
             <Route path="/login" render={(props) => <Login userInfo={userInfo} setUserInfo={setUserInfo} maximumLoginAttemptsReached={maximumLoginAttemptsReached} setMaximumLoginAttemptsReached={setMaximumLoginAttemptsReached} loginAttempts={loginAttempts} setLoginAttempts={setLoginAttempts}/>}/>
             <Route path="/logout" render={(props) => <Logout userInfo={userInfo} setUserInfo={setUserInfo} setLoginAttempts={setLoginAttempts}/>}/>
-            <Route path="/apply" render={(props) => <Apply userInfo={session.isLoggedIn ? filteredUserInfo : userInfo} setUserInfo={setUserInfo} />}/>
+            <Route path="/apply" render={(props) => <Apply userInfo={userInfo} setUserInfo={setUserInfo} />}/>
             <Route path="/home" render={(props) => <HomePage userInfo={userInfo} setUserInfo={setUserInfo} />}/>
             <Route path="/settings" render={(props) => <Settings userInfo={userInfo} setUserInfo={setUserInfo} />}/>
             <Route component={NotFound}/>

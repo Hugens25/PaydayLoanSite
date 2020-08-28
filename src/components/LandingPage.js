@@ -75,9 +75,7 @@ export default function LandingPage(props) {
 
   const handleAddUserInformation = (key, value) => {
     handleStartedTypingField(key)
-    let info = { ...userInfo }
-    info[key] = value
-    setUserInfo(info)
+    setUserInfo({...userInfo, [key]: value})
   }
 
   const handleStartedTypingField = (key) => {
