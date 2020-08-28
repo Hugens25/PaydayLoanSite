@@ -96,9 +96,15 @@ export default function Apply(props) {
 
   const {userInfo, setUserInfo} = props;
 
-  let page1 = {'fields':['firstName', 'lastName', 'address1', 'city', 'state', 'zipCode', 'country', 'email', 'password', 'validatedPassword', 'ssn', 'validatedSSN', 'bday']}
-  let page2 = {'fields':['incomeType', 'payFrequency', 'recentCheck', 'additionalSourceOfIncome', 'employerName', 'routingNumber', 'bankAccountNumber', 'verifyBankAccountNumber']}
-  let requiredFields = [page1, page2]
+  const session = getSessionCookie();
+  
+  let page1RequiredFieldsWhenSignedIn = {'fields':['firstName', 'lastName', 'address1', 'city', 'state', 'zipCode', 'country', 'desiredLoanAmount']}
+  let page2RequiredFieldsWhenSignedIn = {'fields':['incomeType', 'payFrequency', 'recentCheck', 'additionalSourceOfIncome', 'employerName', 'routingNumber', 'bankAccountNumber', 'verifyBankAccountNumber']}
+
+  let page1RequiredFieldsWhenSignedOut = {'fields':['firstName', 'lastName', 'address1', 'city', 'state', 'zipCode', 'country', 'email', 'password', 'validatedPassword', 'ssn', 'validatedSSN', 'bday', 'desiredLoanAmount']}
+  let page2RequiredFieldsWhenSignedOut = {'fields':['incomeType', 'payFrequency', 'recentCheck', 'additionalSourceOfIncome', 'employerName', 'routingNumber', 'bankAccountNumber', 'verifyBankAccountNumber']}
+  
+  let requiredFields = session.isLoggedIn ? [page1RequiredFieldsWhenSignedIn, page2RequiredFieldsWhenSignedIn] : [page1RequiredFieldsWhenSignedOut, page2RequiredFieldsWhenSignedOut]
 
   const [activeStep, setActiveStep] = useState(0);
   const [startedTypingRequiredFields, setStartedTypingRequiredFields] = useState({});
@@ -107,8 +113,6 @@ export default function Apply(props) {
   const [errorSendingUpdate, setErrorSendingUpdate] = useState(false);
   const [sentUserInfo, setSentUserInfo] = useState(false);
   const [date, setDate] = useState(Date.now());
-
-  const session = getSessionCookie();
 
   const [fetchedUserInfo, setFetchedUserInfo] = useState(false);
 
@@ -129,8 +133,8 @@ export default function Apply(props) {
     setSessionCookie({...session, 'attemptedPageSubmit':true})
     if (activeStep < 2) {
       let fieldValues = requiredFields[activeStep].fields.map((field) => {
-        // return userInfo[field] ? true : false
-        return true // uncomment to bypass application validation
+        return userInfo[field] ? true : false
+        // return true // uncomment to bypass application validation
       })
       if(!fieldValues.includes(false)){
         handleSendApplicationInfo('false');
@@ -243,7 +247,7 @@ export default function Apply(props) {
         <Box className={classes.container}>
         <Paper className={classes.paper} elevation={3}>
           <Typography component="h1" variant="h4" align="center">
-            {`Loan Application for $${userInfo.desiredLoanAmount ? userInfo.desiredLoanAmount : '400'}`}
+            {`Loan Application for $${userInfo.desiredLoanAmount ? userInfo.desiredLoanAmount : '0'}`}
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (

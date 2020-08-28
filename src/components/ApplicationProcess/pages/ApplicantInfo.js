@@ -179,7 +179,7 @@ export default function AddressForm(props) {
             onChange={(e) => {handleAddUserInformation("country", e)}}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {!session.isLoggedIn && <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
             helperText={!userInfo.ssn ? "*required" : ""}
@@ -194,8 +194,8 @@ export default function AddressForm(props) {
             error={!userInfo.ssn && (startedTypingRequiredFields.ssn || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddUserInformation("ssn", e)}}
           />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Grid>}
+        {!session.isLoggedIn && <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
             helperText={!userInfo.validatedSSN ? "*required" : ""}
@@ -207,7 +207,7 @@ export default function AddressForm(props) {
             error={!ssnValidated}
             onChange={(e) => {handleAddUserInformation("validatedSSN", e)}}
           />
-        </Grid>
+        </Grid>}
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"

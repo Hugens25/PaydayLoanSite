@@ -56,7 +56,7 @@ export default function Navbar() {
 
   const session = getSessionCookie();
 
-  const keysToRemove = ['ssn', 'desiredLoanAmount', 'bankAccountNumber']
+  const keysToRemove = ['ssn', 'bankAccountNumber']
 
   const [userInfo, setUserInfo] = useState(session);
   const [maximumLoginAttemptsReached, setMaximumLoginAttemptsReached] = useState(false);
@@ -67,7 +67,7 @@ export default function Navbar() {
   Object.keys(userInfo)
     .filter((key) => !keysToRemove.includes(key))
     .map((key) => {filteredUserInfo[key] = userInfo[key]})
-
+  
   const handleOpenSideNav = () => {
     setIsHamburgerMenuOpen(!isHambugerMenuOpen)
   }
