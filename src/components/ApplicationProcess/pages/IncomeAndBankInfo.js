@@ -19,10 +19,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   selectLabel: {
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
+    backgroundColor: 'white',
   },
   inputLabel: {
     textOverflow: 'ellipsis',
@@ -66,7 +68,7 @@ export default function PaymentForm(props) {
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <FormControl className={classes.formControl}>
-              <InputLabel id="sourceOfIncome" className={classes.selectLabel}>Primary Income</InputLabel>
+              <InputLabel id="sourceOfIncome" variant="outlined" className={classes.selectLabel}>Primary Income</InputLabel>
               <Select
                 variant="outlined"
                 helperText={!userInfo.incomeType ? "*required" : ""}
@@ -87,7 +89,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl className={classes.formControl}>
-              <InputLabel id="payFrequency" className={classes.selectLabel}>How often are you paid?</InputLabel>
+              <InputLabel id="payFrequency" variant="outlined" className={classes.selectLabel}>How often are you paid?</InputLabel>
                 <Select
                   variant="outlined"
                   helperText={!userInfo.payFrequency ? "*required" : ""}
@@ -128,7 +130,7 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl className={classes.formControl}>
-              <InputLabel id="additionalSourceOfIncome" className={classes.selectLabel}>Additional Source of Income</InputLabel>
+              <InputLabel id="additionalSourceOfIncome" variant="outlined" className={classes.selectLabel}>Additional Source of Income</InputLabel>
               <Select
                 variant="outlined"
                 helperText={!userInfo.additionalSourceOfIncome ? "*required" : ""}
@@ -153,7 +155,7 @@ export default function PaymentForm(props) {
             hasSecondaryIncome &&
             <Grid item xs={12} sm={6}>
               <FormControl className={classes.formControl}>
-                <InputLabel id="additionalPayFrequency" className={classes.selectLabel}>How often are you paid?</InputLabel>
+                <InputLabel id="additionalPayFrequency" variant="outlined" className={classes.selectLabel}>How often are you paid?</InputLabel>
                 <Select
                   variant="outlined"
                   helperText={!userInfo.payFrequency ? "*required" : ""}
