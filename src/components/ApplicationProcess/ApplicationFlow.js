@@ -159,9 +159,9 @@ export default function Apply(props) {
     setStartedTypingRequiredFields(field)
   }
 
-  const handleAddUserInformation = (key, e) => {
+  const handleAddUserInformation = (key, value) => {
     let info = { ...userInfo }
-    info[key] = e.target.value
+    info[key] = value
     setUserInfo(info)
     handleStartedTypingRequiredFields(key)
   }

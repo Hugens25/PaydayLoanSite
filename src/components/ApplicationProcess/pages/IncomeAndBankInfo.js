@@ -72,9 +72,10 @@ export default function PaymentForm(props) {
                 helperText={!userInfo.incomeType ? "*required" : ""}
                 labelId="sourceOfIncome"
                 id="sourceOfIncomeSelect"
+                name="incomeType"
                 value={userInfo.incomeType}
                 error={!userInfo.incomeType && (startedTypingRequiredFields.incomeType || session.attemptedPageSubmit)}
-                onChange={(e) => {handleAddUserInformation("incomeType", e)}}
+                onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
               >
                 <MenuItem value={"Employed"}>Employed</MenuItem>
                 <MenuItem value={"Self-Employed"}>Self-Employed</MenuItem>
@@ -90,11 +91,12 @@ export default function PaymentForm(props) {
                 <Select
                   variant="outlined"
                   helperText={!userInfo.payFrequency ? "*required" : ""}
-                  labelId="payFrequency"
                   id="payFrequencySelect"
+                  labelId="payFrequency"
+                  name="payFrequency"
                   value={userInfo.payFrequency}
                   error={!userInfo.payFrequency && (startedTypingRequiredFields.payFrequency || session.attemptedPageSubmit)}
-                  onChange={(e) => {handleAddUserInformation("payFrequency", e)}}
+                  onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
                   renderValue={(value) => `${value}`}
                 >
                   <MenuItem value={"Weekly"}>Weekly</MenuItem>
@@ -110,13 +112,14 @@ export default function PaymentForm(props) {
               variant="outlined"
               helperText={!userInfo.recentCheck ? "*required" : ""} 
               id="recentCheck" 
-              label="What was the amount of your most recent check?" 
+              name="recentCheck" 
+              label={userInfo.recentCheck ? "" : "What was the amount of your most recent check?" }
               fullWidth 
               // InputProps={{
               //   startAdornment: <InputAdornment position="start">$</InputAdornment>,
               // }}
               error={!userInfo.recentCheck && (startedTypingRequiredFields.recentCheck || session.attemptedPageSubmit)}
-              onChange={(e) => {handleAddUserInformation("recentCheck", e)}}
+              onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
               value={userInfo.recentCheck}
             />
           </Grid>
@@ -151,11 +154,12 @@ export default function PaymentForm(props) {
                 <Select
                   variant="outlined"
                   helperText={!userInfo.payFrequency ? "*required" : ""}
-                  labelId="additionalPayFrequency"
                   id="additionalPayFrequencySelect"
+                  labelId="additionalPayFrequency"
+                  name="additionalPayFrequency"
                   value={userInfo.additionalPayFrequency}
                   error={!userInfo.additionalPayFrequency && (startedTypingRequiredFields.additionalPayFrequency || session.attemptedPageSubmit)}
-                  onChange={(e) => {handleAddUserInformation("additionalPayFrequency", e)}}
+                  onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
                   renderValue={(value) => `${value}`}
                 >
                   <MenuItem value={"Weekly"}>Weekly</MenuItem>
@@ -176,10 +180,11 @@ export default function PaymentForm(props) {
                   variant="outlined"
                   helperText={!userInfo.additionalIncomeAmount ? "*required" : ""} 
                   id="additionalIncomeAmount" 
+                  name="additionalIncomeAmount" 
                   label="Additional Income Amount" 
                   fullWidth
                   error={!userInfo.additionalIncomeAmount && (startedTypingRequiredFields.additionalIncomeAmount || session.attemptedPageSubmit)}
-                  onChange={(e) => {handleAddUserInformation("additionalIncomeAmount", e)}}
+                  onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
                   value={userInfo.additionalIncomeAmount}
                   />
               </Grid>
@@ -191,9 +196,10 @@ export default function PaymentForm(props) {
               variant="outlined"
               helperText={!userInfo.employerName ? "*required" : ""} 
               id="employerName" 
-              label="Primary Employer Name" 
+              name="employerName" 
+              label={userInfo.employerName ? "" : "Primary Employer Name" }
               fullWidth 
-              onChange={(e) => {handleAddUserInformation("employerName", e)}}  
+              onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}} 
               error={!userInfo.employerName && (startedTypingRequiredFields.employerName || session.attemptedPageSubmit)}
               value={userInfo.employerName}
             />
@@ -204,10 +210,11 @@ export default function PaymentForm(props) {
               variant="outlined"
               helperText={!userInfo.routingNumber ? "*required" : ""} 
               id="routingNumber" 
-              label="Bank Routing Number" 
+              name="routingNumber" 
+              label={userInfo.routingNumber ? "" : "Bank Routing Number" }
               fullWidth 
               error={!userInfo.routingNumber && (startedTypingRequiredFields.routingNumber || session.attemptedPageSubmit)}
-              onChange={(e) => {handleAddUserInformation("routingNumber", e)}}
+              onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
               value={userInfo.routingNumber}
             />
           </Grid>
@@ -216,11 +223,12 @@ export default function PaymentForm(props) {
               // className={classes.inputLabel}
               variant="outlined"
               helperText={!userInfo.bankAccountNumber ? "*required" : ""} 
-              id="accountNumber" 
-              label="Bank Account Number" 
+              id="bankAccountNumber" 
+              name="bankAccountNumber"
+              label={userInfo.bankAccountNumber ? "" : "Bank Account Number"}
               fullWidth 
               error={!userInfo.bankAccountNumber && (startedTypingRequiredFields.bankAccountNumber || session.attemptedPageSubmit)}
-              onChange={(e) => {handleAddUserInformation("bankAccountNumber", e)}}
+              onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
               value={userInfo.bankAccountNumber}
             />
           </Grid>
@@ -229,11 +237,12 @@ export default function PaymentForm(props) {
               // className={classes.inputLabel}
               variant="outlined"
               helperText={!userInfo.verifyBankAccountNumber ? "*required" : ""} 
-              id="verifyAccountNumber" 
-              label="Re-Enter Bank Account Number" 
+              id="verifyBankAccountNumber" 
+              name="verifyBankAccountNumber"
+              label={userInfo.verifyBankAccountNumber ? "" : "Re-Enter Bank Account Number"}
               fullWidth 
               error={!accountNumberVerified}
-              onChange={(e) => {handleAddUserInformation("verifyBankAccountNumber", e)}}
+              onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
             />
           </Grid>
         </Grid>

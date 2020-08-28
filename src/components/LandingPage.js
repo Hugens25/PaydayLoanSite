@@ -141,13 +141,13 @@ export default function LandingPage(props) {
                     helperText={!userInfo.firstName && startedTypingField.firstName ? "*required" : ""}
                     id="firstName"
                     name="firstName"
-                    label="First Name"
+                    label={userInfo.firstName ? "" : "First Name"}
                     fullWidth
                     autoComplete="given-name"
                     variant="outlined"
                     value={userInfo.firstName}
                     error={!userInfo.firstName && startedTypingField.firstName }
-                    onChange={(e) => {handleAddUserInformation("firstName", e.target.value)}}
+                    onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <TextField
@@ -155,13 +155,13 @@ export default function LandingPage(props) {
                     helperText={!userInfo.lastName && startedTypingField.lastName ? "*required" : ""}
                     id="lastName"
                     name="lastName"
-                    label="Last Name"
+                    label={userInfo.lastName ? "" : "Last Name"}
                     fullWidth
                     autoComplete="family-name"
                     variant="outlined"
                     value={userInfo.lastName}
                     error={!userInfo.lastName && startedTypingField.lastName }
-                    onChange={(e) => {handleAddUserInformation("lastName", e.target.value)}}
+                    onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <TextField
@@ -169,13 +169,13 @@ export default function LandingPage(props) {
                     helperText={!userInfo.email && startedTypingField.email ? "*required" : ""}
                     id="email"
                     name="email"
-                    label="Email"
+                    label={userInfo.email ? "" : "Email"}
                     fullWidth
                     autoComplete="email"
                     variant="outlined"
                     value={userInfo.email}
                     error={!userInfo.email && startedTypingField.email }
-                    onChange={(e) => {handleAddUserInformation("email", e.target.value)}}
+                    onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
                     onKeyPress={(e)=>{if(e.key === "Enter"){document.getElementById('checkMyOptionsButton').click();}}}
                   />
                   <Typography className={classes.textInputs} gutterBottom>
@@ -189,7 +189,7 @@ export default function LandingPage(props) {
                     step={2.5}
                     scale={(num) => num * 20}
                     valueLabelDisplay="on"
-                    onChange={(e) => {handleAddUserInformation("desiredLoanAmount", parseFloat(document.getElementsByName('desiredLoanAmount')[0].value) * 20)}}
+                    onChange={(e) => {handleAddUserInformation(e.target.name, parseFloat(document.getElementsByName('desiredLoanAmount')[0].value) * 20)}}
                   />
                   <Box className={classes.buttons}>
                     <Button id="checkMyOptionsButton" className={classes.button} onClick={handleSaveUserInfo}>
