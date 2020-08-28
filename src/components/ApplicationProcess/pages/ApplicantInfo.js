@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { getSessionCookie } from '../../../session/session';
@@ -10,6 +11,10 @@ import { getSessionCookie } from '../../../session/session';
 const useStyles = makeStyles((theme) => ({
   
   inputLabel: {
+    paddingLeft: theme.spacing(2),
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   datePicker: {
     bottom: '0.5rem',
@@ -76,10 +81,13 @@ export default function AddressForm(props) {
             helperText={!userInfo.firstName ? "*required" : ""}
             id="firstName"
             name="firstName"
-            label={userInfo.firstName ? "" : "First Name"}
+            value={userInfo.firstName}
+            label="First Name"
+            InputLabelProps={{
+              shrink: userInfo.firstName ? true : false,
+            }}
             fullWidth
             autoComplete="given-name"
-            value={userInfo.firstName}
             error={!userInfo.firstName && (startedTypingRequiredFields.firstName || session.attemptedPageSubmit)}
             onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
           />
@@ -90,7 +98,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.lastName ? "*required" : ""}
             id="lastName"
             name="lastName"
-            label={userInfo.lastName ? "" : "Last name"}
+            label="Last name"
+            InputLabelProps={{
+              shrink: userInfo.lastName ? true : false,
+            }}
             fullWidth
             autoComplete="family-name"
             value={userInfo.lastName}
@@ -104,7 +115,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.address1 ? "*required" : ""}
             id="address1"
             name="address1"
-            label={userInfo.address1 ? "" : "Address line 1"}
+            label="Address line 1"
+            InputLabelProps={{
+              shrink: userInfo.address1 ? true : false,
+            }}
             fullWidth
             autoComplete="billing address-line1"
             value={userInfo.address1}
@@ -117,7 +131,10 @@ export default function AddressForm(props) {
             variant="outlined"
             id="address2"
             name="address2"
-            label={userInfo.address2 ? "" : "Address line 2"}
+            label="Address line 2"
+            InputLabelProps={{
+              shrink: userInfo.address2 ? true : false,
+            }}
             fullWidth
             autoComplete="billing address-line2"
             value={userInfo.address2}
@@ -130,7 +147,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.city ? "*required" : ""}
             id="city"
             name="city"
-            label={userInfo.city ? "" : "City"}
+            label="City"
+            InputLabelProps={{
+              shrink: userInfo.city ? true : false,
+            }}
             fullWidth
             autoComplete="billing address-level2"
             value={userInfo.city}
@@ -144,7 +164,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.state ? "*required" : ""}
             id="state" 
             name="state" 
-            label={userInfo.state ? "" : "State/Province/Region"}
+            label="State/Province/Region"
+            InputLabelProps={{
+              shrink: userInfo.state ? true : false,
+            }}
             fullWidth
             value={userInfo.state}
             error={!userInfo.state && (startedTypingRequiredFields.state || session.attemptedPageSubmit)}
@@ -157,7 +180,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.zipCode ? "*required" : ""}
             id="zipCode"
             name="zipCode"
-            label={userInfo.zipCode ? "" : "Zip / Postal Code"}
+            label="Zip / Postal Code"
+            InputLabelProps={{
+              shrink: userInfo.zipCode ? true : false,
+            }}
             fullWidth
             autoComplete="billing postal-code"
             value={userInfo.zipCode}
@@ -171,7 +197,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.country ? "*required" : ""}
             id="country"
             name="country"
-            label={userInfo.country ? "" : "Country"}
+            label="Country"
+            InputLabelProps={{
+              shrink: userInfo.country ? true : false,
+            }}
             fullWidth
             autoComplete="billing country"
             value={userInfo.country}
@@ -185,7 +214,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.ssn ? "*required" : ""}
             id="ssn"
             name="ssn"
-            label={userInfo.ssn ? "" : "Social Security Number"}
+            label="Social Security Number"
+            InputLabelProps={{
+              shrink: userInfo.ssn ? true : false,
+            }}
             // type="number"
             fullWidth
             autoComplete="SSN"
@@ -201,7 +233,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.validatedSSN ? "*required" : ""}
             id="validatedSSN"
             name="validatedSSN"
-            label={userInfo.ssnValidated ? "" : "Re-Enter Social Security Number"}
+            label="Re-Enter Social Security Number"
+            InputLabelProps={{
+              shrink: userInfo.validatedSSN ? true : false,
+            }}
             fullWidth
             autoComplete="SSN"
             error={!ssnValidated}
@@ -214,7 +249,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.validatedSSN ? "*required" : ""}
             id="desiredLoanAmount"
             name="desiredLoanAmount"
-            label={userInfo.desiredLoanAmount ? "" : "Desired Loan Amount"}
+            label="Desired Loan Amount"
+            InputLabelProps={{
+              shrink: userInfo.desiredLoanAmount ? true : false,
+            }}
             value={userInfo.desiredLoanAmount}
             fullWidth
             autoComplete="desiredLoanAmount"
@@ -229,7 +267,10 @@ export default function AddressForm(props) {
                 format="MM/dd/yyyy"
                 margin="normal"
                 id="date-picker-inline"
-                label={userInfo.bday ? "" : "Date of Birth"}
+                label="Date of Birth"
+                InputLabelProps={{
+                  shrink: userInfo.bday ? true : false,
+                }}
                 value={userInfo.bday}
                 onChange={handleDateChange}
                 className={classes.datePicker}
@@ -243,7 +284,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.email ? "*required" : ""}
             id="email"
             name="email"
-            label={userInfo.email ? "" : "Email"}
+            label="Email"
+            InputLabelProps={{
+              shrink: userInfo.email ? true : false,
+            }}
             fullWidth
             autoComplete="email"
             value={userInfo.email}
@@ -257,7 +301,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.password ? "*required" : ""}
             id="password"
             name="password"
-            label={userInfo.password ? "" : "Choose a Password"}
+            label="Choose a Password"
+            InputLabelProps={{
+              shrink: userInfo.password ? true : false,
+            }}
             fullWidth
             autoComplete="password"
             type="password"
@@ -273,7 +320,10 @@ export default function AddressForm(props) {
             helperText={!userInfo.validatedPassword ? "*required" : ""}
             id="validatedPassword"
             name="validatedPassword"
-            label={userInfo.validatedPassword ? "" : "Re-Enter Password"}
+            label="Re-Enter Password"
+            InputLabelProps={{
+              shrink: userInfo.validatedPassword ? true : false,
+            }}
             fullWidth
             autoComplete="password"
             type="password"

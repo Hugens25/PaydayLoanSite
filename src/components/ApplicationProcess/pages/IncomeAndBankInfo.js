@@ -113,7 +113,10 @@ export default function PaymentForm(props) {
               helperText={!userInfo.recentCheck ? "*required" : ""} 
               id="recentCheck" 
               name="recentCheck" 
-              label={userInfo.recentCheck ? "" : "What was the amount of your most recent check?" }
+              label="What was the amount of your most recent check?"
+              InputLabelProps={{
+                shrink: userInfo.recentCheck ? true : false,
+              }}
               fullWidth 
               // InputProps={{
               //   startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -182,6 +185,9 @@ export default function PaymentForm(props) {
                   id="additionalIncomeAmount" 
                   name="additionalIncomeAmount" 
                   label="Additional Income Amount" 
+                  InputLabelProps={{
+                    shrink: userInfo.additionalIncomeAmount ? true : false,
+                  }}
                   fullWidth
                   error={!userInfo.additionalIncomeAmount && (startedTypingRequiredFields.additionalIncomeAmount || session.attemptedPageSubmit)}
                   onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
@@ -197,7 +203,10 @@ export default function PaymentForm(props) {
               helperText={!userInfo.employerName ? "*required" : ""} 
               id="employerName" 
               name="employerName" 
-              label={userInfo.employerName ? "" : "Primary Employer Name" }
+              label="Primary Employer Name"
+              InputLabelProps={{
+                shrink: userInfo.employerName ? true : false,
+              }}
               fullWidth 
               onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}} 
               error={!userInfo.employerName && (startedTypingRequiredFields.employerName || session.attemptedPageSubmit)}
@@ -211,7 +220,10 @@ export default function PaymentForm(props) {
               helperText={!userInfo.routingNumber ? "*required" : ""} 
               id="routingNumber" 
               name="routingNumber" 
-              label={userInfo.routingNumber ? "" : "Bank Routing Number" }
+              label="Bank Routing Number"
+              InputLabelProps={{
+                shrink: userInfo.routingNumber ? true : false,
+              }}
               fullWidth 
               error={!userInfo.routingNumber && (startedTypingRequiredFields.routingNumber || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
@@ -225,7 +237,10 @@ export default function PaymentForm(props) {
               helperText={!userInfo.bankAccountNumber ? "*required" : ""} 
               id="bankAccountNumber" 
               name="bankAccountNumber"
-              label={userInfo.bankAccountNumber ? "" : "Bank Account Number"}
+              label="Bank Account Number"
+              InputLabelProps={{
+                shrink: userInfo.bankAccountNumber ? true : false,
+              }}
               fullWidth 
               error={!userInfo.bankAccountNumber && (startedTypingRequiredFields.bankAccountNumber || session.attemptedPageSubmit)}
               onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
@@ -239,7 +254,10 @@ export default function PaymentForm(props) {
               helperText={!userInfo.verifyBankAccountNumber ? "*required" : ""} 
               id="verifyBankAccountNumber" 
               name="verifyBankAccountNumber"
-              label={userInfo.verifyBankAccountNumber ? "" : "Re-Enter Bank Account Number"}
+              label="Re-Enter Bank Account Number"
+              InputLabelProps={{
+                shrink: userInfo.verifyBankAccountNumber ? true : false,
+              }}
               fullWidth 
               error={!accountNumberVerified}
               onChange={(e) => {handleAddUserInformation(e.target.name, e.target.value)}}
