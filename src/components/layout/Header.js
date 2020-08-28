@@ -56,7 +56,7 @@ export default function Navbar() {
 
   const session = getSessionCookie();
 
-  const keysToRemove = ['ssn', 'bankAccountNumber']
+  const keysToRemove = ['ssn']
 
   const [userInfo, setUserInfo] = useState(session);
   const [maximumLoginAttemptsReached, setMaximumLoginAttemptsReached] = useState(false);
